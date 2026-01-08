@@ -17,8 +17,8 @@ Fonctionnalités
 
 Installation
 
-1. Cloner le dépôt : git clone https://github.com/votre-nom-utilisateur/pegintichat.git
-2. Installer les dépendances : pip install -r requirements.txt
+1. https://github.com/pegintiiaultra/Pegintichat.git
+2. 2. Installer les dépendances : pip install -r requirements.txt
 
 Utilisation
 
