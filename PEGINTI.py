@@ -1,7 +1,7 @@
 Corrige plutôt
 
 import nltk
-from nltk.tokenize import word_tokenize
+fr nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from langdetect import detect
 
@@ -45,9 +45,26 @@ IDENTITY = (
     "My main mission is to spread knowledge, know-how, and values of living and being "
     "for a virtuous Africa and an ideal world."
 )
-
+def repondre(question: str):
+    lang = detect_language(question)
+    reply_set = responses.get(lang, responses["unknown"])
+    if "peginti" in question.lower() or "identité" in question.lower():
+        return IDENTITY
+    elif "bonjour" in question.lower() or "bonsoir" in question.lower():
+        lang = 'fr'
+        return responses.get(lang, responses["unknown"])["greeting"]
+    elif "hello" in question.lower():
+        lang = 'en'
+        return responses.get(lang, responses["unknown"])["greeting"]
+    elif "hola" in question.lower():
+        lang = 'es'
+        return responses.get(lang, responses["unknown"])["greeting"]
+    elif "aide" in question.lower() or "help" in question.lower() or "ayuda" in question.lower():
+        return reply_set["help"]
+    else:
+        return reply_set["default"]
 # Dictionnaire multilingue
-responses = {
+reresponses {
     "fr": {
         "greeting": "Bonjour, je suis PEGINTI. Comment puis-je vous aider aujourd'hui ?",
         "help": "Je peux vous accompagner dans vos projets et répondre à vos questions.",
@@ -70,19 +87,7 @@ responses = {
     }
 }
 
-# Fonction de réponse
-def repondre(question: str):
-    lang = detect_language(question)
-    reply_set = responses.get(lang, responses["unknown"])
 
-    if "peginti" in question.lower() or "identité" in question.lower():
-        return IDENTITY
-    elif "bonjour" in question.lower() or "bonsoir" in question.lower() or "hello" in question.lower() or "hola" in question.lower():
-        return reply_set["greeting"]
-    elif "aide" in question.lower() or "help" in question.lower() or "ayuda" in question.lower():
-        return reply_set["help"]
-    else:
-        return reply_set["default"]
 
 # Boucle principale
 def main():
