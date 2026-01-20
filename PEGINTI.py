@@ -14,18 +14,17 @@ def nettoyer_texte(texte, langue="french"):
     tokens = [token for token in tokens if token not in stop_words]
     return tokens
 
-# Réponses bilingues
-def repondre(question):
-    print("Vous avez demandé : " + question)
-    reponse = "Je suis désolé, je ne comprends pas la question. / Sorry, I don't understand the question."
+lang = detect_language(user_input)
+reply_set = responses.get(lang, responses["unknown"])
 
-    if question.lower() in ["bonjour", "hello"]:
-        reponse = "Bonjour, comment allez-vous ? / Hello, how are you?"
-    elif question.lower() in ["quel est votre nom ?", "what is your name?"]:
-        reponse = "Mon nom est PEGINTI, je suis une IA pour vous aider. / My name is PEGINTI, I am an AI created to help you."
-    elif question.lower() in ["au revoir", "goodbye"]:
-        reponse = "Au revoir, à bientôt ! / Goodbye, see you soon!"
-# PEGINTI.py
+if "bonjour" in user_input.lower() or "hello" in user_input.lower() or "hola" in user_input.lower():
+    reply = reply_set["greeting"]
+elif "aide" in user_input.lower() or "help" in user_input.lower() or "ayuda" in user_input.lower():
+    reply = reply_set["help"]
+else:
+    reply = reply_set["default"]
+
+print(f"Réponse : {reply}")
 
 IDENTITY = (
     "FRANÇAIS :\n"
