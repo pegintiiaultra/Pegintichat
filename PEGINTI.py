@@ -73,7 +73,7 @@ def repondre(question: str):
     lang = detect_language(question)
     reply_set = responses.get(lang, responses["unknown"])
 
-    if "peginti" in question.lower():
+    if "peginti" in question.lower() or "identité" in question.lower():
         return IDENTITY
     elif "bonjour" in question.lower() or "bonsoir" in question.lower() or "hello" in question.lower() or "hola" in question.lower():
         return reply_set["greeting"]
