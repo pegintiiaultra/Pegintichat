@@ -1,4 +1,4 @@
-# langdetect.py
+langdetect.py
 # Utilitaire pour détecter automatiquement la langue d'un texte utilisateur
 
 from langdetect import detect, DetectorFactory
