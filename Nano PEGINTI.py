@@ -1,5 +1,4 @@
-# PEGINTI.py
-
+#PEGINTI.py
 
 # Dictionnaire multilingue
 responses = {
