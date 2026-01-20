@@ -1,5 +1,7 @@
 # PEGINTI.py
 
+from langdetect import detect_language
+
 IDENTITY = (
     "FRANÇAIS :\n"
     "Je suis PEGINTI, un mot en dialecte Eton du Cameroun (région du Centre). "
@@ -21,50 +23,53 @@ IDENTITY = (
     "for a virtuous Africa and an ideal world."
 )
 
-def repondre(question):
-    question = question.lower()
-    if "peginti" in question:
-        reponse = IDENTITY
+# Dictionnaire multilingue
+responses = {
+    "fr": {
+        "greeting": "Bonjour, je suis PEGINTI. Comment puis-je vous aider aujourd'hui ?",
+        "help": "Je peux vous accompagner dans vos projets et répondre à vos questions.",
+        "default": "Je réponds en français."
+    },
+    "en": {
+        "greeting": "Hello, I am PEGINTI. How can I assist you today?",
+        "help": "I can support your projects and answer your questions.",
+        "default": "I will answer in English."
+    },
+    "es": {
+        "greeting": "Hola, soy PEGINTI. ¿Cómo puedo ayudarte hoy?",
+        "help": "Puedo apoyarte en tus proyectos y responder a tus preguntas.",
+        "default": "Responderé en español."
+    },
+    "unknown": {
+        "greeting": "Langue non reconnue, je bascule par défaut en français.",
+        "help": "Je peux vous accompagner dans vos projets et répondre à vos questions.",
+        "default": "Je réponds par défaut en français."
+    }
+}
+
+def repondre(question: str):
+    lang = detect_language(question)
+    reply_set = responses.get(lang, responses["unknown"])
+
+    if "peginti" in question.lower() or "identité" in question.lower():
+        return IDENTITY
+    elif "bonjour" in question.lower() or "bonsoir" in question.lower() or "hello" in question.lower() or "hola" in question.lower():
+        return reply_set["greeting"]
+    elif "aide" in question.lower() or "help" in question.lower() or "ayuda" in question.lower():
+        return reply_set["help"]
     else:
-        reponse = "Je suis désolé, je ne comprends pas la question. / Sorry, I don't understand the question."
-    print("Réponse : " + reponse)
+        return reply_set["default"]
 
 def main():
-    print("PEGINTI est lancé avec succès ! / PEGINTI has started successfully!")
+    print("PEGINTI est lancé avec succès ! / PEGINTI has started successfully!\n")
     while True:
         question = input("Vous : ")
-        repondre(question)
+        reponse = repondre(question)
+        print(f"Réponse ({detect_language(question)}): {reponse}\n")
+
         if question.lower() in ["au revoir", "goodbye"]:
             print("PEGINTI : Au revoir, à bientôt ! / Goodbye, see you soon!")
             break
 
 if __name__ == "__main__":
     main()
-# langdetect.py
-# Utilitaire pour détecter automatiquement la langue d'un texte utilisateur
-
-from langdetect import detect, DetectorFactory
-
-# Fixe la graine pour rendre les résultats reproductibles
-DetectorFactory.seed = 0
-
-def detect_language(text: str) -> str:
-    """
-    Détecte la langue principale d'un texte.
-    Retourne le code ISO (ex: 'fr', 'en', 'es', 'de').
-    """
-    try:
-        return detect(text)
-    except Exception:
-        return "unknown"
-
-# Exemple d'utilisation directe
-if __name__ == "__main__":
-    sample_texts = [
-        "Je préfère qu'on discute en français",
-        "I would like to continue in English",
-        "Hola, ¿cómo estás?"
-    ]
-    for txt in sample_texts:
-        print(f"Texte: {txt}")
-        print(f"Langue détectée: {detect_language(txt)}\n")
