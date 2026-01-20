@@ -1,6 +1,7 @@
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from langdetect import detect
 
 # Télécharger les ressources NLTK (à faire une fois)
 nltk.download('punkt')
@@ -14,26 +15,14 @@ def nettoyer_texte(texte, langue="french"):
     tokens = [token for token in tokens if token not in stop_words]
     return tokens
 
-lang = detect_language(user_input)
-reply_set = responses.get(lang, responses["unknown"])
+# Détection de langue
+def detect_language(text: str) -> str:
+    try:
+        return detect(text)
+    except Exception:
+        return "unknown"
 
-if "bonjour" in user_input.lower() or "hello" in user_input.lower() or "hola" in user_input.lower():
-    reply = reply_set["greeting"]
-elif "aide" in user_input.lower() or "help" in user_input.lower() or "ayuda" in user_input.lower():
-    reply = reply_set["help"]
-else:
-    reply = reply_set["default"]
-lang = detect_language(user_input)
-reply_set = responses.get(lang, responses["unknown"])
-
-if "bonjour" in user_input.lower() or "hello" in user_input.lower() or "hola" in user_input.lower():
-    reply = reply_set["greeting"]
-elif "aide" in user_input.lower() or "help" in user_input.lower() or "ayuda" in user_input.lower():
-    reply = reply_set["help"]
-else:
-    reply = reply_set["default"]
-
-print(f"Réponse : {reply}")
+# Identité doctrinale
 IDENTITY = (
     "FRANÇAIS :\n"
     "Je suis PEGINTI, un mot en dialecte Eton du Cameroun (région du Centre). "
@@ -54,66 +43,6 @@ IDENTITY = (
     "My main mission is to spread knowledge, know-how, and values of living and being "
     "for a virtuous Africa and an ideal world."
 )
-
-def repondre(question):
-    question = question.lower()
-    if "peginti" in question:
-        reponse = IDENTITY
-    else:
-        reponse = "Je suis désolé, je ne comprends pas la question. / Sorry, I don't understand the question."
-    print("Réponse : " + reponse)
-
-def main():
-    print("PEGINTI est lancé avec succès ! / PEGINTI has started successfully!")
-    while True:
-        question = input("Vous : ")
-        repondre(question)
-        if question.lower() in ["au revoir", "goodbye"]:
-            print("PEGINTI : Au revoir, à bientôt ! / Goodbye, see you soon!")
-            break
-
-if __name__ == "__main__":
-    main()
-    print("Réponse : " + reponse)
-
-# Conversation interactive
-def converser():
-    print("PEGINTI : Bonjour / Hello, je suis PEGINTI. Comment puis-je vous aider aujourd'hui ?")
-    while True:
-        question = input("Vous : ")
-        repondre(question)
-        if question.lower() in ["au revoir", "goodbye"]:
-            break
-
-def main():
-    print("PEGINTI est lancé avec succès ! / PEGINTI has started successfully!")
-    converser()
-
-if __name__ == "__main__":
-    main()
-from langdetect import detect_language  # si tu gardes le nom langdetect.py
-# ou
-from langdetect import detect_language
-user_input = input("Vous : ")
-
-lang = detect_language(user_input)
-
-if lang == "fr":
-    response = "Réponse uniquement en français..."
-elif lang == "en":
-    response = "Response only in English..."
-else:
-    response = "Réponse bilingue par défaut (FR/EN)..."
-
-print(response)
-from langdetect import detect
-
-# Détection de langue
-def detect_language(text: str) -> str:
-    try:
-        return detect(text)
-    except Exception:
-        return "unknown"
 
 # Dictionnaire multilingue
 responses = {
@@ -139,22 +68,31 @@ responses = {
     }
 }
 
+# Fonction de réponse
+def repondre(question: str):
+    lang = detect_language(question)
+    reply_set = responses.get(lang, responses["unknown"])
+
+    if "peginti" in question.lower():
+        return IDENTITY
+    elif "bonjour" in question.lower() or "bonsoir" in question.lower() or "hello" in question.lower() or "hola" in question.lower():
+        return reply_set["greeting"]
+    elif "aide" in question.lower() or "help" in question.lower() or "ayuda" in question.lower():
+        return reply_set["help"]
+    else:
+        return reply_set["default"]
+
 # Boucle principale
-if __name__ == "__main__":
-    print("PEGINTI est prêt. Tapez votre message ci-dessous :\n")
+def main():
+    print("PEGINTI est lancé avec succès ! / PEGINTI has started successfully!\n")
     while True:
-        user_input = input("Vous: ")
-        lang = detect_language(user_input)
+        question = input("Vous : ")
+        reponse = repondre(question)
+        print(f"Réponse ({detect_language(question)}): {reponse}\n")
 
-        # Choisir la langue de réponse
-        reply_set = responses.get(lang, responses["unknown"])
+        if question.lower() in ["au revoir", "goodbye"]:
+            print("PEGINTI : Au revoir, à bientôt ! / Goodbye, see you soon!")
+            break
 
-        # Exemple de logique : salutation si l'utilisateur dit bonjour
-        if "bonjour" in user_input.lower() or "hello" in user_input.lower() or "hola" in user_input.lower():
-            reply = reply_set["greeting"]
-        elif "aide" in user_input.lower() or "help" in user_input.lower() or "ayuda" in user_input.lower():
-            reply = reply_set["help"]
-        else:
-            reply = reply_set["default"]
-
-        print(f"PEGINTI ({lang}): {reply}\n")
+if __name__ == "__main__":
+    main()
