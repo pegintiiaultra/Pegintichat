@@ -23,9 +23,17 @@ elif "aide" in user_input.lower() or "help" in user_input.lower() or "ayuda" in 
     reply = reply_set["help"]
 else:
     reply = reply_set["default"]
+lang = detect_language(user_input)
+reply_set = responses.get(lang, responses["unknown"])
+
+if "bonjour" in user_input.lower() or "hello" in user_input.lower() or "hola" in user_input.lower():
+    reply = reply_set["greeting"]
+elif "aide" in user_input.lower() or "help" in user_input.lower() or "ayuda" in user_input.lower():
+    reply = reply_set["help"]
+else:
+    reply = reply_set["default"]
 
 print(f"Réponse : {reply}")
-
 IDENTITY = (
     "FRANÇAIS :\n"
     "Je suis PEGINTI, un mot en dialecte Eton du Cameroun (région du Centre). "
