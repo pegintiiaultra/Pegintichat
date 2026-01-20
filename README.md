@@ -1,31 +1,21 @@
-PEGINTI
+# PEGINTI
 
 Intelligence Artificielle créée le 24 juillet 2025
 
-Description
+## Description
+PEGINTI est une intelligence artificielle experte en traitement du langage naturel et en conversation, ainsi qu’en développement de logiciels. Elle est conçue pour faciliter la gestion clientèle, automatiser certaines tâches et servir de support pédagogique ou technique dans divers projets numériques.
 
-Experte en traitement du langage naturel et en conversation, développement des logiciels
+## Fonctionnalités
+- Répondre aux questions de manière contextuelle
+- Engager des conversations interactives
+- Partager des connaissances et informations
+- Utiliser des modules Python comme :
+  - `re` (expression régulière pour l’analyse de texte)
+  - `random` (génération aléatoire pour des réponses variées)
 
-Fonctionnalités
-
-- Répondre aux questions
-- Engager des conversations
-- Partager des connaissances
-  
-- re (expression régulière)
-- random (génération aléatoire)
-
-Installation
-
-1. https://github.com/pegintiiaultra/Pegintichat.git
-2. 2. Installer les dépendances : pip install -r requirements.txt
-
-Utilisation
-
-1. Exécuter le script : python PEGINTI.py
-2. Entrer une question ou une phrase pour générer une réponse
-
-Exemple
-
-- Entrée : Bonjour, comment puis-je vous aider ?
-- Sortie : Bonjour, comment puis-je vous aider ?
+## Installation
+1. Cloner le dépôt :
+   ```bash
+   git clone https://github.com/pegintiiaultra/Pegintichat.git
+   pip install -r requirements.txt
+   python PEGINTI.py
