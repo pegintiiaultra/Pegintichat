@@ -84,3 +84,18 @@ def main():
 
 if __name__ == "__main__":
     main()
+from langdetect import detect_language  # si tu gardes le nom langdetect.py
+# ou
+from langdetect import detect_language
+user_input = input("Vous : ")
+
+lang = detect_language(user_input)
+
+if lang == "fr":
+    response = "Réponse uniquement en français..."
+elif lang == "en":
+    response = "Response only in English..."
+else:
+    response = "Réponse bilingue par défaut (FR/EN)..."
+
+print(response)
