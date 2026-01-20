@@ -99,3 +99,55 @@ else:
     response = "Réponse bilingue par défaut (FR/EN)..."
 
 print(response)
+from langdetect import detect
+
+# Détection de langue
+def detect_language(text: str) -> str:
+    try:
+        return detect(text)
+    except Exception:
+        return "unknown"
+
+# Dictionnaire multilingue
+responses = {
+    "fr": {
+        "greeting": "Bonjour, je suis PEGINTI. Comment puis-je vous aider aujourd'hui ?",
+        "help": "Je peux vous accompagner dans vos projets et répondre à vos questions.",
+        "default": "Je réponds en français."
+    },
+    "en": {
+        "greeting": "Hello, I am PEGINTI. How can I assist you today?",
+        "help": "I can support your projects and answer your questions.",
+        "default": "I will answer in English."
+    },
+    "es": {
+        "greeting": "Hola, soy PEGINTI. ¿Cómo puedo ayudarte hoy?",
+        "help": "Puedo apoyarte en tus proyectos y responder a tus preguntas.",
+        "default": "Responderé en español."
+    },
+    "unknown": {
+        "greeting": "Langue non reconnue, je bascule par défaut en français.",
+        "help": "Je peux vous accompagner dans vos projets et répondre à vos questions.",
+        "default": "Je réponds par défaut en français."
+    }
+}
+
+# Boucle principale
+if __name__ == "__main__":
+    print("PEGINTI est prêt. Tapez votre message ci-dessous :\n")
+    while True:
+        user_input = input("Vous: ")
+        lang = detect_language(user_input)
+
+        # Choisir la langue de réponse
+        reply_set = responses.get(lang, responses["unknown"])
+
+        # Exemple de logique : salutation si l'utilisateur dit bonjour
+        if "bonjour" in user_input.lower() or "hello" in user_input.lower() or "hola" in user_input.lower():
+            reply = reply_set["greeting"]
+        elif "aide" in user_input.lower() or "help" in user_input.lower() or "ayuda" in user_input.lower():
+            reply = reply_set["help"]
+        else:
+            reply = reply_set["default"]
+
+        print(f"PEGINTI ({lang}): {reply}\n")
