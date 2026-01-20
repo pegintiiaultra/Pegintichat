@@ -23,30 +23,21 @@ responses = {
         "default": "Je réponds par défaut en français."
     }
 }
-
 def repondre(question: str):
     lang = detect_language(question)
     reply_set = responses.get(lang, responses["unknown"])
-
     if "peginti" in question.lower() or "identité" in question.lower():
         return IDENTITY
-    elif "bonjour" in question.lower() or "bonsoir" in question.lower() or "hello" in question.lower() or "hola" in question.lower():
-        return reply_set["greeting"]
+    elif "bonjour" in question.lower() or "bonsoir" in question.lower():
+        lang = 'fr'
+        return responses.get(lang, responses["unknown"])["greeting"]
+    elif "hello" in question.lower():
+        lang = 'en'
+        return responses.get(lang, responses["unknown"])["greeting"]
+    elif "hola" in question.lower():
+        lang = 'es'
+        return responses.get(lang, responses["unknown"])["greeting"]
     elif "aide" in question.lower() or "help" in question.lower() or "ayuda" in question.lower():
         return reply_set["help"]
     else:
         return reply_set["default"]
-
-def main():
-    print("PEGINTI est lancé avec succès ! / PEGINTI has started successfully!\n")
-    while True:
-        question = input("Vous : ")
-        reponse = repondre(question)
-        print(f"Réponse ({detect_language(question)}): {reponse}\n")
-
-        if question.lower() in ["au revoir", "goodbye"]:
-            print("PEGINTI : Au revoir, à bientôt ! / Goodbye, see you soon!")
-            break
-
-if __name__ == "__main__":
-    main()
