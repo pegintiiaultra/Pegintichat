@@ -1,3 +1,7 @@
+# PEGINTI – Intelligence Artificielle
+
+![Build Status](https://github.com/pegintiiaultra/Pegintichat/actions/workflows/main.yml/badge.svg)
+![Coverage Status](./badges/coverage.svg)
 # PEGINTI – Intelligence Artificielle / Artificial Intelligence
 
 Créée le 24 juillet 2025 / Created on July 24, 2025
