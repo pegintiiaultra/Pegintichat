@@ -1,0 +1,7 @@
+nano requirements.txt
+nltk
+langdetect
+flake8
+bandit
+coverage
+coverage-badge
