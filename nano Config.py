@@ -1,3 +1,4 @@
+nano config.py
 # config.py
 # Dictionnaire multilingue et identité doctrinale de PEGINTI
 
