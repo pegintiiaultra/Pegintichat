@@ -99,3 +99,4 @@ else:
     response = "Réponse bilingue par défaut (FR/EN)..."
 
 print(response)
+
