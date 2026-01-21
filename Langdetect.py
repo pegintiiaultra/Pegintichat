@@ -1,7 +1,8 @@
-langdetect.py
+# langdetect.py
 # Utilitaire pour détecter automatiquement la langue d'un texte utilisateur
 
-from langdetect import detect, DetectorFactory
+from langdetect import detect
+from langdetect import DetectorFactory
 
 # Fixe la graine pour rendre les résultats reproductibles
 DetectorFactory.seed = 0
