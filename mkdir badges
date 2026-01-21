@@ -1,1 +1,5 @@
-mkdir badges 
+mkdir badges
+touch badges/coverage.svg
+git add badges/
+git commit -m "Ajout du dossier badges et du fichier coverage.svg"
+git push origin main
