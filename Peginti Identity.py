@@ -1,4 +1,4 @@
-def repondre(question):
+PEGINTI repondre(question):
     question = question.lower()
     if "peginti" in question:
         reponse = (
