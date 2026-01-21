@@ -1,4 +1,4 @@
-nltk==3.7
+nltk==3.9
 langdetect==1.0.9
 flake8==5.0.4
 bandit==1.7.4
