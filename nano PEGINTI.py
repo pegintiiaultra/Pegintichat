@@ -1,5 +1,6 @@
-principal PEGINTI.Py# PEGINTI.py
+principal PEGINTI.Py
 
+# PEGINTI.py
 from langdetect import detect_language
 from config import responses, IDENTITY
 import utils
