@@ -1,0 +1,6 @@
+nltk
+langdetect
+flake8
+bandit
+coverage
+coverage-badge
