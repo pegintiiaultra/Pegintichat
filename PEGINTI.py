@@ -1,10 +1,7 @@
 # PEGINTI.py
+# Programme principal de PEGINTI
 
-# Import de la fonction de détection de langue définie dans langdetect.py
-from langdetect import detect_language
-# PEGINTI.py
-
-from langdetect import detect_language   # Import de la fonction utilitaire
+from langdetect import detect_language   # Import depuis langdetect.py
 
 # Identité doctrinale
 IDENTITY = (
@@ -54,23 +51,27 @@ responses = {
 
 # Fonction de réponse
 def repondre(question: str):
-    lang = detect_language(question)
-    reply_set = responses.get(lang, responses["unknown"])
+    q = question.lower()
 
-    if "peginti" in question.lower() or "identité" in question.lower():
+    if "peginti" in q or "identité" in q:
         return IDENTITY
-    elif "bonjour" in question.lower() or "bonsoir" in question.lower():
-        lang = 'fr'
-        return responses.get(lang, responses["unknown"])["greeting"]
-    elif "hello" in question.lower():
-        lang = 'en'
-        return responses.get(lang, responses["unknown"])["greeting"]
-    elif "hola" in question.lower():
-        lang = 'es'
-        return responses.get(lang, responses["unknown"])["greeting"]
-    elif "aide" in question.lower() or "help" in question.lower() or "ayuda" in question.lower():
-        return reply_set["help"]
+    elif "bonjour" in q or "bonsoir" in q:
+        return responses["fr"]["greeting"]
+    elif "hello" in q:
+        return responses["en"]["greeting"]
+    elif "hola" in q:
+        return responses["es"]["greeting"]
+    elif "aide" in q:
+        return responses["fr"]["help"]
+    elif "help" in q:
+        return responses["en"]["help"]
+    elif "ayuda" in q:
+        return responses["es"]["help"]
+    elif "bravo" in q or "merci" in q or "félicitations" in q:
+        return "Merci beaucoup pour vos encouragements ! / Thank you very much for your encouragement!"
     else:
+        lang = detect_language(question)
+        reply_set = responses.get(lang, responses["unknown"])
         return reply_set["default"]
 
 # Boucle principale
