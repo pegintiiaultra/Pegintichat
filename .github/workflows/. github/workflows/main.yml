@@ -12,7 +12,6 @@ jobs:
     strategy:
       matrix:
         python-version: [ '3.9', '3.10', '3.11' ]
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -22,10 +21,17 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Cache pip
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 bandit coverage coverage-badge
         pip install -r requirements.txt
 
     - name: Lint with flake8
@@ -42,9 +48,6 @@ jobs:
         coverage run -m unittest discover -s tests -p 'test_*.py'
         coverage report -m
         coverage xml
-
-    - name: Generate coverage badge
-      run: |
         python -m coverage_badge -o badges/coverage.svg -f
 
     - name: Upload coverage badge
