@@ -45,7 +45,7 @@ jobs:
 
     - name: Generate coverage badge
       run: |
-        coverage-badge -o badges/coverage.svg -f
+        python -m coverage_badge -o badges/coverage.svg -f
 
     - name: Upload coverage badge
       uses: actions/upload-artifact@v3
