@@ -15,7 +15,12 @@ If you discover a security issue in PEGINTI:
 - Include steps to reproduce the issue and, if possible, a suggested fix.
 
 We are committed to responding quickly and fixing critical vulnerabilities as soon as possible.
+## 🔐 Gestion des secrets et CI/CD
 
+- Les secrets (`SSH_USER`, `SSH_HOST`, `SSH_PASSWORD`, `GH_TOKEN`) sont stockés uniquement dans GitHub Secrets.
+- Aucun secret ne doit être exposé dans le code ou les commits.
+- Les workflows CI/CD sont protégés par des règles d’approbation pour éviter l’exécution non validée.
+- Toute vulnérabilité ou fuite potentielle doit être signalée via une issue privée ou par contact direct avec le mainteneur.
 ---
 
 ## Versions supportées / Supported Versions
