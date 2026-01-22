@@ -1,3 +1,8 @@
+# Pegintichat
+
+![Déploiement Pegintichat](https://github.com/pegintiiaultra/Pegintichat/actions/workflows/main.yml/badge.svg)
+
+Plateforme de déploiement doctrinal et opérationnel pour MIRAP/JO, propulsée par GitHub Actions.
 PEGINTI – Intelligence Artificielle / Artificial Intelligence  
 ![GitHub Actions Status](https://github.com/Tomo7/PEGINTI/actions/workflows/ci-cd.yml/badge.svg)  
 ![Coverage Status](badges/coverage.svg)  
