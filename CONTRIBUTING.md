@@ -31,3 +31,12 @@ We welcome contributions to improve the project, whether bug fixes, new features
 ## Style
 - Respecter les conventions PEP8 pour le code Python.  
 - Follow PEP8 conventions for Python code.
+## 🔒 Règles de sécurité pour les Pull Requests externes
+
+- Les workflows GitHub Actions ne s’exécutent pas automatiquement pour les contributeurs externes.
+- Selon votre profil :
+  - Nouveaux sur GitHub et première contribution → approbation requise.
+  - Première contribution → approbation requise.
+  - Tous les contributeurs externes → approbation requise.
+- Un reviewer avec droits d’écriture doit valider la PR avant fusion.
+- Les branches doivent être nommées de façon descriptive (`feature/`, `fix/`, `docs/`).
