@@ -31,3 +31,31 @@ We are committed to responding quickly and fixing critical vulnerabilities as so
 - Gardez vos dépendances à jour (`pip install --upgrade -r requirements.txt`).
 - Exécutez régulièrement les tests de sécurité (`bandit -r .`).
 - Utilisez des environnements virtuels pour isoler vos installations Python.
+# 🔒 Configuration de sécurité des workflows GitHub Actions
+
+La configuration des workflows GitHub Actions est conçue pour renforcer la sécurité et le contrôle du dépôt.
+
+---
+
+## 📑 Permissions
+- `contents` : lecture seule → empêche les modifications non autorisées du code.  
+- `pull-requests` : lecture seule → empêche les modifications non autorisées des demandes de fusion.  
+- `issues` : lecture seule → empêche les modifications non autorisées des problèmes.  
+- `actions` : lecture seule → empêche les modifications non autorisées des paramètres des workflows.  
+- `github-actions` : administrateur → garantit l'exécution des workflows CI/CD sans restriction.  
+- `github-admin` : administrateur → garantit la maîtrise totale des administrateurs sur le dépôt.  
+
+---
+
+## 🎯 Raisons
+- **Sécurité renforcée** : empêcher les modifications non autorisées du code, des demandes de fusion, des problèmes et des paramètres.  
+- **Contrôle strict** : garantir que seuls les administrateurs ont la main sur la gestion globale du dépôt.  
+- **Exécution garantie** : assurer que les workflows CI/CD peuvent tourner correctement sans restriction.  
+- **Principe du moindre privilège** : limiter chaque permission au strict nécessaire pour réduire la surface d'attaque et les risques d'erreurs.  
+
+---
+
+## 🧠 Impact
+- Les workflows sont autonomes mais non intrusifs.  
+- Les administrateurs gardent la maîtrise totale.  
+- La configuration est **scalable** et prête pour accueillir des contributeurs sans compromettre la sécurité.
