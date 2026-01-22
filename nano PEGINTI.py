@@ -1,5 +1,6 @@
-# PEGINTI.py
+principal PEGINTI.Py
 
+# PEGINTI.py
 from langdetect import detect_language
 from config import responses, IDENTITY
 import utils
@@ -41,22 +42,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-<<<<<<< HEAD
-from langdetect import detect_language  # si tu gardes le nom langdetect.py
-# ou
-from langdetect import detect_language
-user_input = input("Vous : ")
-
-lang = detect_language(user_input)
-
-if lang == "fr":
-    response = "Réponse uniquement en français..."
-elif lang == "en":
-    response = "Response only in English..."
-else:
-    response = "Réponse bilingue par défaut (FR/EN)..."
-
-print(response)
-
-=======
->>>>>>> 51ce2c8bd21e4f4cd1c4a900e52aba191300e55d
