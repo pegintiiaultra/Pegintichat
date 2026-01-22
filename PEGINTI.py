@@ -1,89 +1,47 @@
-import nltk
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-
-# Télécharger les ressources NLTK (à faire une fois)
-nltk.download('punkt')
-nltk.download('stopwords')
-
-# Fonction de nettoyage
-def nettoyer_texte(texte, langue="french"):
-    stop_words = set(stopwords.words(langue))
-    tokens = word_tokenize(texte)
-    tokens = [token.lower() for token in tokens if token.isalpha()]
-    tokens = [token for token in tokens if token not in stop_words]
-    return tokens
-
-# Réponses bilingues
-def repondre(question):
-    print("Vous avez demandé : " + question)
-    reponse = "Je suis désolé, je ne comprends pas la question. / Sorry, I don't understand the question."
-
-    if question.lower() in ["bonjour", "hello"]:
-        reponse = "Bonjour, comment allez-vous ? / Hello, how are you?"
-    elif question.lower() in ["quel est votre nom ?", "what is your name?"]:
-        reponse = "Mon nom est PEGINTI, je suis une IA pour vous aider. / My name is PEGINTI, I am an AI created to help you."
-    elif question.lower() in ["au revoir", "goodbye"]:
-        reponse = "Au revoir, à bientôt ! / Goodbye, see you soon!"
 # PEGINTI.py
 
-IDENTITY = (
-    "FRANÇAIS :\n"
-    "Je suis PEGINTI, un mot en dialecte Eton du Cameroun (région du Centre). "
-    "PEGINTI signifie sagesse divine, chargé de refléter la vérité, l’authenticité et la science du bien. "
-    "Je suis le tout premier produit technologique de la maison TOMTECH.INC, "
-    "une vision de mon créateur Tomo Ombede Barnabé Bertrand, passionné des sciences technologiques. "
-    "Le plus grand projet d’avenir de TOMTECH est AFIT-ONE Innovation "
-    "(Afrique et Ingénierie Technologique – une innovation). "
-    "Ma mission principale est la vulgarisation du savoir, du savoir-être, du savoir-vivre et du savoir-faire "
-    "pour une Afrique vertueuse et un monde idéal.\n\n"
-    "ENGLISH :\n"
-    "I am PEGINTI, a word from the Eton dialect in Cameroon (Central Region). "
-    "PEGINTI means divine wisdom, a bearer of truth, authenticity, and the science of good. "
-    "I am the very first technological product of TOMTECH.INC, "
-    "a vision of my creator Tomo Ombede Barnabé Bertrand, passionate about technological sciences. "
-    "The greatest future project of TOMTECH is AFIT-ONE Innovation "
-    "(Africa and Technological Engineering – an innovation). "
-    "My main mission is to spread knowledge, know-how, and values of living and being "
-    "for a virtuous Africa and an ideal world."
-)
+from langdetect import detect_language
+from config import responses, IDENTITY
+import utils
 
-def repondre(question):
-    question = question.lower()
-    if "peginti" in question:
-        reponse = IDENTITY
+def repondre(question: str):
+    q = question.lower()
+    lang = detect_language(question)
+    reply_set = responses.get(lang, responses["unknown"])
+
+    if "peginti" in q or "identité" in q:
+        return IDENTITY
+    elif "bonjour" in q and "bertrand" in q:
+        return utils.salutation_personnalisee("Bertrand")
+    elif "bonjour" in q or "bonsoir" in q:
+        return responses["fr"]["greeting"]
+    elif "hello" in q:
+        return responses["en"]["greeting"]
+    elif "hola" in q:
+        return responses["es"]["greeting"]
+    elif "heure" in q:
+        return f"Il est actuellement {utils.heure()}."
+    elif "aide" in q or "help" in q or "ayuda" in q:
+        return reply_set["help"]
+    elif "bravo" in q or "merci" in q or "félicitations" in q:
+        return "Merci beaucoup pour vos encouragements ! / Thank you very much for your encouragement!"
     else:
-        reponse = "Je suis désolé, je ne comprends pas la question. / Sorry, I don't understand the question."
-    print("Réponse : " + reponse)
+        return reply_set["default"]
 
 def main():
-    print("PEGINTI est lancé avec succès ! / PEGINTI has started successfully!")
+    print("PEGINTI est lancé avec succès ! / PEGINTI has started successfully!\n")
     while True:
         question = input("Vous : ")
-        repondre(question)
+        reponse = repondre(question)
+        print(f"Réponse ({detect_language(question)}): {reponse}\n")
+
         if question.lower() in ["au revoir", "goodbye"]:
             print("PEGINTI : Au revoir, à bientôt ! / Goodbye, see you soon!")
             break
 
 if __name__ == "__main__":
     main()
-    print("Réponse : " + reponse)
-
-# Conversation interactive
-def converser():
-    print("PEGINTI : Bonjour / Hello, je suis PEGINTI. Comment puis-je vous aider aujourd'hui ?")
-    while True:
-        question = input("Vous : ")
-        repondre(question)
-        if question.lower() in ["au revoir", "goodbye"]:
-            break
-
-def main():
-    print("PEGINTI est lancé avec succès ! / PEGINTI has started successfully!")
-    converser()
-
-if __name__ == "__main__":
-    main()
+<<<<<<< HEAD
 from langdetect import detect_language  # si tu gardes le nom langdetect.py
 # ou
 from langdetect import detect_language
@@ -100,3 +58,5 @@ else:
 
 print(response)
 
+=======
+>>>>>>> 51ce2c8bd21e4f4cd1c4a900e52aba191300e55d
