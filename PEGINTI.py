@@ -1,62 +1,64 @@
-# PEGINTI.py
-
-from langdetect import detect_language
+from langdetect import detect, LangDetectException
 from config import responses, IDENTITY
 import utils
 
-def repondre(question: str):
+
+def detect_lang_safe(text: str) -> str:
+    try:
+        return detect(text)
+    except LangDetectException:
+        return "unknown"
+
+
+def repondre(question: str, lang: str):
     q = question.lower()
-    lang = detect_language(question)
     reply_set = responses.get(lang, responses["unknown"])
 
     if "peginti" in q or "identité" in q:
         return IDENTITY
+
     elif "bonjour" in q and "bertrand" in q:
         return utils.salutation_personnalisee("Bertrand")
+
     elif "bonjour" in q or "bonsoir" in q:
         return responses["fr"]["greeting"]
+
     elif "hello" in q:
         return responses["en"]["greeting"]
+
     elif "hola" in q:
         return responses["es"]["greeting"]
+
     elif "heure" in q:
         return f"Il est actuellement {utils.heure()}."
-    elif "aide" in q or "help" in q or "ayuda" in q:
+
+    elif any(word in q for word in ["aide", "help", "ayuda"]):
         return reply_set["help"]
-    elif "bravo" in q or "merci" in q or "félicitations" in q:
-        return "Merci beaucoup pour vos encouragements ! / Thank you very much for your encouragement!"
+
+    elif any(word in q for word in ["bravo", "merci", "félicitations"]):
+        return "Merci beaucoup pour vos encouragements ! 🙏 / Thank you very much for your encouragement!"
+
     else:
         return reply_set["default"]
 
-def main():
-    print("PEGINTI est lancé avec succès ! / PEGINTI has started successfully!\n")
-    while True:
-        question = input("Vous : ")
-        reponse = repondre(question)
-        print(f"Réponse ({detect_language(question)}): {reponse}\n")
 
-        if question.lower() in ["au revoir", "goodbye"]:
-            print("PEGINTI : Au revoir, à bientôt ! / Goodbye, see you soon!")
+def main():
+    print("🚀 PEGINTI est lancé avec succès ! / PEGINTI has started successfully!\n")
+
+    while True:
+        question = input("Vous : ").strip()
+        if not question:
+            continue
+
+        lang = detect_lang_safe(question)
+
+        if question.lower() in ["au revoir", "goodbye", "bye", "exit", "quit"]:
+            print("PEGINTI : Au revoir, à bientôt ! / Goodbye, see you soon! 👋")
             break
+
+        reponse = repondre(question, lang)
+        print(f"PEGINTI ({lang}) : {reponse}\n")
+
 
 if __name__ == "__main__":
     main()
-<<<<<<< HEAD
-from langdetect import detect_language  # si tu gardes le nom langdetect.py
-# ou
-from langdetect import detect_language
-user_input = input("Vous : ")
-
-lang = detect_language(user_input)
-
-if lang == "fr":
-    response = "Réponse uniquement en français..."
-elif lang == "en":
-    response = "Response only in English..."
-else:
-    response = "Réponse bilingue par défaut (FR/EN)..."
-
-print(response)
-
-=======
->>>>>>> 51ce2c8bd21e4f4cd1c4a900e52aba191300e55d
