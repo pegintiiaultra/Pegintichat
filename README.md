@@ -1,4 +1,47 @@
 HEAD
+<p align="center">
+  <!-- Logo officiel -->
+  <img src="logo.png" alt="PEGINTI Logo" width="200"/>
+</p>
+
+<p align="center">
+  <!-- Bannière -->
+  <img src="banner.png" alt="PEGINTI Banner" width="400"/>
+</p>
+
+---
+
+## 🧠 Logo officiel PEGINTI
+Le logo représente **un cerveau posé sur un nuage**, aux couleurs du Cameroun (vert, rouge avec une étoile jaune, et jaune).  
+L’ensemble est placé sur un **fond bleu nuit** avec des motifs numériques, symbolisant l’atmosphère technologique et l’intelligence artificielle.  
+
+## 🔵 Bannière PEGINTI IA ULTRA
+La bannière est un **emblème circulaire** avec des formes entrelacées en vert, jaune et rouge, formant un motif en “8”.  
+Au centre, une **étoile bleue éclatante** symbolise l’innovation.  
+Le texte **PEGINTI** apparaît en haut, et **IA ULTRA** en bas, avec les inscriptions **237** et **75:** sur les côtés.  
+Elle incarne la vision **Tomtech.Inc – AFIC‑ONE (Africa In Cameroon 1)**.  
+
+---
+
+## 🇫🇷 Français
+![Python](https://img.shields.io/badge/python-3.10-blue)
+![Statut](https://img.shields.io/badge/statut-actif-success)
+![Licence](https://img.shields.io/badge/licence-MIT-green)
+![Contributions](https://img.shields.io/badge/contributions-bienvenues-orange)
+
+[![Sponsor PEGINTI](https://img.shields.io/badge/Sponsor-PEGINTI-red?style=for-the-badge&logo=github)](mailto:pegintiiaultra@gmail.com)
+[![Contact WhatsApp](https://img.shields.io/badge/WhatsApp-+237%20691482453-green?style=for-the-badge&logo=whatsapp)](https://wa.me/237691482453)
+
+---
+
+## 🇬🇧 English
+![Python](https://img.shields.io/badge/python-3.10-blue)
+![Status](https://img.shields.io/badge/status-active-success)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Contributions](https://img.shields.io/badge/contributions-welcome-orange)
+
+[![Sponsor PEGINTI](https://img.shields.io/badge/Sponsor-PEGINTI-red?style=for-the-badge&logo=github)](mailto:pegintiiaultra@gmail.com)
+[![Contact WhatsApp](https://img.shields.io/badge/WhatsApp-+237%20691482453-green?style=for-the-badge&logo=whatsapp)](https://wa.me/237691482453)
 # PEGINTICHAT
 PEGINTI – Intelligence Artificielle / Artificial Intelligence  
 ![GitHub Actions Status](https://github.com/Tomo7/PEGINTI/actions/workflows/ci-cd.yml/badge.svg)  
