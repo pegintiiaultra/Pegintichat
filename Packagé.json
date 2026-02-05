@@ -14,7 +14,8 @@ cat > package.json <<'EOF'
     "type": "git",
     "url": "https://github.com/peginti/pegintichat.git"
   },
-  "publishConfig": {
+  
+{
     "registry": "https://npm.pkg.github.com/"
   },
   "dependencies": {
