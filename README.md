@@ -14,7 +14,7 @@ HEAD
 ---
 
 ## 🧠 Logo officiel PEGINTI
-Le logo représente **un cerveau posé sur un nuage**, aux couleurs du Cameroun (vert, rouge avec une étoile en or,et jaune).  
+Le logo représente **un cerveau posé sur un nuage**, aux couleurs du Cameroun (vert, rouge et jaune avec une étoile en or sur la bande rouge ).  
 L’ensemble est placé sur un **fond bleu nuit** avec des motifs numériques, symbolisant l’atmosphère technologique et l’intelligence artificielle.  
 
 ## 🔵 Bannière PEGINTI IA ULTRA
