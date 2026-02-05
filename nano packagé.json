@@ -1,11 +1,33 @@
 {
   "name": "pegintichat",
   "version": "1.0.0",
-  "description": "An MCP server for intelligent conversation, code correction, and workflow automation.",
+  "description": "PEGINTICHAT - Secure and interactive MCP chat server",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"No test specified\" && exit 0"
   },
   "author": "TOMO OMBEDE BARNABÉ BERTRAND",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peginti/pegintichat.git"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": [
+    "chat",
+    "mcp",
+    "socket.io",
+    "express",
+    "peginti",
+    "secure",
+    "interactive"
+  ]
 }
