@@ -133,11 +133,11 @@ It is designed to facilitate customer management, automate certain tasks, and se
 - 🇫🇷 Partager des connaissances et informations  
 - 🇬🇧 Share knowledge and information  
 - 🇫🇷 Utiliser des modules Python comme `re`, `random`, `langdetect` - 🇬🇧 Use Python modules such as `re`, `random`, `langdetect`
-- ## 📌 Documentation
-- [Changelog](./CHANGELOG.md)
-- [Roadmap](./ROADMAP.md)
-- [Contributing](./CONTRIBUTING.md)
-
+## 📚 Documentation
+- 📜 [Code of Conduct](./CODE_OF_CONDUCT.md)  
+- 🤝 [Contributing](./CONTRIBUTING.md)  
+- 📝 [Changelog](./CHANGELOG.md)  
+- 🚀 [Roadmap](./ROADMAP.md)
 ## Installation  
 ```bash
 git clone https://github.com/Tomo7/PEGINTI.git
