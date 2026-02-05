@@ -132,7 +132,11 @@ It is designed to facilitate customer management, automate certain tasks, and se
 - 🇬🇧 Engage in interactive conversations  
 - 🇫🇷 Partager des connaissances et informations  
 - 🇬🇧 Share knowledge and information  
-- 🇫🇷 Utiliser des modules Python comme `re`, `random`, `langdetect` - 🇬🇧 Use Python modules such as `re`, `random`, `langdetect`  
+- 🇫🇷 Utiliser des modules Python comme `re`, `random`, `langdetect` - 🇬🇧 Use Python modules such as `re`, `random`, `langdetect`
+- ## 📌 Documentation
+- [Changelog](./CHANGELOG.md)
+- [Roadmap](./ROADMAP.md)
+- [Contributing](./CONTRIBUTING.md)
 
 ## Installation  
 ```bash
