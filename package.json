@@ -1,0 +1,20 @@
+{
+  "name": "@peginti/pegintichat",
+  "version": "1.0.0",
+  "description": "PEGINTICHAT - Application de chat en ligne sécurisée et interactive",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "author": "PEGINTI <pegintiiaultra@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
+}
+npm login --registry=https://npm.pkg.github.com/ --scope=@peginti
+npm publish
+pegintiiaultra@gmail.com
+npm init -y
+https://npm.pkg.github.com/
+npm install @peginti/pegintichat

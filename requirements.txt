@@ -1,0 +1,6 @@
+nltk==3.9
+langdetect==1.0.9
+flake8==5.0.4
+bandit==1.7.4
+coverage==7.2.2
+coverage-badge==1.0.3
