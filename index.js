@@ -1,47 +1,74 @@
 // PEGINTICHAT - MCP Server Entry Point
 
-// Import des dépendances
+// =======================
+// Imports
+// =======================
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 
-// Initialisation du serveur
+// =======================
+// App & Server init
+// =======================
 const app = express();
 const server = http.createServer(app);
+
+// =======================
+// Socket.IO init
+// =======================
 const io = new Server(server, {
   cors: {
-    origin: "*", // Autoriser toutes les origines (à sécuriser en prod)
-    methods: ["GET", "POST"]
+    origin: '*', // ⚠️ À restreindre en production
+    methods: ['GET', 'POST']
   }
 });
 
-// Middleware pour servir une page d’accueil simple
+// =======================
+// Middlewares
+// =======================
+app.use(express.json());
+
+// =======================
+// Routes
+// =======================
 app.get('/', (req, res) => {
-  res.send('PEGINTICHAT MCP server is running 🚀');
+  res.status(200).send('PEGINTICHAT MCP server is running 🚀');
 });
 
-// Gestion des connexions Socket.IO
+// =======================
+// Socket.IO events
+// =======================
 io.on('connection', (socket) => {
-  console.log('✅ Nouvel utilisateur connecté');
+  console.log(`✅ Utilisateur connecté : ${socket.id}`);
 
-  // Réception d’un message
   socket.on('message', (msg) => {
-    console.log('💬 Message reçu : ' + msg);
-    // Diffusion à tous les utilisateurs connectés
-    io.emit('message', msg);
+    if (!msg) return;
+
+    console.log('💬 Message reçu :', msg);
+
+    // Broadcast à tous les clients (y compris l’émetteur)
+    io.emit('message', {
+      id: socket.id,
+      message: msg,
+      timestamp: new Date().toISOString()
+    });
   });
 
-  // Déconnexion
-  socket.on('disconnect', () => {
-    console.log('❌ Utilisateur déconnecté');
+  socket.on('disconnect', (reason) => {
+    console.log(`❌ Utilisateur déconnecté : ${socket.id} (${reason})`);
   });
 });
 
-// Lancement du serveur
+// =======================
+// Server start
+// =======================
 const PORT = process.env.PORT || 3000;
+
 server.listen(PORT, () => {
   console.log(`🚀 Pegintichat est actif sur http://localhost:${PORT}`);
 });
 
-// Export du module
-module.exports = { app, io };
+// =======================
+// Exports (tests / MCP usage)
+// =======================
+module.exports = { app, server, io };
