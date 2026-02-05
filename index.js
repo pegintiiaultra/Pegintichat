@@ -48,9 +48,20 @@ io.on('connection', (socket) => {
 
     // Broadcast à tous les clients (y compris l’émetteur)
     io.emit('message', {
-      id: socket.id,
-      message: msg,
-      timestamp: new Date().toISOString()
+  id: socket.id,
+  message: msg,
+  timestamp: new Date().toISOString()
+});
+
+// Réponse IA simulée
+setTimeout(() => {
+  io.emit('message', {
+    id: "PEGINTI-IA",
+    message: `J'ai bien compris : "${msg}"`,
+    timestamp: new Date().toISOString()
+  });
+}, 600);
+
     });
   });
 
