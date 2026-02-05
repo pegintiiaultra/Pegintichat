@@ -21,3 +21,26 @@
     "international": "Positionne PEGINTI comme acteur open-source reconnu dans l’écosystème MCP."
   }
 }
+{
+  "name": "PEGINTICHAT",
+  "version": "1.0.0",
+  "description": "An MCP server designed for intelligent conversation, code correction, and workflow automation, bridging community education and business services.",
+  "author": "TOMO OMBEDE BARNABÉ BERTRAND",
+  "license": "MIT",
+  "repository": "https://github.com/peginti/pegintichat",
+  "categories": ["Education", "Community", "Business", "DevTools"],
+  "install": {
+    "npm": "npm install pegintichat",
+    "python": "pip install pegintichat"
+  },
+  "entrypoint": "src/index.js",
+  "capabilities": {
+    "resources": ["documents", "messages", "official services"],
+    "tools": ["chat", "code-correction", "workflow-automation"]
+  },
+  "strategicImpact": {
+    "community": "Strengthens digital education and local governance.",
+    "business": "Optimizes official services and enterprise workflows.",
+    "international": "Positions PEGINTI as a recognized open-source actor in the MCP ecosystem."
+  }
+}
