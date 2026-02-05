@@ -1,0 +1,56 @@
+# PEGINTICHAT Roadmap
+
+Ce document présente la feuille de route du projet PEGINTICHAT.  
+Il décrit les objectifs communautaires et commerciaux, ainsi que les étapes techniques et organisationnelles prévues.
+
+---
+
+## 🎯 Objectifs à court terme (1–3 mois)
+- Finaliser et publier le `README.md` bilingue (Communautaire + Commercial).
+- Mettre en place la documentation initiale (`CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`).
+- Publier PEGINTICHAT comme package npm réutilisable avec une première version stable.
+- Lancer la chaîne WhatsApp officielle MIRAP pour la communication communautaire.
+- Organiser des sessions de formation gratuites en Afrique (éducation numérique).
+
+---
+
+## 🚀 Objectifs à moyen terme (3–6 mois)
+- Développer et tester les fonctionnalités de correction de code et de configuration automatique.
+- Intégrer PEGINTICHAT dans GitHub Marketplace (mode gratuit + services premium).
+- Améliorer l’automatisation des workflows (clients, tâches, entreprises).
+- Étendre la documentation bilingue et ajouter des tutoriels pratiques.
+- Créer des partenariats éducatifs et communautaires en Afrique.
+
+---
+
+## 🌍 Objectifs à long terme (6–12 mois et plus)
+- Institutionnaliser PEGINTI comme projet éducatif durable en Afrique.
+- Déployer une plateforme en ligne type “cyber café digital” pour les services officiels.
+- Étendre les services commerciaux à l’international (entreprises, ONG, startups).
+- Développer un réseau mondial de partenaires et contributeurs open‑source.
+- Assurer la pérennité du projet par une gouvernance transparente et des revenus durables.
+
+---
+
+## 📊 Tableau de suivi
+
+| Étape                                    | Statut      | Priorité |
+|------------------------------------------|-------------|----------|
+| README bilingue                          | ✅ Terminé  | Haute    |
+| Documentation initiale                   | ⏳ En cours | Haute    |
+| Publication npm                          | ⏳ En cours | Haute    |
+| Chaîne WhatsApp MIRAP                    | ⏳ En cours | Moyenne  |
+| Formations gratuites en Afrique          | ⏳ En cours | Haute    |
+| Correction de code & config automatique  | ⏳ À venir  | Haute    |
+| Intégration GitHub Marketplace           | ⏳ À venir  | Haute    |
+| Automatisation workflows entreprises     | ⏳ À venir  | Moyenne  |
+| Plateforme cyber café digital            | ⏳ À venir  | Moyenne  |
+| Expansion internationale                 | ⏳ À venir  | Moyenne  |
+| Réseau mondial de partenaires            | ⏳ À venir  | Moyenne  |
+
+---
+
+## 📌 Suivi et mise à jour
+- La roadmap sera mise à jour à chaque release majeure.  
+- Les progrès seront suivis dans le fichier `CHANGELOG.md`.  
+- Les suggestions de la communauté seront intégrées via les issues GitHub.
