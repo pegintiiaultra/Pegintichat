@@ -33,7 +33,8 @@ Elle incarne la vision **Tomtech.Inc – AFIC‑ONE (Africa In Cameroon 1)**.
 
 [![Sponsor PEGINTI](https://img.shields.io/badge/Sponsor-PEGINTI-red?style=for-the-badge&logo=github)](mailto:pegintiiaultra@gmail.com)
 [![Contact WhatsApp](https://img.shields.io/badge/WhatsApp-+237%20691482453-green?style=for-the-badge&logo=whatsapp)](https://wa.me/237691482453)
-
+## 🔗 Dépôt GitHub officiel
+[PEGINTICHAT sur GitHub](https://github.com/peginti/pegintichat)
 ---
 
 ## 🇬🇧 English
