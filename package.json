@@ -4,17 +4,20 @@
   "description": "PEGINTICHAT - Application de chat en ligne sécurisée et interactive",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "PEGINTI <pegintiiaultra@gmail.com>",
   "license": "MIT",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
-npm login --registry=https://npm.pkg.github.com/ --scope=@peginti
-npm publish
-pegintiiaultra@gmail.com
-npm init -y
-https://npm.pkg.github.com/
-npm install @peginti/pegintichat
