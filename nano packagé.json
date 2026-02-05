@@ -1,0 +1,11 @@
+{
+  "name": "pegintichat",
+  "version": "1.0.0",
+  "description": "An MCP server for intelligent conversation, code correction, and workflow automation.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "TOMO OMBEDE BARNABÉ BERTRAND",
+  "license": "MIT"
+}
