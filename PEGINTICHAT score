@@ -1,0 +1,4 @@
+mkdir -p src/api
+mkdir -p src/core
+mkdir -p src/mcp
+mkdir -p tests
