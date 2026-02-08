@@ -1,0 +1,2 @@
+mkdir -p src/api/MCP
+nano src/api/MCP/utiles.js
