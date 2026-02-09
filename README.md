@@ -132,25 +132,3 @@ npm install --save-dev jeststdio)**
 ```bash
 echo '{"jsonrpc
 npm test
-```
-```
-
----
-
-Bertrand":"2.0","id":1,", **c’est un blocmethod":"ping"}' | node index.js unique**, propre, fidèle à TON texte
-```
-
-```bash
-echo, et entièrement '{"jsonrpc":"2.0","id":3,"method en Markdown.  
-Tu peux le coller":"about","params directement dans":{"question":"Bonjour qui est Peginti ton README.md.
-
- ?"}}' | node index.js
-```
-
----
-
-# 🧪Si tu veux maintenant **la version enrich **Tests automatisés (Jest)**
-
-```bash
-npm installie**, **la version premium GitHub**, --save-dev jest
-npm test
