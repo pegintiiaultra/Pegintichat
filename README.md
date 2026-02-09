@@ -28,7 +28,6 @@ PEGINTICHAT repose sur une architecture conceptuelle unique :
 - Compatibilité Android/Termux  
 - Déploiement PM2/Nginx  
 - Zéro dépendance native  
-
 👉 **Le moteur.**
 
 ## 🟡 **2. PEGINTI — Noyau vision**
@@ -37,7 +36,6 @@ PEGINTICHAT repose sur une architecture conceptuelle unique :
 - Vision d’autonomisation numérique  
 - Cadre doctrinal et pédagogique  
 - Communauté et accompagnement  
-
 👉 **La direction.**
 
 Cette séparation rend le projet lisible pour les développeurs et fidèle à la vision PEGINTI.
@@ -55,40 +53,113 @@ Cette séparation rend le projet lisible pour les développeurs et fidèle à la
 
 ---
 
-# 🧱 **Architecture du projet**
+# 🧱 **Architecture et extensible  
+ du projet**
+
+*(Ton texte ne conten- Faciliter la gestion clientèle, l’autait pas le schémaomatisation et l, donc je n’en ajoute pas.)*
+
 ---
 
-# ⚙️ **Prérequis**
+# ⚙’assistance technique  
+- Offrir une base️ **Prérequis**
 
 - Node.js ≥ 18  
-- npm  
+ technique claire pour des projets- npm  
 
 Fonctionne sur :
 
-- Android (Termux)  
+- Android professionnels ou communautaires  
+ (Termux)  
 - Linux  
 - Windows  
 
-Aucune dépendance lourde n’est requise.
+- Être compatible Android / LinuxAucune dépendance lourde n’est requ / Windows  
+- Rester open‑sourceise.
 
 ---
 
 # 📦 **Installation**
 
+ et maintenable  
+
 ```bash
-git clone https://github.com/pegintiiaultra/PEGINTICHAT.git
+git clone---
+
+# 🧱 **Architecture du projet**
+
+*( https://github.com/pegintiiaultra/Ton texte ne contenait pas le schémaPEGINTICHAT.git
 cd PEGINTICHAT
-npm install
+npm, donc je n’en ajoute pas.)*
+
+---
+
+# ⚙ install
 npm start
-http://localhost:4000
+http- npm  
+
+Fonction://localhost:4000
 {
-  "status": "PEGINTICHAT API running",
+  "status": "PEGINTICHAT API running lourde n’est requise.
+
+---
+
+# 📦 **",
   "version": "1.0.0"
 }
-curl -X POST http://localhost:4000/mcp \
-  -H "Content-Type: application/json" \
-  -d '{"method":"ping"}'
-echo '{"jsonrpc":"2.0","id":1,"method":"ping"}' | node index.js
-echo '{"jsonrpc":"2.0","id":3,"method":"about","params":{"question":"Bonjour qui est Peginti ?"}}' | node index.js
-npm install --save-dev jest
+git clone **POST /mcp**
+```bash
+curl -X POST https://github.com/pegintiiaultra/ http://localhost:4000/mcp \
+  -HPEGINTICHAT.git
+cd PEGINTICHAT
+npm "Content-Type: application/json" \
+  -d '{" install
+npm startmethod":"ping"}'
+http```
+
+---
+
+# 🔌 **://localhost:400Utilisation MCP (stdio)**
+
+```bash0
+echo",
+  "version": "1.0.0"
+}
+---
+
+# 🔌 **Utilisation MCP (bash
+npm install --save-dev jeststdio)**
+
+```bash
+echo '{"jsonrpc
 npm test
+```
+```
+
+---
+
+Bertrand":"2.0","id":1,", **c’est un blocmethod":"ping"}' | node index.js unique**, propre, fidèle à TON texte
+```
+
+```bash
+echo, et entièrement '{"jsonrpc":"2.0","id":3,"method en Markdown.  
+Tu peux le coller":"about","params directement dans":{"question":"Bonjour qui est Peginti ton README.md.
+
+ ?"}}' | node index.js
+```
+
+---
+
+# 🧪Si tu veux maintenant **la version enrich **Tests automatisés (Jest)**
+
+```bash
+npm installie**, **la version premium GitHub**, --save-dev jest
+npm test
+```
+```
+
+---
+
+Bertrand ou **la version avec badges et bann, **c’est un bloc unique**, propreière**, je peux te, fidèle à TON texte la produire immédiatement, et entièrement en Markdown.  
+.Tu peux le coller directement dans ton README.md.
+
+Si tu veux maintenant **la version enrichie**, **la version premium GitHub**, ou **la version avec badges et bannière**, je peux te la produire immédiatement.
