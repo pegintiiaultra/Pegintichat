@@ -53,82 +53,31 @@ Cette séparation rend le projet lisible pour les développeurs et fidèle à la
 
 ---
 
-# 🧱 **Architecture et extensible  
- du projet**
+# 🧱 **Architecture du projet**
 
-*(Ton texte ne conten- Faciliter la gestion clientèle, l’autait pas le schémaomatisation et l, donc je n’en ajoute pas.)*
+*(Ton texte ne contenait pas le schéma, donc il n’est pas ajouté ici.)*
 
 ---
 
-# ⚙’assistance technique  
-- Offrir une base️ **Prérequis**
+# ⚙️ **Prérequis**
 
 - Node.js ≥ 18  
- technique claire pour des projets- npm  
+- npm  
 
 Fonctionne sur :
 
-- Android professionnels ou communautaires  
- (Termux)  
+- Android (Termux)  
 - Linux  
 - Windows  
 
-- Être compatible Android / LinuxAucune dépendance lourde n’est requ / Windows  
-- Rester open‑sourceise.
+Aucune dépendance lourde n’est requise.
 
 ---
 
 # 📦 **Installation**
 
- et maintenable  
-
 ```bash
-git clone---
-
-# 🧱 **Architecture du projet**
-
-*( https://github.com/pegintiiaultra/Ton texte ne contenait pas le schémaPEGINTICHAT.git
+git clone https://github.com/pegintiiaultra/PEGINTICHAT.git
 cd PEGINTICHAT
-npm, donc je n’en ajoute pas.)*
-
----
-
-# ⚙ install
+npm install
 npm start
-http- npm  
-
-Fonction://localhost:4000
-{
-  "status": "PEGINTICHAT API running lourde n’est requise.
-
----
-
-# 📦 **",
-  "version": "1.0.0"
-}
-git clone **POST /mcp**
-```bash
-curl -X POST https://github.com/pegintiiaultra/ http://localhost:4000/mcp \
-  -HPEGINTICHAT.git
-cd PEGINTICHAT
-npm "Content-Type: application/json" \
-  -d '{" install
-npm startmethod":"ping"}'
-http```
-
----
-
-# 🔌 **://localhost:400Utilisation MCP (stdio)**
-
-```bash0
-echo",
-  "version": "1.0.0"
-}
----
-
-# 🔌 **Utilisation MCP (bash
-npm install --save-dev jeststdio)**
-
-```bash
-echo '{"jsonrpc
-npm test
