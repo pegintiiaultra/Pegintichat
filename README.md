@@ -154,12 +154,3 @@ Tu peux le coller":"about","params directement dans":{"question":"Bonjour qui es
 ```bash
 npm installie**, **la version premium GitHub**, --save-dev jest
 npm test
-```
-```
-
----
-
-Bertrand ou **la version avec badges et bann, **c’est un bloc unique**, propreière**, je peux te, fidèle à TON texte la produire immédiatement, et entièrement en Markdown.  
-.Tu peux le coller directement dans ton README.md.
-
-Si tu veux maintenant **la version enrichie**, **la version premium GitHub**, ou **la version avec badges et bannière**, je peux te la produire immédiatement.
