@@ -60,3 +60,30 @@ Cette séparation rend le projet **lisible pour les développeurs** et **fidèle
 ---
 
 # 🧱 **Architecture technique**
+**Port par défaut : `4000`**
+
+---
+
+# ⚙️ **Installation**
+
+### 📦 Clone + installation
+```bash
+git clone https://github.com/pegintiiaultra/PEGINTICHAT.git
+cd PEGINTICHAT
+npm install
+npm start
+http://localhost:4000
+{
+  "status": "PEGINTICHAT API running",
+  "version": "1.0.0"
+}
+curl -X POST http://localhost:4000/mcp \
+  -H "Content-Type: application/json" \
+  -d '{"method":"ping"}'
+echo '{"jsonrpc":"2.0","id":1,"method":"about","params":{"question":"Bonjour"}}' | node index.js
+npm test
+pm2 start ecosystem.config.js --env production
+pm2 save
+docker build -t pegintichat .
+docker run -p 4000:4000 pegintichat
+MIT License © 2026 PEGINTI IA ULTRA
