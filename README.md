@@ -2,7 +2,6 @@
 ### Noyau technique officiel de l’écosystème PEGINTI
 
 PEGINTICHAT est un agent conversationnel et un serveur MCP minimal en Node.js, conçu pour faciliter la gestion de la relation client, l’automatisation de tâches, et le développement de projets numériques pour les entreprises, boutiques et applications en ligne.  
-Le projet est pensé pour être portable, léger, et fonctionnel même sur des environnements contraints comme Android ( minimal en Node.js, conçu pour faciliter la gestion de la relation client, l’automatisation de tâches, et le développement de projets numériques pour les entreprises, boutiques et applications en ligne.  
 Le projet est pensé pour être portable, léger, et fonctionnel même sur des environnements contraints comme Android (Termux).
 
 ---
@@ -29,7 +28,7 @@ PEGINTICHAT repose sur une architecture conceptuelle unique :
 - Compatibilité Android/Termux  
 - Déploiement PM2/Nginx  
 - Zéro dépendance native  
-👉 **Le moteur.**
+👉 Le moteur.
 
 ## 🟡 2. PEGINTI — Noyau vision
 - Mission éducative africaine  
@@ -37,7 +36,7 @@ PEGINTICHAT repose sur une architecture conceptuelle unique :
 - Vision d’autonomisation numérique  
 - Cadre doctrinal et pédagogique  
 - Communauté et accompagnement  
-👉 **La direction.**
+👉 La direction.
 
 Cette séparation rend le projet lisible pour les développeurs et fidèle à la vision PEGINTI.
 
@@ -54,19 +53,12 @@ Cette séparation rend le projet lisible pour les développeurs et fidèle à la
 
 ---
 
-# 🧱 Architecture du projet
-
-*(Ton texte ne contenait pas le schéma, donc il n’est pas ajouté ici.)*
-
----
-
 # ⚙️ Prérequis
 
 - Node.js ≥ 18  
 - npm  
 
 Fonctionne sur :
-
 - Android (Termux)  
 - Linux  
 - Windows  
