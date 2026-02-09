@@ -1,12 +1,13 @@
-# 🧠 **PEGINTICHAT — IA ULTRA**
-### *Noyau technique officiel de l’écosystème PEGINTI*
+# 🧠 PEGINTICHAT — IA ULTRA
+### Noyau technique officiel de l’écosystème PEGINTI
 
 PEGINTICHAT est un agent conversationnel et un serveur MCP minimal en Node.js, conçu pour faciliter la gestion de la relation client, l’automatisation de tâches, et le développement de projets numériques pour les entreprises, boutiques et applications en ligne.  
+Le projet est pensé pour être portable, léger, et fonctionnel même sur des environnements contraints comme Android ( minimal en Node.js, conçu pour faciliter la gestion de la relation client, l’automatisation de tâches, et le développement de projets numériques pour les entreprises, boutiques et applications en ligne.  
 Le projet est pensé pour être portable, léger, et fonctionnel même sur des environnements contraints comme Android (Termux).
 
 ---
 
-# 🌐 **Sites officiels**
+# 🌐 Sites officiels
 
 ### 🔗 Site principal PEGINTICHAT  
 https://pegintichat.online/
@@ -16,11 +17,11 @@ https://peginti.e-monsite.com
 
 ---
 
-# 🌍 **Écosystème PEGINTI — Architecture à double noyau**
+# 🌍 Écosystème PEGINTI — Architecture à double noyau
 
 PEGINTICHAT repose sur une architecture conceptuelle unique :
 
-## 🔵 **1. IA ULTRA — Noyau technique**
+## 🔵 1. IA ULTRA — Noyau technique
 - API HTTP légère  
 - Serveur MCP (stdio)  
 - Détection automatique FR/EN  
@@ -30,7 +31,7 @@ PEGINTICHAT repose sur une architecture conceptuelle unique :
 - Zéro dépendance native  
 👉 **Le moteur.**
 
-## 🟡 **2. PEGINTI — Noyau vision**
+## 🟡 2. PEGINTI — Noyau vision
 - Mission éducative africaine  
 - Gouvernance et identité  
 - Vision d’autonomisation numérique  
@@ -42,7 +43,7 @@ Cette séparation rend le projet lisible pour les développeurs et fidèle à la
 
 ---
 
-# 🎯 **Objectifs du projet**
+# 🎯 Objectifs du projet
 
 - Fournir un agent conversationnel polyvalent  
 - Proposer un serveur MCP stdio simple et extensible  
@@ -53,13 +54,13 @@ Cette séparation rend le projet lisible pour les développeurs et fidèle à la
 
 ---
 
-# 🧱 **Architecture du projet**
+# 🧱 Architecture du projet
 
 *(Ton texte ne contenait pas le schéma, donc il n’est pas ajouté ici.)*
 
 ---
 
-# ⚙️ **Prérequis**
+# ⚙️ Prérequis
 
 - Node.js ≥ 18  
 - npm  
@@ -74,7 +75,7 @@ Aucune dépendance lourde n’est requise.
 
 ---
 
-# 📦 **Installation**
+# 📦 Installation
 
 ```bash
 git clone https://github.com/pegintiiaultra/PEGINTICHAT.git
