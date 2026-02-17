@@ -1,0 +1,7 @@
+<Action> : <Objet> [Conformité]
+
+Exemple :
+Ajout : schéma Draw.io signé [GPG Verified]
+Mise à jour : index.js et package.json [PR Premium]
+Refactorisation : pegintichat-v2 avec supervision [Institutionnel]
+Intégration : .gitignore pour node_modules [Sécurité]
