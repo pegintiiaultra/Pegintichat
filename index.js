@@ -78,3 +78,4 @@ app.listen(PORT, () => {
   console.log(`✅ PEGINTICHAT v2.1 → http://127.0.0.1:${PORT}`);
   console.log('🔐 Routes sécurisées: /secure/*');
 });
+// test
