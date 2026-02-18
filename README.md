@@ -1,5 +1,7 @@
 # 🧠 PEGINTICHAT — IA ULTRA
 ### Noyau technique officiel de l’écosystème PEGINTI
+## Dashboard PEGINTI
+![Dashboard PEGINTI](dashboard-peginti.png)
 
 PEGINTICHAT est un agent conversationnel et un serveur MCP minimal en Node.js, conçu pour faciliter la gestion de la relation client, l’automatisation de tâches, et le développement de projets numériques pour les entreprises, boutiques et applications en ligne.  
 Le projet est pensé pour être portable, léger, et fonctionnel même sur des environnements contraints comme Android (Termux).
