@@ -19,3 +19,7 @@ Gemfile.lock
 .Index.js.SWP
 node_modules/
 package-lock.json
+e -i <commit_id>
+h origin peginti-dashboard
+pen dashboard-peginti.png
+igné (GPG Verified)
