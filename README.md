@@ -1,82 +1,115 @@
-# 🧠 PEGINTICHAT — IA ULTRA
-### Noyau technique officiel de l’écosystème PEGINTI
-## Dashboard PEGINTI
+# 🧠 PEGINTI237 — Application Officielle  
+### Façade institutionnelle premium de l’écosystème PEGINTI
+
+PEGINTI237 (aussi appelé PEGINTIIAULTRA) est l’application officielle de l’écosystème PEGINTI.  
+Elle représente la vision, la gouvernance, la pédagogie et l’identité numérique de TomTech.inc.
+
+Cette application s’appuie sur deux piliers :
+
+- **BO’OIVINI** — Cerveau central ultra‑intelligent, chatbot interne premium, moteur stratégique.  
+- **PEGINTICHAT** — Dépôt public, chatbot externe, agent conversationnel open‑source.
+
+---
+
+# 🧠 BO’OIVINI — Cerveau central ultra‑intelligent  
+### Chatbot interne premium de TomTech.inc
+
+BO’OIVINI est l’intelligence centrale de la technologie PEGINTI :
+
+- IA ultra‑intelligente  
+- Chatbot interne professionnel  
+- Capable d’assister les entreprises dans :  
+  - maintenance technique  
+  - gestion clientèle  
+  - automatisation  
+  - stratégie numérique  
+- Produit premium commercialisable  
+- Supervision interne (BO’OIVINI = monitoring + intelligence)  
+- Aligné avec IA ULTRA et MIRAP  
+
+👉 **BO’OIVINI = moteur stratégique + IA interne premium.**
+
+---
+
+# 🤖 PEGINTICHAT — Dépôt public et chatbot externe  
+### Agent conversationnel open‑source
+
+PEGINTICHAT n’est pas l’application principale.  
+C’est un **projet public**, un **template**, un **chatbot externe**, destiné à :
+
+- la communauté  
+- les développeurs  
+- les entreprises souhaitant un agent conversationnel simple  
+- les démonstrations publiques  
+- l’intégration dans des projets légers
+
+Il repose sur :
+
+- Node.js  
+- API HTTP  
+- Serveur MCP  
+- JWT  
+- PM2  
+- MIRAP Phase 1  
+
+👉 **PEGINTICHAT = chatbot public / dépôt open‑source.**
+
+---
+
+# 📊 Dashboard PEGINTI  
 ![Dashboard PEGINTI](dashboard-peginti.png)
 
-PEGINTICHAT est un agent conversationnel et un serveur MCP minimal en Node.js, conçu pour faciliter la gestion de la clientèle, l’automatisation et l’assistance technique.  
-Le projet est pensé pour être portable, léger, et fonctionnel même sur des environnements contraints comme Android (Termux) ou Linux.
+Le tableau institutionnel matérialise la façade premium et le Noyau IA Ultra.  
+Il est disponible en deux formats :
+
+- **dashboard-peginti.drawio** (éditable, traçable)  
+- **dashboard-peginti.png** (visuel premium)
+
+### Flux institutionnel  
+Terminal → Commit signé (GPG Verified) → PR Premium → Merge institutionnel → Façade PEGINTI sécurisée
+
+---
+
+# 🌍 Architecture PEGINTI — Double Noyau
+
+## 🔵 IA ULTRA — Noyau technique  
+- Orchestration  
+- Gouvernance invisible  
+- Formalisation  
+- Supervision des artefacts  
+- Alignement doctrinal  
+
+## 🟡 PEGINTI — Noyau vision  
+- Mission éducative africaine  
+- Gouvernance et identité  
+- Vision d’autonomisation numérique  
+- Cadre doctrinal et pédagogique  
+
+## 🧠 BO’OIVINI — Intelligence interne premium  
+- Chatbot interne  
+- Maintenance  
+- Gestion clientèle  
+- Automatisation  
+- Stratégie numérique  
+
+## 🤖 PEGINTICHAT — Chatbot public  
+- Dépôt open‑source  
+- API conversationnelle  
+- Serveur MCP  
+- MIRAP Phase 1  
 
 ---
 
 # 🌐 Sites officiels
 
-### 🔗 Site principal PEGINTICHAT
+### 🔗 Application PEGINTI237  
 https://pegintichat.online/
 
-### 🔗 Site communautaire PEGINTI
+### 🔗 Communauté PEGINTI  
 https://peginti.e-monsite.com
 
-### 🔗 Dépôt GitHub officiel
+### 🔗 Dépôt GitHub  
 https://github.com/pegintiiaultra/PEGINTICHAT.git
-
----
-
-# 🌍 Écosystème PEGINTI — Architecture à double noyau
-
-PEGINTICHAT repose sur une architecture conceptuelle unique :
-
-## 🔵 1. IA ULTRA — Noyau technique
-- API HTTP légère
-- Serveur MCP (stdio)
-- Détection automatique FR/EN
-- Automatisation de tâches
-- Compatibilité Android/Termux
-- Déploiement PM2/Nginx
-- Zéro dépendance native  
-👉 Le moteur.
-
-## 🟡 2. PEGINTI — Noyau vision
-- Mission éducative africaine
-- Gouvernance et identité
-- Vision d’autonomisation numérique
-- Cadre doctrinal et pédagogique
-- Communauté et accompagnement  
-👉 La direction.
-
-Cette séparation rend le projet lisible pour les développeurs et fidèle à la vision PEGINTI.
-
----
-
-# 🎯 Objectifs du projet
-
-- Fournir un agent conversationnel polyvalent
-- Proposer un serveur MCP stdio simple et extensible
-- Faciliter la gestion clientèle, l’automatisation et l’assistance technique
-- Offrir une base technique claire pour des projets professionnels ou communautaires
-- Être compatible Android / Linux / Windows
-- Rester open‑source et maintenable
-
----
-
-# ⚙️ Prérequis
-
-- Node.js ≥ 18
-- npm
-
----
-
-# 📊 Dashboard PEGINTI
-
-Le tableau institutionnel matérialise la façade premium et le Noyau IA Ultra.  
-Il est disponible en deux formats :
-- **dashboard-peginti.drawio** (éditable, traçable)
-- **dashboard-peginti.png** (visuel premium)
-
-## Visuel
-![Dashboard PEGINTI](dashboard-peginti.png)
-
-### Flux institutionnel
-Terminal → Commit signé (GPG Verified) → PR Premium → Merge institutionnel → Façade PEGINTI sécurisée
 
 ---
 
@@ -84,10 +117,13 @@ Terminal → Commit signé (GPG Verified) → PR Premium → Merge institutionne
 
 TomTech.inc est la structure fondatrice et porteuse de la vision PEGINTI.  
 Sa mission est de :
-- Institutionnaliser des standards africains en intelligence artificielle et en programmation.  
-- Offrir des solutions numériques souveraines et reproductibles.  
-- Harmoniser identité culturelle et innovation technologique.  
-- Déployer PEGINTICHAT et Noyau IA Ultra comme piliers de gouvernance numérique.  
+
+- Institutionnaliser des standards africains en intelligence artificielle  
+- Offrir des solutions numériques souveraines et reproductibles  
+- Harmoniser identité culturelle et innovation technologique  
+- Déployer BO’OIVINI comme IA interne premium  
+- Déployer PEGINTICHAT comme agent public open‑source  
+- Faire de PEGINTI237 l’application institutionnelle de référence  
 
 ---
 
@@ -97,11 +133,17 @@ Sa mission est de :
 **Entreprise :** TomTech.inc  
 **Localisation :** Yaoundé II SOA, Cameroun  
 **Email :** bertrandtomo7@gmail.com  
-**WhatsApp :** +237 691482453
-# 📦 Installation
+**WhatsApp :** +237 691482453  
 
-```bash
-git clone https://github.com/pegintiiaultra/PEGINTICHAT.git
-cd PEGINTICHAT
-npm install
-npm start
+---
+
+# 📜 Licence
+
+Projet sous licence MIT.
+
+---
+
+# 🌍 Vision
+
+**Souveraineté numérique africaine.**  
+Traçabilité, reproductibilité, conformité doctrinale.
