@@ -123,7 +123,8 @@ Sa mission est de :
 - Harmoniser identité culturelle et innovation technologique  
 - Déployer BO’OIVINI comme IA interne premium  
 - Déployer PEGINTICHAT comme agent public open‑source  
-- Faire de PEGINTI237 l’application institutionnelle de référence  
+- Faire de PEGINTI237 l’application institutionnelle de référence
+- PEGINTI est gratuit et communautaire. BO’OIVINI est la version premium, configurée sur mesure pour les entreprises.
 
 ---
 
