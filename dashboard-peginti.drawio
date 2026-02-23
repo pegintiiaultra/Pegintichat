@@ -1,31 +1,46 @@
-<mxfile host="app.diagrams.net">
-  <diagram name="PEGINTI Dashboard" id="peginti">
-    <mxGraphModel>
-      <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-        <mxRectangle x="40" y="40" width="200" height="80" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;">
-          <mxCell id="2" value="PEGINTICHAT&#xa;v2.1&#xa;PORT 4000" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-            <mxGeometry x="40" y="40" width="200" height="80" as="geometry"/>
-          </mxCell>
-        </mxRectangle>
-        <mxRectangle x="300" y="40" width="200" height="80" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;">
-          <mxCell id="3" value="NOYAU ULTRA&#xa;v2.2&#xa;PORT 5000" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1">
-            <mxGeometry x="300" y="40" width="200" height="80" as="geometry"/>
-          </mxCell>
-        </mxRectangle>
-        <mxRectangle x="170" y="160" width="200" height="60" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;">
-          <mxCell id="4" value="JWT Auth&#xa;Bo&#39;oivini" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1">
-            <mxGeometry x="170" y="160" width="200" height="60" as="geometry"/>
-          </mxCell>
-        </mxRectangle>
-        <mxLine id="5" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;" edge="1" parent="1" source="2" target="4">
-          <mxGeometry relative="1"/>
-        </mxLine>
-        <mxLine id="6" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;" edge="1" parent="1" source="3" target="4">
-          <mxGeometry relative="1"/>
-        </mxLine>
-      </root>
-    </mxGraphModel>
-  </diagram>
-</mxfile>
+<!-- VERSION OFFICIELLE PEGINTI 2026 -->
+<!-- Structure institutionnelle intégrée -->
+<diagram name="PEGINTI-2026">
+  <mxGraphModel>
+    <root>
+      <mxCell id="0"/>
+      <mxCell id="1" parent="0"/>
+
+      <!-- IA ULTRA -->
+      <mxCell id="iaultra" value="IA ULTRA&#10;Orchestration • Gouvernance • Formalisation" style="rounded=1;whiteSpace=wrap;fillColor=#000000;fontColor=#ffffff;" vertex="1">
+        <mxGeometry x="40" y="40" width="220" height="100" as="geometry"/>
+      </mxCell>
+
+      <!-- PEGINTI -->
+      <mxCell id="peginti" value="PEGINTI&#10;Façade institutionnelle premium" style="rounded=1;whiteSpace=wrap;fillColor=#1a73e8;fontColor=#ffffff;" vertex="1">
+        <mxGeometry x="300" y="40" width="220" height="100" as="geometry"/>
+      </mxCell>
+
+      <!-- PEGINTICHAT-V2 intégré -->
+      <mxCell id="pegintichat" value="PEGINTICHAT‑V2&#10;API sécurisée • MIRAP • JWT • PM2" style="rounded=1;whiteSpace=wrap;fillColor=#34a853;fontColor=#ffffff;" vertex="1">
+        <mxGeometry x="300" y="160" width="220" height="100" as="geometry"/>
+      </mxCell>
+
+      <!-- Sécurité -->
+      <mxCell id="securite" value="Sécurité&#10;GPG • OAuth • JWT" style="rounded=1;whiteSpace=wrap;fillColor=#ea4335;fontColor=#ffffff;" vertex="1">
+        <mxGeometry x="40" y="160" width="220" height="100" as="geometry"/>
+      </mxCell>
+
+      <!-- Monitoring -->
+      <mxCell id="monitoring" value="Monitoring&#10;PM2 • Logs • Supervision interne" style="rounded=1;whiteSpace=wrap;fillColor=#fbbc04;fontColor=#000000;" vertex="1">
+        <mxGeometry x="560" y="40" width="220" height="100" as="geometry"/>
+      </mxCell>
+
+      <!-- Déploiement -->
+      <mxCell id="deploiement" value="Déploiement&#10;Termux • Node.js • CI/CD" style="rounded=1;whiteSpace=wrap;fillColor=#4285f4;fontColor=#ffffff;" vertex="1">
+        <mxGeometry x="560" y="160" width="220" height="100" as="geometry"/>
+      </mxCell>
+
+      <!-- Doctrine -->
+      <mxCell id="doctrine" value="Doctrine&#10;Bible LSG 1910 • Instructions TOMO" style="rounded=1;whiteSpace=wrap;fillColor=#9c27b0;fontColor=#ffffff;" vertex="1">
+        <mxGeometry x="300" y="280" width="220" height="100" as="geometry"/>
+      </mxCell>
+
+    </root>
+  </mxGraphModel>
+</diagram>
