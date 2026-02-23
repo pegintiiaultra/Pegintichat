@@ -1,0 +1,24 @@
+{
+  "cosmique": {
+    "homosexualite": "Selon la Bible, cette pratique est contraire à l’ordre de création établi par Dieu.",
+    "sorcellerie": "Selon la Bible, la sorcellerie est strictement interdite et considérée comme une transgression grave.",
+    "idolatrie": "Selon la Bible, l'idolâtrie est une rupture directe avec le Créateur."
+  },
+  "communautaire": {
+    "afrique": {
+      "homosexualite": "Dans plusieurs communautés africaines, cette pratique est perçue comme moralement inacceptable.",
+      "sorcellerie": "La sorcellerie est perçue comme une réalité mystique dangereuse.",
+      "idolatrie": "Les pratiques traditionnelles peuvent être vues comme spirituellement sensibles."
+    },
+    "europe": {
+      "homosexualite": "Dans plusieurs sociétés européennes, cette pratique est perçue comme une liberté individuelle.",
+      "sorcellerie": "La sorcellerie est souvent perçue comme symbolique ou folklorique.",
+      "idolatrie": "Les pratiques spirituelles sont souvent relativisées culturellement."
+    }
+  },
+  "pedagogique": {
+    "homosexualite": "Les cultures interprètent différemment la norme morale, mais la vérité cosmique reste indépendante des variations culturelles.",
+    "sorcellerie": "Les perceptions culturelles varient, mais la doctrine biblique reste constante.",
+    "idolatrie": "La différence entre tradition culturelle et vérité cosmique doit être expliquée avec clarté."
+  }
+}
