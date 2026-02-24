@@ -1,68 +1,52 @@
 'use strict';
-const fs = require('fs');
-const path = require('path');
 
-class Peginti {
-  constructor() {
-    this.modules = new Map();
-    console.log('🧠 PEGINTI → Scan modules:', path.join(__dirname, 'modules'));
-    this.loadModules();
-    console.log('🧠 PEGINTI → Modules loaded:', Array.from(this.modules.keys()));
-  }
+const modules = new Map();
+modules.set("core", require("./modules/core"));
+modules.set("strat", require("./modules/strat"));
+modules.set("bip", require("./modules/bip"));
 
-  loadModules() {
-    const modulesDir = path.join(__dirname, 'modules');
-    console.log('🔍 PEGINTI → modulesDir existe?', fs.existsSync(modulesDir));
-    
-    if (!fs.existsSync(modulesDir)) {
-      console.log('❌ PEGINTI → modules/ manquant');
-      return;
-    }
-    
-    const files = fs.readdirSync(modulesDir);
-    console.log('📁 PEGINTI → Fichiers trouvés:', files);
-    
-    files.forEach(file => {
-      if (file.endsWith('.js')) {
-        try {
-          const moduleName = path.basename(file, '.js');
-          const modulePath = path.join(modulesDir, file);
-          const module = require(modulePath);
-          this.modules.set(moduleName, module);
-          console.log(`✅ PEGINTI → Module ${moduleName} chargé`);
-        } catch(e) {
-          console.error(`❌ PEGINTI → Erreur ${file}:`, e.message);
-        }
-      }
-    });
-  }
+module.exports = (data) => {
+  const question = (data.question || "").toLowerCase();
 
-  analyse(question, userContext = {}) {
-    console.log('🧠 PEGINTI → Analyse:', question);
-    const domain = this.detectDomain(question);
-    console.log('🧠 PEGINTI → Domaine:', domain);
-    
-    const module = this.modules.get(domain) || this.modules.get('bip');
-    if (!module) {
-      return { error: 'Aucun module disponible', modules: Array.from(this.modules.keys()) };
-    }
-    
-    const response = module.analyse({question}, userContext);
+  // Détection CORE (identité PEGINTI)
+  if (/peginti|mission|vision|origine|création|identité|vitrine|application|bo.oivini|pegintichat|peginti237|tomtech/.test(question)) {
     return {
       peginti: true,
-      domain,
-      module_used: domain,
-      modules_actifs: Array.from(this.modules.keys()),
-      response
+      domain: "core",
+      module_used: "core",
+      modules_actifs: Array.from(modules.keys()),
+      response: modules.get("core").analyse(data)
     };
   }
 
-  detectDomain(question) {
-    const lower = question.toLowerCase();
-    if (lower.includes('stratégie') || lower.includes('plan')) return 'strat';
-    if (lower.includes('bible') || lower.includes('foi')) return 'bip';
-    return 'strat';
+  // Détection STRAT
+  if (/stratégie|plan|business|décision|croissance|projet|entreprise/.test(question)) {
+    return {
+      peginti: true,
+      domain: "strat",
+      module_used: "strat",
+      modules_actifs: Array.from(modules.keys()),
+      response: modules.get("strat").analyse(data)
+    };
   }
-}
 
-module.exports = new Peginti();
+  // Détection BIP
+  if (/bible|verset|chrétien|doctrine|foi|église/.test(question)) {
+    return {
+      peginti: true,
+      domain: "bip",
+      module_used: "bip",
+      modules_actifs: Array.from(modules.keys()),
+      response: modules.get("bip").analyse(data)
+    };
+  }
+
+  // Fallback STRAT
+  return {
+    peginti: true,
+    domain: "strat",
+    module_used: "strat",
+    modules_actifs: Array.from(modules.keys()),
+    response: modules.get("strat").analyse(data)
+  };
+};
