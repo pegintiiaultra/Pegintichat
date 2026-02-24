@@ -1,19 +1,17 @@
 module.exports = {
   apps: [
     {
-      name: "pegintichat-v2",
-      script: "./index.js",
+      name: "pegintichat-bo-oivini",
+      script: "index.js",
       instances: 1,
       exec_mode: "fork",
       env: {
+        PORT: 4000,
         NODE_ENV: "production",
-        PORT: 4000
+        BIP_ACTIVE: "true"
       },
-      log_file: "./logs/pegintichat.log",
-      error_file: "./logs/pegintichat-error.log",
-      out_file: "./logs/pegintichat-out.log",
-      merge_logs: true,
-      max_memory_restart: '100M'
+      watch: ["index.js", "src/", "modules/"],
+      max_memory_restart: "200M"
     }
   ]
 };
