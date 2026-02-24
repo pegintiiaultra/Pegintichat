@@ -1,18 +1,19 @@
 'use strict';
 
-const STRAT = {
-  analyse: (data, context) => {
-    const { question, user_view, role = 'décideur', objectifs = 'croissance' } = { ...data, ...context };
+module.exports = {
+  analyse: (data, context = {}) => {
+    const { question, user_view = 'vision institutionnelle 🇨🇲' } = { ...data, ...context };
     
     return {
       module: 'STRAT',
-      niveau_strategique: 'haute_strategie',
-      recommandation: `🎯 STRATÉGIE PREMIUM ${role.toUpperCase()}\n\n1️⃣ PRIORITÉ: ${objectifs.toUpperCase()}\n2️⃣ ARCHITECTURE: Modularité PEGINTI\n3️⃣ VISION: ${user_view}\n\n✅ Exécuter maintenant`,
-      priorites: ['souveraineté', 'pérennité'],
-      vision_peginti: 'Plateforme IA camerounaise souveraine',
+      recommandation: `🎯 STRATÉGIE PREMIUM DÉCIDEUR
+
+1️⃣ PRIORITÉ: CROISSANCE INSTITUTIONNELLE
+2️⃣ ARCHITECTURE: Modularité PEGINTI v2.0 + BO'OIVINI
+3️⃣ VISION: ${user_view}
+
+✅ Exécuter maintenant`,
       score: 95
     };
   }
 };
-
-module.exports = STRAT;
