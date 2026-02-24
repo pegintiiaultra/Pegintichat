@@ -1,14 +1,10 @@
 'use strict';
-module.exports = {
-  analyser: (sujet, params={}) => ({
-    reply: `🧠 BIP PEGINTICHAT : ${sujet}\n\n1️⃣ Bible:\n   "${sujet}" → Texte exact\n2️⃣ Tradition:\n   Doctrines principales\n3️⃣ Vous:\n   ${params.user_view||"Votre conscience souveraine"}\n4️⃣ Repères:\n   Liberté absolue garantie`,
+const BIP = {
+  analyser: (sujet, params) => ({
+    reply: `🧠 BIP : ${sujet}\n1️⃣ Bible: Texte exact\n2️⃣ Tradition: Doctrines\n3️⃣ Vous: ${params?.user_view || 'Votre conscience'}\n4️⃣ Repères: Liberté absolue`,
     score: 100,
-    peginti: true,
-    bip_version: "1.0"
+    bip: true
   }),
-  test: (test) => ({ 
-    method: 'PEGINTICHAT_BIP', 
-    input: test, 
-    status: 'OK' 
-  })
+  test: (test) => ({ method: 'bip_ok', input: test, success: true })
 };
+module.exports = BIP;
