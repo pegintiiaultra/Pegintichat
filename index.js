@@ -2,22 +2,6 @@
 const express = require('express');
 const PegintiRouter = require('./src/router');
 const app = express();
-
 app.use(express.json({limit: '2mb'}));
-
-// ✅ ROUTER PEGINTI EXPLICITE
 app.use('/peginti', PegintiRouter);
-
-// Status + debug
-app.get('/', (req, res) => {
-  const Peginti = require('./src/peginti');
-  res.json({ 
-    peginti: '✅ PLATEFORME MODULAIRE v2.0',
-    modules: Array.from(Peginti.modules.keys()),
-    endpoints: ['/peginti/modules', '/peginti/analyse']
-  });
-});
-
-app.listen(4000, '0.0.0.0', () => {
-  console.log('🚀 PEGINTI v2.0 → http://127.0.0.1:4000');
-});
+app.listen(4000, '0.0.0.0', () => console.log('🚀 PEGINTI v2.0 → http://127.0.0.1:4000'));
