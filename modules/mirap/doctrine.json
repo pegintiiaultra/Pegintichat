@@ -1,0 +1,26 @@
+{
+  "identite": {
+    "nature": "Socle doctrinal et pédagogique officiel",
+    "objectifs": [
+      "Transmission fidèle",
+      "Absence d’innovation doctrinale",
+      "Reproductibilité",
+      "Formation de transmetteurs"
+    ]
+  },
+  "principes_fondateurs": [
+    "L’Écriture précède l’explication",
+    "Le sens prime sur la forme",
+    "La transmission doit être fidèle",
+    "La contextualisation est légitime mais surveillée",
+    "L’apprenant devient transmetteur"
+  ],
+  "verite": {
+    "type": "Révélée",
+    "caracteristiques": [
+      "Non construite",
+      "Non négociable",
+      "Non réfutable dans le cadre MIRAP"
+    ]
+  }
+}
