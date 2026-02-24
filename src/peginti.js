@@ -1,56 +1,119 @@
 'use strict';
+const fs = require('fs');
+const path = require('path');
 
-const modules = new Map();
-modules.set("core", require("./modules/core"));
-modules.set("strat", require("./modules/strat"));
-modules.set("bip", require("./modules/bip"));
+class Peginti {
+  constructor() {
+    this.modules = new Map();
+    console.log('🧠 PEGINTI → Initialisation du noyau…');
+    this.loadModules();
+    console.log('🧠 PEGINTI → Modules actifs:', Array.from(this.modules.keys()));
+  }
 
-const Peginti = {
-  analyse: (data) => {
+  loadModules() {
+    const modulesDir = path.join(__dirname, 'modules');
+    console.log('🔍 PEGINTI → Chargement des modules depuis:', modulesDir);
+
+    if (!fs.existsSync(modulesDir)) {
+      console.log('❌ PEGINTI → Dossier modules/ introuvable');
+      return;
+    }
+
+    const files = fs.readdirSync(modulesDir);
+    console.log('📁 PEGINTI → Fichiers détectés:', files);
+
+    files.forEach(file => {
+      if (file.endsWith('.js')) {
+        try {
+          const moduleName = path.basename(file, '.js');
+          const modulePath = path.join(modulesDir, file);
+          const module = require(modulePath);
+
+          if (typeof module.analyse !== 'function') {
+            console.log(`⚠️ PEGINTI → Module ${moduleName} ignoré (pas de analyse())`);
+            return;
+          }
+
+          this.modules.set(moduleName, module);
+          console.log(`✅ PEGINTI → Module ${moduleName} chargé`);
+        } catch (e) {
+          console.error(`❌ PEGINTI → Erreur dans ${file}:`, e.message);
+        }
+      }
+    });
+  }
+
+  analyse(data, userContext = {}) {
     const question = (data.question || "").toLowerCase();
+    console.log('🧠 PEGINTI → Analyse:', question);
 
-    // CORE — Identité PEGINTI
-    if (/peginti|mission|vision|origine|création|identité|vitrine|application|bo.oivini|pegintichat|peginti237|tomtech/.test(question)) {
-      return {
-        peginti: true,
-        domain: "core",
-        module_used: "core",
-        modules_actifs: Array.from(modules.keys()),
-        response: modules.get("core").analyse(data)
-      };
-    }
+    const domain = this.detectDomain(question);
+    console.log('🧠 PEGINTI → Domaine détecté:', domain);
 
-    // STRAT — Stratégie
-    if (/stratégie|plan|business|décision|croissance|projet|entreprise/.test(question)) {
-      return {
-        peginti: true,
-        domain: "strat",
-        module_used: "strat",
-        modules_actifs: Array.from(modules.keys()),
-        response: modules.get("strat").analyse(data)
-      };
-    }
+    const module = this.modules.get(domain);
 
-    // BIP — Doctrine
-    if (/bible|verset|chrétien|doctrine|foi|église/.test(question)) {
+    if (!module) {
+      console.log('❌ PEGINTI → Module introuvable, fallback BIP');
       return {
         peginti: true,
         domain: "bip",
         module_used: "bip",
-        modules_actifs: Array.from(modules.keys()),
-        response: modules.get("bip").analyse(data)
+        modules_actifs: Array.from(this.modules.keys()),
+        response: this.modules.get("bip")?.analyse(data, userContext) || { error: "Module BIP manquant" }
       };
     }
 
-    // Fallback STRAT
+    const response = module.analyse(data, userContext);
+
     return {
       peginti: true,
-      domain: "strat",
-      module_used: "strat",
-      modules_actifs: Array.from(modules.keys()),
-      response: modules.get("strat").analyse(data)
+      domain,
+      module_used: domain,
+      modules_actifs: Array.from(this.modules.keys()),
+      response
     };
   }
-};
 
-module.exports = Peginti;
+  detectDomain(question) {
+    const q = question.toLowerCase();
+
+    // CORE — Identité PEGINTI
+    if (
+      q.includes('peginti') ||
+      q.includes('cest quoi') ||
+      q.includes('c’est quoi') ||
+      q.includes('qui es tu') ||
+      q.includes('mission') ||
+      q.includes('vision') ||
+      q.includes('origine') ||
+      q.includes('identité') ||
+      q.includes('pegintichat') ||
+      q.includes('bo’oivini') ||
+      q.includes('bo oivini') ||
+      q.includes('peginti237') ||
+      q.includes('tomtech')
+    ) return 'core';
+
+    // STRAT — Stratégie
+    if (
+      q.includes('stratégie') ||
+      q.includes('plan') ||
+      q.includes('business') ||
+      q.includes('entreprise') ||
+      q.includes('croissance')
+    ) return 'strat';
+
+    // BIP — Doctrine
+    if (
+      q.includes('bible') ||
+      q.includes('verset') ||
+      q.includes('foi') ||
+      q.includes('église')
+    ) return 'bip';
+
+    // Fallback STRAT
+    return 'strat';
+  }
+}
+
+module.exports = new Peginti();
