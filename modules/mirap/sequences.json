@@ -1,0 +1,37 @@
+{
+  "sequences": [
+    {
+      "id": "SEQ1",
+      "titre": "Fondement biblique du Nom",
+      "lectures": ["Exode 3:13-15", "Psaume 68:5"],
+      "question": "Dieu peut-il être connu sans Nom ?"
+    },
+    {
+      "id": "SEQ2",
+      "titre": "Voile et perte du Nom",
+      "lectures": ["Exode 20:7", "Osée 4:6"],
+      "question": "Le Nom est-il protégé ou effacé ?"
+    },
+    {
+      "id": "SEQ3",
+      "titre": "Jésus-Christ et le Nom divin",
+      "lectures": ["Jean 8:58", "Philippiens 2:9-11"]
+    },
+    {
+      "id": "SEQ4",
+      "titre": "Salut et phonétique",
+      "lectures": ["Romains 10:13", "Actes 2:6", "Apocalypse 7:9"]
+    },
+    {
+      "id": "SEQ5",
+      "titre": "NTI nkoré et contextualisation",
+      "lectures": ["Joël 2:32", "Actes 4:12"],
+      "comparaison": ["Yeshua", "Iêsous", "Jésus", "NTI nkoré"]
+    },
+    {
+      "id": "SEQ6",
+      "titre": "Position doctrinale officielle MIRAP",
+      "objectif": "Reproductibilité doctrinale"
+    }
+  ]
+}
