@@ -1,26 +1,23 @@
 'use strict';
 const express = require('express');
-const BIP = require('./src/doctrinal');
+const PegintiRouter = require('./src/router');
 const app = express();
 
-app.use(express.json({limit:'1mb'}));
+app.use(express.json({limit: '2mb'}));
 
-// PEGINTICHAT officiel
-app.get('/', (req, res) => res.json({ 
-  pegintichat: '✅ v2.0 BIP doctrinal actif', 
-  port: 4000, 
-  github: 'pegintiiaultra/Pegintichat' 
-}));
+// ✅ ROUTER PEGINTI EXPLICITE
+app.use('/peginti', PegintiRouter);
 
-app.post('/doctrinal/test', (req, res) => {
-  res.json(BIP.test(req.body.test || 'foi'));
+// Status + debug
+app.get('/', (req, res) => {
+  const Peginti = require('./src/peginti');
+  res.json({ 
+    peginti: '✅ PLATEFORME MODULAIRE v2.0',
+    modules: Array.from(Peginti.modules.keys()),
+    endpoints: ['/peginti/modules', '/peginti/analyse']
+  });
 });
 
-app.post('/bip/analyse', (req, res) => {
-  res.json(BIP.analyser(req.body.sujet, req.body));
-});
-
-const server = app.listen(4000, '0.0.0.0', (err) => {
-  if(err) console.error('PEGINTICHAT ERROR:', err);
-  else console.log('🚀 PEGINTICHAT BIP → http://127.0.0.1:4000');
+app.listen(4000, '0.0.0.0', () => {
+  console.log('🚀 PEGINTI v2.0 → http://127.0.0.1:4000');
 });
