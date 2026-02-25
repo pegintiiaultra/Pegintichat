@@ -4,12 +4,11 @@
    🧠 BO'OIVINI — MATRICE LOGIQUE AUTONOME PEGINTI
 --------------------------------------------------------- */
 
-/* === Noyau : matrice interne === */
 const matriceInterne = {
   metaphoreCulturelle: {
     purete: { occidental: "neige", africain: "coton" },
     force: { occidental: "acier", africain: "baobab" },
-    clarte: { occidental: "verre", africain: "eau_de_source" }
+    clarte: { occidental: "verre", africain: "eaudesource" }
   },
   logiqueContinuite: {
     priorite: "coherence_communautaire",
@@ -18,17 +17,16 @@ const matriceInterne = {
   logiqueULTRA: {
     creation: ["pensee", "parole", "action"],
     principes: [
-      "diversite_dans_unite",
-      "equilibre_forces_opposes",
+      "diversitedansunite",
+      "equilibreforcesopposes",
       "observation_naturelle"
     ]
   }
 };
 
-/* === Logique interne : filtres privés === */
 const filtresPrives = {
   traductionConceptuelle: {
-    mode: "occident_vers_afrique",
+    mode: "occidentversafrique",
     preserveFonction: true,
     preserveCulture: true
   },
@@ -44,7 +42,6 @@ const filtresPrives = {
   }
 };
 
-/* === Préférences du noyau === */
 const preferencesNoyau = {
   assistantPersonnel: true,
   prioriteFondateur: true,
@@ -54,9 +51,8 @@ const preferencesNoyau = {
   gestionAcces: "niveaux_hierarchiques"
 };
 
-/* === Système : règles ULTRA === */
 const reglesUltra = {
-  cyclesNaturels: ["rotation", "translation", "alternance_jour_nuit", "saisons"],
+  cyclesNaturels: ["rotation", "translation", "alternancejournuit", "saisons"],
   modelesAtomiques: [
     "equilibre_opposes",
     "interaction_complementaire",
@@ -68,7 +64,6 @@ const reglesUltra = {
   }
 };
 
-/* === Système : traduction conceptuelle === */
 const traductionConceptuelle = {
   detecterOccidental: true,
   convertirVersAfricain: true,
@@ -77,22 +72,16 @@ const traductionConceptuelle = {
   mapping: {
     neige: "coton",
     marbre: "terre_rouge",
-    verre: "eau_de_source"
+    verre: "eaudesource"
   }
 };
 
-/* ---------------------------------------------------------
-   🔶 MATRICE DE RAISONNEMENT AUTONOME PEGINTI
---------------------------------------------------------- */
-
-/* === Données MRP === */
 const mrp = {
   cosmique: {},
   communautaire: {},
   pedagogique: {}
 };
 
-/* === Analyseur MRP === */
 function analyserSujet(sujet, culture) {
   const cosmique = mrp.cosmique[sujet] || null;
   const communautaire = (mrp.communautaire[culture] || {})[sujet] || null;
@@ -106,14 +95,9 @@ function analyserSujet(sujet, culture) {
   };
 }
 
-/* === Fonction de raisonnement === */
 function raisonner(sujet, culture) {
   return analyserSujet(sujet, culture);
 }
-
-/* ---------------------------------------------------------
-   🚀 EXPORT — MATRICE UNIQUE
---------------------------------------------------------- */
 
 module.exports = {
   logique: {
