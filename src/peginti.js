@@ -1,68 +1,60 @@
 'use strict';
-
 const fs = require('fs');
 const path = require('path');
-
-/* ---------------------------------------------------------
-   ⚙️  MOTEUR PEGINTI — Chargement des modules internes
---------------------------------------------------------- */
 
 class Peginti {
   constructor() {
     this.modules = new Map();
+    this.loadModules();
+    console.log('🧠 PEGINTI ULTRA → Modules:', Array.from(this.modules.keys()));
+  }
 
+  loadModules() {
     const modulesDir = path.join(__dirname, 'modules');
-    console.log('🧠 PEGINTI → Scan modules:', modulesDir);
-    console.log('🔍 PEGINTI → modulesDir existe ?', fs.existsSync(modulesDir));
+    if (!fs.existsSync(modulesDir)) return console.log('⚠️ modules/ absent');
 
-    if (fs.existsSync(modulesDir)) {
-      const files = fs.readdirSync(modulesDir);
-      console.log('📁 PEGINTI → Fichiers trouvés:', files);
-
-      files.forEach(file => {
-        if (file.endsWith('.js')) {
-          try {
-            const moduleName = path.basename(file, '.js');
-            const modulePath = path.join(modulesDir, file);
-            const module = require(modulePath);
-            this.modules.set(moduleName, module);
-            console.log(`✅ PEGINTI → Module ${moduleName} chargé`);
-          } catch (e) {
-            console.log(`❌ PEGINTI → Erreur chargement module ${file}`, e);
-          }
+    fs.readdirSync(modulesDir).forEach(file => {
+      if (file.endsWith('.js')) {
+        const moduleName = path.basename(file, '.js');
+        try {
+          this.modules.set(moduleName, require(path.join(modulesDir, file)));
+          console.log(`✅ ${moduleName}`);
+        } catch(e) {
+          console.error(`❌ ${file}:`, e.message);
         }
-      });
-    }
+      }
+    });
+  }
 
-    console.log('🧠 PEGINTI → Modules chargés:', Array.from(this.modules.keys()));
+  analyse(question, context = {}) {
+    const domain = this.detectDomain(question);
+    const module = this.modules.get(domain) || this.modules.get('core');
+    
+    // BO'OIVINI supervision (si présent)
+    let response = module.analyse({question}, context);
+    if (this.modules.has('booivini')) {
+      response = this.modules.get('booivini').supervise(response, {question, domain});
+    }
+    
+    return {
+      peginti: 'v2.0-ultra',
+      timestamp: new Date().toISOString(),
+      domain,
+      module_used: domain,
+      response
+    };
+  }
+
+  detectDomain(question) {
+    const q = question.toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
+    
+    if (q.includes('peginti') || q.includes("c'est quoi") || q.includes('qui es')) return 'core';
+    if (q.includes('strateg') || q.includes('plan') || q.includes('croiss')) return 'strat';
+    if (q.includes('bible') || q.includes('foi') || q.includes('verset')) return 'bip';
+    if (q.includes("bo'oivini") || q.includes('booivini') || q.includes('matrice')) return 'booivini';
+    
+    return 'strat';
   }
 }
 
-/* ---------------------------------------------------------
-   🧠  CERVEAU PEGINTI — Hémisphère droit + gauche
---------------------------------------------------------- */
-
-const boovini = require('./matrice/booivini.js');
-const pegintichat = require('./chat/pegintichat.js');
-
-const cerveau = {
-  droit: {
-    logique: boovini.logique,
-    raisonner: boovini.raisonnement.raisonner
-  },
-  gauche: {
-    exprimerLogique: pegintichat.logique,
-    exprimerRaisonnement: pegintichat.raisonner
-  }
-};
-
-console.log("🧠 Cerveau PEGINTI chargé :", Object.keys(cerveau));
-
-/* ---------------------------------------------------------
-   🚀 EXPORT GLOBAL
---------------------------------------------------------- */
-
-module.exports = {
-  Peginti,
-  cerveau
-};
+module.exports = new Peginti();

@@ -1,19 +1,12 @@
 'use strict';
-
 module.exports = {
-  analyse: (data, context = {}) => {
-    const { question, user_view = 'vision institutionnelle 🇨🇲' } = { ...data, ...context };
-    
-    return {
-      module: 'STRAT',
-      recommandation: `🎯 STRATÉGIE PREMIUM DÉCIDEUR
-
-1️⃣ PRIORITÉ: CROISSANCE INSTITUTIONNELLE
-2️⃣ ARCHITECTURE: Modularité PEGINTI v2.0 + BO'OIVINI
-3️⃣ VISION: ${user_view}
-
-✅ Exécuter maintenant`,
-      score: 95
-    };
-  }
+  analyse: ({question}, {user_view = 'institutionnelle 🇨🇲'}) => ({
+    module: 'STRAT',
+    response: `🎯 STRATÉGIE ULTRA RAPIDE
+1️⃣ Objectif: "${question.substring(0,30)}..."
+2️⃣ Action: Modularité + BO'OIVINI
+3️⃣ Vision: ${user_view}
+⚡ Exécuter maintenant`,
+    ultra: true
+  })
 };
