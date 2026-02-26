@@ -1,5 +1,5 @@
 #!/bin/bash
-# PEGINTI-CHAT v2.2 PROPRE - Couleurs corrigées
+# PEGINTI-CHAT v2.2 PROPRE - Couleurs corrigées (Bleu pour PEGINTICHAT, Jaune pour Bo'oivinichat)
 BLUE="\033[0;34m"; YELLOW="\033[1;33m"; RESET="\033[0m"
 
 clear
@@ -25,18 +25,18 @@ while true; do
   status=$(echo "$route" | jq -r '.status // "✅ Routage déterminé"' 2>/dev/null)
 
   # Affichage métriques (toujours en jaune)
-  printf "${YELLOW}↪ %s${RESET} ${BLUE}| %s${RESET} ${YELLOW}| %s%%${RESET} ${BLUE}%s${RESET}\n" "$destination" "$module" "$confiance" "$status"
+  printf "${YELLOW}↪ %s${RESET} ${YELLOW}| %s${RESET} ${YELLOW}| %s%%${RESET} ${YELLOW}%s${RESET}\n" "$destination" "$module" "$confiance" "$status"
 
   if [[ "$destination" == "Bo'oivinichat" ]]; then
     # Premium ultra rapide (Jaune)
     printf "${YELLOW}💎 Bo'oivinichat:${RESET} "
     reponse=$(curl -s -H "Authorization: TomTech" "http://localhost:3000/booivini/chat?message=$encoded" 2>/dev/null | jq -r '.reponse // "Réponse premium indisponible"' 2>/dev/null)
-    echo "$reponse"
+    echo -e "${YELLOW}$reponse${RESET}"
   else
     # PEGINTICHAT vitrine communautaire (Bleu)
     printf "${BLUE}🌍 PEGINTICHAT:${RESET} "
     reponse=$(curl -s "http://localhost:3000/peginti/matrice?q=$encoded" 2>/dev/null | jq -r '.cadres[]?, .plan // "👁️ BIP: Réponse communautaire"' 2>/dev/null)
-    echo "$reponse"
+    echo -e "${BLUE}$reponse${RESET}"
   fi
   echo
 done
