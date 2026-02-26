@@ -22,13 +22,31 @@ module.exports = {
     ];
 
     if (criteresPublic.some(c => q.includes(c))) {
-      return { question, cible: "PEGINTICHAT", module: "BIP", type: "public", status: "Routage dynamique OK" };
+      return {
+        question,
+        destination: "PEGINTICHAT",
+        module: "BIP",
+        type: "public",
+        status: "Routage dynamique OK"
+      };
     }
 
     if (criteresPremium.some(c => q.includes(c))) {
-      return { question, cible: "Bo'oivinichat", module: "PREMIUM", type: "privé", status: "Routage dynamique OK" };
+      return {
+        question,
+        destination: "Bo'oivinichat",
+        module: "PREMIUM",
+        type: "privé",
+        status: "Routage dynamique OK"
+      };
     }
 
-    return { question, cible: "PEGINTICHAT", module: "BIP", type: "public", status: "Routage par défaut" };
+    return {
+      question,
+      destination: "PEGINTICHAT",
+      module: "BIP",
+      type: "public",
+      status: "Routage par défaut"
+    };
   }
 };
