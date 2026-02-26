@@ -1,5 +1,5 @@
 #!/bin/bash
-# PEGINTI-CHAT v2.2 PROPRE - Couleurs corrigées (Bleu pour PEGINTICHAT, Jaune pour Bo'oivinichat)
+# PEGINTI-CHAT v2.2 PROPRE - Couleurs corrigées définitives
 BLUE="\033[0;34m"; YELLOW="\033[1;33m"; RESET="\033[0m"
 
 clear
