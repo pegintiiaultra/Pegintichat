@@ -5,6 +5,8 @@ const bip = require('./modules/bip');
 const strat = require('./modules/strat');
 const philo = require('./modules/philo');
 const mirap = require('./modules/mirap');
+const collab = require('./modules/collab');
+const matrice = require('./modules/matrice');
 
 // Public GAUCHE
 app.get('/', (req, res) => {
@@ -60,21 +62,13 @@ app.get('/peginti/strategie', (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log('🧠 BO\'OIVINI: http://localhost:3000/');
+// Matrice de raisonnement
+app.get('/peginti/matrice', (req, res) => {
+  const question = req.query.q || "Question vide";
+  const resultat = matrice.raisonner(question);
+  res.json(resultat);
 });
 
-// Module de collaboration PEGINTICHAT ↔ Bo'oivinichat
-const collab = require('./modules/collab');
-
-app.get('/peginti/router', (req, res) => {
-  const question = req.query.q || "Question vide";
-  const route = collab.router(question);
-  res.json({
-    question,
-    destination: route.cible,
-    module: route.module,
-    type: route.type,
-    status: "Routage dynamique OK"
-  });
+app.listen(3000, () => {
+  console.log('🧠 BO\'OIVINI: http://localhost:3000/');
 });
