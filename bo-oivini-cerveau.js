@@ -63,3 +63,18 @@ app.get('/peginti/strategie', (req, res) => {
 app.listen(3000, () => {
   console.log('🧠 BO\'OIVINI: http://localhost:3000/');
 });
+
+// Module de collaboration PEGINTICHAT ↔ Bo'oivinichat
+const collab = require('./modules/collab');
+
+app.get('/peginti/router', (req, res) => {
+  const question = req.query.q || "Question vide";
+  const route = collab.router(question);
+  res.json({
+    question,
+    destination: route.cible,
+    module: route.module,
+    type: route.type,
+    status: "Routage dynamique OK"
+  });
+});
