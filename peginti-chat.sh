@@ -1,29 +1,43 @@
 #!/bin/bash
+# PEGINTI-CHAT v2.2 FINALISÉ - Jaune & Bleu, modules et Bo'oivini
+BLUE="\033[0;34m"; YELLOW="\033[1;33m"; RESET="\033[0m"
+
 clear
-echo "🧠 PEGINTI-CHAT v2.2 FINAL"
-echo "Vous: qui est bertrand tomo → Bo'oivinichat"
-echo "Vous: technologie IA → PEGINTICHAT"
-echo
+cat << "EOBANNER"
+🧠 PEGINTI-CHAT v2.2 FINALISÉ
+🌍 PEGINTICHAT (GAUCHE | Public | doctrinal) | 💎 Bo'oivinichat (DROIT | Premium | technique/confidentiel)
+Toutes les réponses passent par le cerveau Bo'oivini
+Tape 'exit' pour quitter
+EOBANNER
 
 while true; do
   echo -n "Vous: "
   read input
   [[ "$input" == "exit" || "$input" == "q" ]] && break
-  
+
   encoded=$(echo "$input" | sed 's/ /+/g')
-  route=$(curl -s "localhost:3000/peginti/router?q=$encoded")
-  dest=$(echo "$route" | jq -r '.destination' 2>/dev/null || echo "PEGINTICHAT")
-  conf=$(echo "$route" | jq -r '.confiance' 2>/dev/null || echo "80")
-  
-  echo "↪ $dest | $conf%"
-  
-  if [[ "$dest" == "Bo'oivinichat" ]]; then
-    echo -n "💎 Bo'oivinichat: "
-    curl -s -H "Authorization: TomTech" "localhost:3000/booivini/chat?message=$encoded" | \
-    jq -r '.reponse' 2>/dev/null || echo "Solution premium"
+
+  # Routage via Bo'oivini
+  route=$(curl -s --max-time 5 "http://localhost:3000/peginti/router?q=$encoded" 2>/dev/null)
+  destination=$(echo "$route" | jq -r '.destination // "PEGINTICHAT"' 2>/dev/null)
+  module=$(echo "$route" | jq -r '.module // "BIP"' 2>/dev/null)
+  confiance=$(echo "$route" | jq -r '.confiance // 80' 2>/dev/null)
+  status=$(echo "$route" | jq -r '.status // "Inconnu"' 2>/dev/null)
+
+  printf "${YELLOW}↪ %s${RESET} ${BLUE}| %s${RESET} ${YELLOW}| %s%%${RESET} ${BLUE}%s${RESET}\n" "$destination" "$module" "$confiance" "$status"
+
+  if [[ "$destination" == "Bo'oivinichat" ]]; then
+    # Premium ultra rapide
+    printf "${YELLOW}💎 Bo'oivinichat:${RESET} "
+    reponse=$(curl -s -H "Authorization: TomTech" "http://localhost:3000/booivini/chat?message=$encoded" 2>/dev/null | jq -r '.reponse // "Réponse premium indisponible"' 2>/dev/null)
+    echo "$reponse"
   else
-    echo -n "🌍 PEGINTICHAT: "
-    curl -s "localhost:3000/?chat=$encoded" | jq -r '.reponse' 2>/dev/null || echo "Réponse BIP"
+    # PEGINTICHAT vitrine communautaire avec modules doctrinaux
+    printf "${BLUE}🌍 PEGINTICHAT:${RESET}\n"
+    reponse=$(curl -s "http://localhost:3000/peginti/matrice?q=$encoded" 2>/dev/null | jq -r '.cadres[]?, .plan // "👁️ BIP: Réponse communautaire"' 2>/dev/null)
+    echo "$reponse"
   fi
   echo
 done
+
+echo -e "${YELLOW}👋 Session PEGINTI-CHAT terminée${RESET}"
