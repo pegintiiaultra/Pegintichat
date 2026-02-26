@@ -1,34 +1,54 @@
-/*
- * PEGINTI - ROUTAGE INTELLIGENT DYNAMIQUE v2.0
- * PEGINTICHAT (public) vs Bo'oivinichat (premium)
- */
 module.exports = {
   router: (question) => {
     const q = question.toLowerCase().trim();
 
-    // 🔍 PEGINTICHAT (BIP 👁️) - Questions PUBLIC
+    // 🔍 PEGINTICHAT PRIORITAIRE (80% des cas)
     const pegintiCriteres = [
-      'recherche', 'information', 'savoir', 'explique', 'défini', 'c-est quoi',
+      'qui est', 'c-est quoi', 'explique', 'défini', 'information', 'savoir',
       'corrige', 'erreur', 'bug', 'debug', 'syntaxe', 'fonctionne pas',
-      'technologie', 'nouveau', 'innovation', 'dernière', '202', 'ia', 'blockchain'
+      'technologie', 'ia', 'innovation', 'histoire', 'société', 'egal', 'hommes',
+      'recherche', 'culture', 'bible', 'dieu', 'juif', 'israel'
     ];
 
-    // 💎 Bo'oivinichat (PREMIUM) - Questions PRO
+    // 💎 Bo'oivinichat SEULEMENT questions ULTRA-SPECIFIQUES
     const boiviniCriteres = [
-      'tomtech', 'fondateur', 'peginti', 'bo-oivini', 'boivini', 'tomtech.inc',
-      'entreprise', 'client', 'logiciel', 'programme', 'sdk', 'api', 
-      'correction code', 'code spécifique', 'agent technique', 'premium'
+      'tomtech.inc', 'code spécifique', 'client entreprise', 'sdk peginti',
+      'agent technique', 'développeur peginti', 'programme sur mesure',
+      'premium peginti', 'entreprise cliente'
     ];
 
-    const pegintiMatch = pegintiCriteres.some(critere => q.includes(critere));
-    const boiviniMatch = boiviniCriteres.some(critere => q.includes(critere));
+    // PRIORITÉ PEGINTICHAT
+    if (pegintiCriteres.some(c => q.includes(c))) {
+      return {
+        question: q,
+        destination: "PEGINTICHAT",
+        module: "BIP",
+        type: "public/général", 
+        status: "✅ PEGINTICHAT prioritaire",
+        confiance: 90
+      };
+    }
 
-    if (boiviniMatch) {
-      return {question:q,destination:"Bo'oivinichat",module:"PREMIUM",type:"entreprise/développeur",status:"✅ Routage PREMIUM",confiance:95};
+    // SEULEMENT Bo'oivinichat pour mots-clés EXACTS
+    if (boiviniCriteres.some(c => q.includes(c))) {
+      return {
+        question: q,
+        destination: "Bo'oivinichat",
+        module: "PREMIUM",
+        type: "entreprise/tech",
+        status: "✅ Bo'oivinichat spécifique",
+        confiance: 95
+      };
     }
-    if (pegintiMatch) {
-      return {question:q,destination:"PEGINTICHAT",module:"BIP",type:"public/recherche",status:"✅ Routage PEGINTICHAT",confiance:90};
-    }
-    return {question:q,destination:"PEGINTICHAT",module:"BIP",type:"public/général",status:"ℹ️ Par défaut",confiance:75};
+
+    // PAR DÉFAUT → PEGINTICHAT
+    return {
+      question: q,
+      destination: "PEGINTICHAT",
+      module: "BIP",
+      type: "public/défaut",
+      status: "ℹ️ PEGINTICHAT (défaut)",
+      confiance: 80
+    };
   }
 };
