@@ -7,7 +7,6 @@ module.exports = {
     const q = question.toLowerCase();
 
     // --- PEGINTICHAT (GAUCHE) ---
-    // Recherche générale, doctrinale, biblique, culturelle, historique
     const criteresPublic = [
       "recherche", "technologie", "correction simple",
       "bible", "dieu", "juif", "israelite",
@@ -15,7 +14,6 @@ module.exports = {
     ];
 
     // --- Bo'oivinichat (DROIT) ---
-    // Premium, fondateur, développement spécifique, clients
     const criteresPremium = [
       "fondateur", "entreprise", "premium",
       "développement peginti", "code spécifique",
@@ -24,14 +22,13 @@ module.exports = {
     ];
 
     if (criteresPublic.some(c => q.includes(c))) {
-      return { cible: "PEGINTICHAT", module: "BIP", type: "public" };
+      return { question, cible: "PEGINTICHAT", module: "BIP", type: "public", status: "Routage dynamique OK" };
     }
 
     if (criteresPremium.some(c => q.includes(c))) {
-      return { cible: "Bo'oivinichat", module: "PREMIUM", type: "privé" };
+      return { question, cible: "Bo'oivinichat", module: "PREMIUM", type: "privé", status: "Routage dynamique OK" };
     }
 
-    // --- Par défaut → PEGINTICHAT ---
-    return { cible: "PEGINTICHAT", module: "BIP", type: "public" };
+    return { question, cible: "PEGINTICHAT", module: "BIP", type: "public", status: "Routage par défaut" };
   }
 };
