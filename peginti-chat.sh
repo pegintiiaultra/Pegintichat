@@ -1,5 +1,5 @@
 #!/bin/bash
-# PEGINTI-CHAT v2.2 PROPRE - Couleurs corrigées (Bleu pour PEGINTICHAT, Jaune pour Bo'oivinichat)
+# PEGINTI-CHAT v2.2 PROPRE - Couleurs corrigées
 BLUE="\033[0;34m"; YELLOW="\033[1;33m"; RESET="\033[0m"
 
 clear
@@ -24,6 +24,7 @@ while true; do
   confiance=$(echo "$route" | jq -r '.confiance // 80' 2>/dev/null)
   status=$(echo "$route" | jq -r '.status // "✅ Routage déterminé"' 2>/dev/null)
 
+  # Affichage métriques (toujours en jaune)
   printf "${YELLOW}↪ %s${RESET} ${BLUE}| %s${RESET} ${YELLOW}| %s%%${RESET} ${BLUE}%s${RESET}\n" "$destination" "$module" "$confiance" "$status"
 
   if [[ "$destination" == "Bo'oivinichat" ]]; then
@@ -33,7 +34,7 @@ while true; do
     echo "$reponse"
   else
     # PEGINTICHAT vitrine communautaire (Bleu)
-    printf "${BLUE}🌍 PEGINTICHAT:${RESET}\n"
+    printf "${BLUE}🌍 PEGINTICHAT:${RESET} "
     reponse=$(curl -s "http://localhost:3000/peginti/matrice?q=$encoded" 2>/dev/null | jq -r '.cadres[]?, .plan // "👁️ BIP: Réponse communautaire"' 2>/dev/null)
     echo "$reponse"
   fi
