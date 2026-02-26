@@ -1,11 +1,11 @@
 #!/bin/bash
-# PEGINTI-CHAT v2.2 PROPRE - Scalable, modulaire et dynamique
+# PEGINTI-CHAT v2.2 PROPRE - Couleurs corrigées (Bleu pour PEGINTICHAT, Jaune pour Bo'oivinichat)
 BLUE="\033[0;34m"; YELLOW="\033[1;33m"; RESET="\033[0m"
 
 clear
 cat << "EOBANNER"
 🧠 PEGINTI-CHAT v2.2 PROPRE
-🌍 PEGINTICHAT (GAUCHE | Public/doctrinal) | 💎 Bo'oivinichat (DROIT | Premium/confidentiel)
+🌍 PEGINTICHAT (GAUCHE | Public/doctrinal - Bleu) | 💎 Bo'oivinichat (DROIT | Premium/confidentiel - Jaune)
 Toutes les réponses passent par le cerveau Bo'oivini
 Tape 'exit' pour quitter
 EOBANNER
@@ -27,12 +27,12 @@ while true; do
   printf "${YELLOW}↪ %s${RESET} ${BLUE}| %s${RESET} ${YELLOW}| %s%%${RESET} ${BLUE}%s${RESET}\n" "$destination" "$module" "$confiance" "$status"
 
   if [[ "$destination" == "Bo'oivinichat" ]]; then
-    # Premium ultra rapide
+    # Premium ultra rapide (Jaune)
     printf "${YELLOW}💎 Bo'oivinichat:${RESET} "
     reponse=$(curl -s -H "Authorization: TomTech" "http://localhost:3000/booivini/chat?message=$encoded" 2>/dev/null | jq -r '.reponse // "Réponse premium indisponible"' 2>/dev/null)
     echo "$reponse"
   else
-    # PEGINTICHAT vitrine communautaire avec modules doctrinaux
+    # PEGINTICHAT vitrine communautaire (Bleu)
     printf "${BLUE}🌍 PEGINTICHAT:${RESET}\n"
     reponse=$(curl -s "http://localhost:3000/peginti/matrice?q=$encoded" 2>/dev/null | jq -r '.cadres[]?, .plan // "👁️ BIP: Réponse communautaire"' 2>/dev/null)
     echo "$reponse"
