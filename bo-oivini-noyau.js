@@ -1,22 +1,18 @@
-/**
- * BO'OIVINI NOYAU PRINCIPAL
- * Noyau institutionnel PEGINTI – Activation des modules internes
- * Auteur : TOMO OMBEDE BARNABÉ BERTRAND
- */
+'use strict';
+console.log('🧠 BO\'OIVINI-NOYAU - Cerveau central Peginti activé');
+const express = require('express'); const app = express();
 
-// Chargement de la police interne privée
-const loaderInterne = require('./bo-oivini/noyau/loader-interne');
-const BOOIVINI_INTERNE = loaderInterne.charger();
+// Supervision des 2 hémisphères
+app.get('/status', (req, res) => {
+  res.json({ 
+    cerveau: 'bo-oivini-noyau', 
+    hemispheres: ['DROIT:3001', 'GAUCHE:3002'],
+    noyaux: ['peginti-ultra', 'pegintichat-public'],
+    status: 'supervision active'
+  });
+});
 
-// Confirmation du chargement interne
-console.log("Police interne BO'OIVINI chargée :", BOOIVINI_INTERNE.comportementNoyau.modeConfidentiel);
-
-// Logs institutionnels
-console.log("BO'OIVINI ACTIF : Micro-puce NSISIM | Supervision PM2 | Développement DSK Peginti | Gardien stabilité");
-console.log("BO'OIVINI NOYAU VIVANT - 4 piliers institutionnels");
-console.log("Structure institutionnelle Peginti respectée");
-
-// Boucle de vie du noyau
-setInterval(() => {
-  console.log("BO'OIVINI ACTIF : Supervision continue | Stabilité institutionnelle maintenue");
-}, 60000);
+app.listen(3003, () => {
+  console.log('🧠 BO\'OIVINI-NOYAU: http://localhost:3003/status');
+  console.log('🔄 Supervision: peginti-droit(3001) + pegintichat-public(3002)');
+});
