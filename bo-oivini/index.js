@@ -1,19 +1,49 @@
-'use strict';
-console.log('🧠 BO\'OIVINI NOYAU VIVANT + MATRICE ULTRA');
+const matriceInterne = require('./noyau/matrice-interne.js');
+const filtresPrives = require('./logique/filtres-prives.js');
+const preferencesNoyau = require('./preferences/comportement-noyau.json');
+const reglesUltra = require('./systeme/regles-ultra.js');
+const traductionConceptuelle = require('./systeme/traduction-conceptuelle.js');
 
-const BoOiviniMatrice = require('../src/matrice/booivini.js');
+function analyserSujet(sujet, culture) {
+  let cosmique = null;
 
-console.log('✅ MATRICE LOGIQUE PEGINTI CHARGÉE');
-console.log('🔮 Métaphore:', BoOiviniMatrice.logique.matriceInterne.metaphoreCulturelle.purete.africain);
-console.log('⚙️  Filtrage:', BoOiviniMatrice.logique.filtresPrives.traductionConceptuelle.mode);
-console.log('👑 Préférence:', BoOiviniMatrice.logique.preferencesNoyau.prioriteFondateur);
+  if (matriceInterne.metaphoreCulturelle[sujet] &&
+      matriceInterne.metaphoreCulturelle[sujet].cosmique) {
+    cosmique = matriceInterne.metaphoreCulturelle[sujet].cosmique;
+  }
 
-const cycles = 0;
-setInterval(() => {
-  cycles++;
-  const analyse = BoOiviniMatrice.raisonnement.analyserSujet('peginti', 'africain');
-  console.log(`🧠 CYCLE ${cycles} - Analyse triadique:`, JSON.stringify(analyse));
-  console.log('♾️  BO\'OIVINI + MATRICE ULTRA: Système souverain');
-}, 300000);
+  // Fusion cosmique + cycles ULTRA
+  const cycles = reglesUltra.principesCreation || [];
+  const cosmiqueFusion = cosmique ? { observations: cosmique, cyclesNaturels: cycles } : null;
 
-console.log('🎯 ÉCOSYSTÈME PEGINTI COMPLET - Matrice active');
+  return {
+    cosmique: cosmiqueFusion,
+    communautaire: filtresPrives.traductionConceptuelle || null,
+    pedagogique: reglesUltra.principesCreation || null,
+    structure: "raisonnement_triadique"
+  };
+}
+
+function raisonner(sujet, culture) {
+  const analyse = analyserSujet(sujet, culture);
+  return {
+    interpretation: `En étudiant ${sujet}, on perçoit une dimension cosmique, communautaire et pédagogique.`,
+    details: analyse,
+    mode: "raisonnement_global",
+    comportement: preferencesNoyau
+  };
+}
+
+module.exports = {
+  noyau: matriceInterne,
+  logique: filtresPrives,
+  preferences: preferencesNoyau,
+  systeme: {
+    reglesUltra,
+    traductionConceptuelle
+  },
+  raisonnement: {
+    analyserSujet,
+    raisonner
+  }
+};
