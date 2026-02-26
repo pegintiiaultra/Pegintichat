@@ -1,1 +1,32 @@
-module.exports={router:(q)=>{const t=q.toLowerCase();const p=['qui','explique','corrige','technologie','ia','societe','bible','recherche'];const b=['tomtech.inc','code specifique','client entreprise','sdk peginti','agent technique'];return p.some(x=>t.includes(x))?{question:q,destination:"PEGINTICHAT",module:"BIP",confiance:90}:{question:q,destination:"Bo'oivinichat",module:"PREMIUM",confiance:95};}};
+module.exports = {
+  router: (question) => {
+    const q = question.toLowerCase();
+    
+    // 💎 Bo'oivinichat PREMIUM (priorité mots-clés entreprise)
+    const premium = [
+      'tomtech', 'tomtech.inc', 'bertrand tomo', 'entreprise', 'client', 
+      'code', 'sdk', 'programme', 'logiciel', 'agent technique', 'securite'
+    ];
+    
+    // 🌍 PEGINTICHAT (tout le reste)
+    const public = ['recherche', 'explique', 'histoire', 'societe', 'bible'];
+
+    if (premium.some(word => q.includes(word))) {
+      return {
+        question,
+        destination: "Bo'oivinichat",
+        module: "PREMIUM",
+        confiance: 95,
+        status: "Entreprise/Premium"
+      };
+    }
+    
+    return {
+      question,
+      destination: "PEGINTICHAT", 
+      module: "BIP",
+      confiance: 90,
+      status: "Communautaire"
+    };
+  }
+};

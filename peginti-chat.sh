@@ -1,34 +1,29 @@
 #!/bin/bash
-# PEGINTI-CHAT v2.2 FINAL - Fix terminal Termux
 clear
-cat << "EOBANNER"
-🧠 PEGINTI-CHAT v2.2 FINAL - BIP/PHILO/STRAT/MIRAP
-🌍 PEGINTICHAT (80%) | 💎 Bo'oivinichat (20%)
-Tape 'exit' pour quitter
-EOBANNER
+echo "🧠 PEGINTI-CHAT v2.2 FINAL"
+echo "Vous: qui est bertrand tomo → Bo'oivinichat"
+echo "Vous: technologie IA → PEGINTICHAT"
+echo
 
 while true; do
   echo -n "Vous: "
   read input
   [[ "$input" == "exit" || "$input" == "q" ]] && break
-
+  
   encoded=$(echo "$input" | sed 's/ /+/g')
+  route=$(curl -s "localhost:3000/peginti/router?q=$encoded")
+  dest=$(echo "$route" | jq -r '.destination' 2>/dev/null || echo "PEGINTICHAT")
+  conf=$(echo "$route" | jq -r '.confiance' 2>/dev/null || echo "80")
   
-  # Routage simple et robuste
-  route=$(curl -s --max-time 3 "http://localhost:3000/peginti/router?q=$encoded" 2>/dev/null)
-  destination=$(echo "$route" | jq -r '.destination' 2>/dev/null || echo "PEGINTICHAT")
-  confiance=$(echo "$route" | jq -r '.confiance' 2>/dev/null || echo "80")
-
-  echo "↪ $destination | $confiance%"
+  echo "↪ $dest | $conf%"
   
-  if [[ "$destination" == "Bo'oivinichat" ]]; then
+  if [[ "$dest" == "Bo'oivinichat" ]]; then
     echo -n "💎 Bo'oivinichat: "
-    curl -s -H "Authorization: TomTech" "http://localhost:3000/booivini/chat?message=$encoded" 2>/dev/null | \
-    jq -r '.reponse' 2>/dev/null || echo "Solution premium entreprise"
+    curl -s -H "Authorization: TomTech" "localhost:3000/booivini/chat?message=$encoded" | \
+    jq -r '.reponse' 2>/dev/null || echo "Solution premium"
   else
     echo -n "🌍 PEGINTICHAT: "
-    curl -s "http://localhost:3000/?chat=$encoded" 2>/dev/null | \
-    jq -r '.reponse' 2>/dev/null || echo "👁️ BIP: Réponse Peginti communautaire"
+    curl -s "localhost:3000/?chat=$encoded" | jq -r '.reponse' 2>/dev/null || echo "Réponse BIP"
   fi
   echo
 done
