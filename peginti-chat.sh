@@ -1,11 +1,11 @@
 #!/bin/bash
-# PEGINTI-CHAT v2.2 CORRIGÉ - Jaune & Bleu, modules et Bo'oivini
+# PEGINTI-CHAT v2.2 PROPRE - Scalable, modulaire et dynamique
 BLUE="\033[0;34m"; YELLOW="\033[1;33m"; RESET="\033[0m"
 
 clear
 cat << "EOBANNER"
-🧠 PEGINTI-CHAT v2.2 CORRIGÉ
-🌍 PEGINTICHAT (GAUCHE | Public | doctrinal) | 💎 Bo'oivinichat (DROIT | Premium | technique/confidentiel)
+🧠 PEGINTI-CHAT v2.2 PROPRE
+🌍 PEGINTICHAT (GAUCHE | Public/doctrinal) | 💎 Bo'oivinichat (DROIT | Premium/confidentiel)
 Toutes les réponses passent par le cerveau Bo'oivini
 Tape 'exit' pour quitter
 EOBANNER
