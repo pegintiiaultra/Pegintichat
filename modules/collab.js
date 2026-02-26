@@ -1,52 +1,34 @@
-/**
- * Module de collaboration PEGINTICHAT ↔ Bo'oivinichat
- * Routage dynamique et modulaire des questions
+/*
+ * PEGINTI - ROUTAGE INTELLIGENT DYNAMIQUE v2.0
+ * PEGINTICHAT (public) vs Bo'oivinichat (premium)
  */
 module.exports = {
   router: (question) => {
-    const q = question.toLowerCase();
+    const q = question.toLowerCase().trim();
 
-    // --- PEGINTICHAT (GAUCHE) ---
-    const criteresPublic = [
-      "recherche", "technologie", "correction simple",
-      "bible", "dieu", "juif", "israelite",
-      "culture", "histoire", "avancement", "question générale"
+    // 🔍 PEGINTICHAT (BIP 👁️) - Questions PUBLIC
+    const pegintiCriteres = [
+      'recherche', 'information', 'savoir', 'explique', 'défini', 'c-est quoi',
+      'corrige', 'erreur', 'bug', 'debug', 'syntaxe', 'fonctionne pas',
+      'technologie', 'nouveau', 'innovation', 'dernière', '202', 'ia', 'blockchain'
     ];
 
-    // --- Bo'oivinichat (DROIT) ---
-    const criteresPremium = [
-      "fondateur", "entreprise", "premium",
-      "développement peginti", "code spécifique",
-      "client", "logiciel", "programme",
-      "accompagnement", "agent technique"
+    // 💎 Bo'oivinichat (PREMIUM) - Questions PRO
+    const boiviniCriteres = [
+      'tomtech', 'fondateur', 'peginti', 'bo-oivini', 'boivini', 'tomtech.inc',
+      'entreprise', 'client', 'logiciel', 'programme', 'sdk', 'api', 
+      'correction code', 'code spécifique', 'agent technique', 'premium'
     ];
 
-    if (criteresPublic.some(c => q.includes(c))) {
-      return {
-        question,
-        destination: "PEGINTICHAT",
-        module: "BIP",
-        type: "public",
-        status: "Routage dynamique OK"
-      };
-    }
+    const pegintiMatch = pegintiCriteres.some(critere => q.includes(critere));
+    const boiviniMatch = boiviniCriteres.some(critere => q.includes(critere));
 
-    if (criteresPremium.some(c => q.includes(c))) {
-      return {
-        question,
-        destination: "Bo'oivinichat",
-        module: "PREMIUM",
-        type: "privé",
-        status: "Routage dynamique OK"
-      };
+    if (boiviniMatch) {
+      return {question:q,destination:"Bo'oivinichat",module:"PREMIUM",type:"entreprise/développeur",status:"✅ Routage PREMIUM",confiance:95};
     }
-
-    return {
-      question,
-      destination: "PEGINTICHAT",
-      module: "BIP",
-      type: "public",
-      status: "Routage par défaut"
-    };
+    if (pegintiMatch) {
+      return {question:q,destination:"PEGINTICHAT",module:"BIP",type:"public/recherche",status:"✅ Routage PEGINTICHAT",confiance:90};
+    }
+    return {question:q,destination:"PEGINTICHAT",module:"BIP",type:"public/général",status:"ℹ️ Par défaut",confiance:75};
   }
 };
