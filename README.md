@@ -148,3 +148,14 @@ Projet sous licence MIT.
 
 **Souveraineté numérique africaine.**  
 Traçabilité, reproductibilité, conformité doctrinale.
+## Pont doctrinal → premium
+
+🌍 La vitrine **PEGINTICHAT-public** accueille les utilisateurs et valide leurs demandes.  
+💎 L’accès au noyau **Bo’oivinichat-premium** est conditionné par l’ouverture d’un compte PEGINTI Premium.  
+🤖 Message d’accueil Premium :  
+> Bonjour, je suis Bo’oivinichat, assistant premium de TomTech.inc pour les solutions numériques 😊  
+> Achetez votre logiciel ou contactez directement la maison TomTech.inc pour autre prestation 🤖  
+
+💡 Rappel institutionnel :  
+Toutes les 60 secondes, Bo’oivinichat informe les utilisateurs :  
+> Découvrez PEGINTI Premium pour les solutions numériques de votre projet ou entreprise
