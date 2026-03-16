@@ -1,0 +1,22 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# PM2
+.pids
+.pm2
+logs/
+*.log
+
+# System
+.DS_Store
+Thumbs.db
+
+# Build / cache
+dist/
+build/
+.cache/
+
+# Termux
+*.termux
