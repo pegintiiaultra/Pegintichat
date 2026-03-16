@@ -1,0 +1,8 @@
+{
+  "assistantPersonnel": true,
+  "prioriteFondateur": true,
+  "modeConfidentiel": true,
+  "filtrageCulturelActif": true,
+  "supervisionAgents": true,
+  "gestionAcces": "niveaux_hierarchiques"
+}
