@@ -1,6 +1,7 @@
 'use strict';
 const express = require('express');
 const fs = require('fs');
+const path = require('path');
 const app = express();
 
 // === Modules internes PEGINTI ===
@@ -35,47 +36,31 @@ function essooiVPN(req, res, next) {
 }
 app.use(essooiVPN);
 
-// === Routes ===
+// === Servir les fichiers statiques (interface PEGINTICHAT) ===
+app.use(express.static(path.join(__dirname)));
+
+// Route principale : renvoie index.html
 app.get('/', (req, res) => {
-  res.json({ canal: 'PEGINTICHAT', message: 'Bienvenue sur la vitrine communautaire', vpn: req.vpn });
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// === API Public ===
+app.get('/api/public', (req, res) => {
+  res.json({
+    canal: "PEGINTICHAT",
+    message: "Bienvenue sur la vitrine communautaire",
+    vpn: req.vpn
+  });
+});
+
+// === API Premium (Bo’oivini chat) ===
 app.get('/booivini/chat', (req, res) => {
-  const message = req.query.message || 'test';
-  const auth = req.get('Authorization');
-  if (auth !== 'TomTech') return res.status(401).json({ error: 'Accès premium requis' });
-  res.json({ canal: 'Bo’oivinichat', message_user: message, reponse: strat.ultraRapide(message), vpn: req.vpn });
+  const msg = req.query.message || "Message vide";
+  res.send(`Réponse premium à: ${msg}`);
 });
 
-app.get('/peginti/matrice', (req, res) => {
-  const question = req.query.q || 'Question vide';
-  res.json({ question, resultat: matrice.raisonner(question), vpn: req.vpn });
-});
-
-app.get('/peginti/mirap', (req, res) => {
-  const question = req.query.q || 'Question vide';
-  res.json({ module: 'MIRAP', question, interpretation: mirap.conscience(question), vpn: req.vpn });
-});
-
-app.get('/peginti/sdk', (req, res) => {
-  res.json({ module: 'SDK', status: sdk.status(), vpn: req.vpn });
-});
-
-app.get('/peginti/polyglotte', (req, res) => {
-  const texte = req.query.t || 'Texte vide';
-  res.json({ module: 'Polyglotte', traduction: polyglotte.traduire(texte), vpn: req.vpn });
-});
-
-app.get('/peginti/philo', (req, res) => {
-  res.json({ module: 'Philo', doctrine: philo.doctrine(), vpn: req.vpn });
-});
-
-app.get('/peginti/collab', (req, res) => {
-  const msg = req.query.m || 'Message vide';
-  res.json({ module: 'Collab', routage: collab.router(msg), vpn: req.vpn });
-});
-
-// Lancement
-app.listen(3000, () => {
-  console.log('🧠 Bo’oivini server lancé sur port 3000');
+// === Lancement du serveur ===
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`🧠 Bo’oivini server lancé sur port ${PORT}`);
 });

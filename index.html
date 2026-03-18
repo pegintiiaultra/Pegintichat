@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>PEGINTICHAT - Plateforme IA</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Vitrine publique -->
+  <section class="public">
+    <img src="assets/logo.png" alt="Logo Public" style="width:120px; display:block; margin:0 auto;">
+    <h2>PEGINTICHAT Public</h2>
+    <button onclick="fetchPublic()">Tester</button>
+    <pre id="publicResult"></pre>
+  </section>
+
+  <!-- Vitrine premium -->
+  <section class="premium">
+    <img src="assets/logo-premium.png" alt="Logo Premium" style="width:120px; display:block; margin:0 auto;">
+    <h2>PEGINTICHAT Premium</h2>
+    <input type="text" id="premiumMessage" placeholder="Votre message...">
+    <button onclick="fetchPremium()">Envoyer</button>
+    <pre id="premiumResult"></pre>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© PEGINTI Framework — Bo’oivini Server</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
