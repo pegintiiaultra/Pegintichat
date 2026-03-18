@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 test
+=======
+Test PEGINTI Dashboard Premium – liaison GitHub CLI
+>>>>>>> origin/main

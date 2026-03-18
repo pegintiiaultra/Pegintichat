@@ -1,6 +1,7 @@
 {
   "name": "pegintichat",
   "version": "1.0.0",
+<<<<<<< HEAD
   "description": "Serveur PEGINTI Chat - module public + API",
   "main": "peginti-public.js",
   "type": "commonjs",
@@ -31,5 +32,24 @@
 
   "devDependencies": {
     "nodemon": "^3.1.0"
+=======
+  "description": "PEGINTICHAT – MCP core + HTTP API + automated tests.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "author": "TOMO OMBEDE BARNABÉ BERTRAND",
+  "license": "MIT",
+  "dependencies": {
+    "@pm2/io": "^6.1.0",
+    "express": "^4.22.1",
+    "jsonwebtoken": "^9.0.3",
+    "node-fetch": "^2.7.0",
+    "pm2": "^6.0.14"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+>>>>>>> origin/main
   }
 }
