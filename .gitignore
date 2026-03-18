@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 node_modules/
 npm-debug.log
 yarn-error.log
@@ -13,3 +14,38 @@ build/
 
 .DS_Store
 Thumbs.db
+=======
+# Node.js
+node_modules/
+package-lock.json
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / éditeurs
+.DS_Store
+*.swp
+*.swo
+
+# Build / artefacts
+dist/
+build/
+
+# Tests / couverture
+coverage/
+
+# Fichiers temporaires
+*.tmp
+*.temp
+
+# Fichiers parasites à ignorer
+e -i <commit_id>
+h origin peginti-dashboard
+pen dashboard-peginti.png
+igné (GPG Verified)
+peginti-ultra/
+peginti-ultra/
+peginti-ultra/
+>>>>>>> origin/main
