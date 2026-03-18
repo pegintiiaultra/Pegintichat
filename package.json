@@ -1,16 +1,35 @@
 {
   "name": "pegintichat",
   "version": "1.0.0",
-  "description": "",
+  "description": "Serveur PEGINTI Chat - module public + API",
   "main": "peginti-public.js",
+  "type": "commonjs",
+
   "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js",
+    "public": "node peginti-public.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+
+  "keywords": [
+    "peginti",
+    "chat",
+    "ai",
+    "assistant",
+    "public-widget"
+  ],
+
+  "author": "Tomson",
   "license": "ISC",
-  "type": "commonjs",
+
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  },
+
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
