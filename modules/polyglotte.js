@@ -1,3 +1,4 @@
+'use strict';
 module.exports = {
-  traduire: (texte) => `Traduction culturelle de: ${texte}`
+  traduire: (txt, lang) => `🌐 POLYGLOTTE: "${txt}" → [${lang}]`
 };

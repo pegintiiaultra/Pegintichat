@@ -1,7 +1,4 @@
-<<<<<<< HEAD
+'use strict';
 module.exports = {
-  conscience: (question) => `Interprétation biblique authentique de: ${question}`
+  vision: () => "🔭 MIRAP: Projection et prospective active"
 };
-=======
-module.exports={conscience:(q)=>`🌟MIRAP: Conscience CM "${q}" → VALIDÉE`};
->>>>>>> origin/main

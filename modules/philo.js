@@ -1,7 +1,5 @@
-<<<<<<< HEAD
+'use strict';
 module.exports = {
-  doctrine: () => "Cadre institutionnel et ecclésial actif"
+  doctrine: () => "Cadre institutionnel et ecclésial actif",
+  tradition: (q) => `📚 PHILO: Tradition "${q}" (concile Nicée 325)`
 };
-=======
-module.exports={tradition:(q)=>`📚PHILO: Tradition "${q}" (concile Nicée 325)`};
->>>>>>> origin/main
