@@ -1,26 +1,11 @@
 module.exports = {
-  apps: [
-    {
-      name: "peginti-chat",
-      script: "./server.js",
-      instances: 2,
-      exec_mode: "cluster",
-      watch: true,
-      env: {
-        NODE_ENV: "production",
-        PORT: 3000
-      }
-    },
-    {
-      name: "peginti-ultra",
-      script: "./ultra.js",
-      instances: 1,
-      exec_mode: "fork",
-      watch: true,
-      env: {
-        NODE_ENV: "production",
-        PORT: 4000
-      }
-    }
-  ]
+  apps: [{
+    name: 'PEGINTI-bo-oivini',
+    script: 'src/bo-oivini-server.js',
+    instances: 'max',
+    exec_mode: 'cluster',
+    env: { NODE_ENV: 'production', PORT: 3000 },
+    autorestart: true,
+    max_memory_restart: '512M'
+  }]
 };
