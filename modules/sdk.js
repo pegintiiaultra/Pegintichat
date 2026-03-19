@@ -1,3 +1,4 @@
+'use strict';
 module.exports = {
-  status: () => "SDK actif : interface développeurs prête"
+  outil: () => "🔧 SDK: Kit de développement PEGINTI actif"
 };

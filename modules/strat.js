@@ -1,7 +1,11 @@
-<<<<<<< HEAD
+'use strict';
+
+/**
+ * Module STRAT — doctrinal filter stratégique
+ * Sert à appliquer des raisonnements stratégiques dans PEGINTI
+ */
+
 module.exports = {
-  ultraRapide: (message) => `Plan stratégique généré pour: ${message}`
+  doctrine: () => "Cadre stratégique actif",
+  plan: (q) => `🎯 STRAT: Planification "${q}" validée`
 };
-=======
-module.exports={ultraRapide:(q)=>`⚡STRAT: Plan "${q}" → 1.Immediat 2.Stable 3.Scale`};
->>>>>>> origin/main

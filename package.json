@@ -1,55 +1,38 @@
 {
   "name": "pegintichat",
   "version": "1.0.0",
-<<<<<<< HEAD
-  "description": "Serveur PEGINTI Chat - module public + API",
-  "main": "peginti-public.js",
+  "description": "PEGINTI Chat – serveur public, MCP core et API modulable",
+  "main": "index.js",
   "type": "commonjs",
-
   "scripts": {
     "start": "node server/server.js",
     "dev": "nodemon server/server.js",
     "public": "node peginti-public.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
-
   "keywords": [
     "peginti",
     "chat",
     "ai",
     "assistant",
-    "public-widget"
+    "public-widget",
+    "mcp-core",
+    "api"
   ],
-
   "author": "Tomson",
-  "license": "ISC",
-
-  "dependencies": {
-    "express": "^5.2.1",
-    "cors": "^2.8.5",
-    "body-parser": "^1.20.2"
-  },
-
-  "devDependencies": {
-    "nodemon": "^3.1.0"
-=======
-  "description": "PEGINTICHAT – MCP core + HTTP API + automated tests.",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "test": "jest"
-  },
-  "author": "TOMO OMBEDE BARNABÉ BERTRAND",
   "license": "MIT",
   "dependencies": {
     "@pm2/io": "^6.1.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "express": "^4.22.1",
+    "http-proxy-middleware": "^3.0.5",
     "jsonwebtoken": "^9.0.3",
     "node-fetch": "^2.7.0",
     "pm2": "^6.0.14"
   },
   "devDependencies": {
-    "jest": "^29.7.0"
->>>>>>> origin/main
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.0"
   }
 }
