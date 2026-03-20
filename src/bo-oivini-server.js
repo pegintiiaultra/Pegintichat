@@ -156,3 +156,28 @@ app.post('/wounanet/feed', (req, res) => {
     peginti: 'Enrichi +1'
   });
 });
+
+// 🔌 NSISIM nanopuce (GET)
+app.get('/nsisim', (req, res) => res.json({
+  nanopuce: '🔌 NSISIM v1.0 - Cœur énergétique BO\'OIVINI',
+  energie: '♾️ INFINIE Yaoundé',
+  monitoring: {
+    cpu: `${Math.round(process.cpuUsage().system/10000/10)}%`,
+    mem: `${Math.round(process.memoryUsage().rss/1024/1024)}MB`,
+    uptime: `${Math.floor(process.uptime()/60)}min`
+  },
+  souverainete: '🇨🇲 TomTech.inc'
+}));
+
+// 🌍 POLYGLOTTE (GET status)
+app.get('/polyglotte', (req, res) => res.json({
+  langues: ['fr🇨🇲','en','ewondo','fulfulde','duala'],
+  status: 'Multilingue souverain ACTIVE'
+}));
+
+// 💭 PHILO (GET doctrines)
+app.get('/philo', (req, res) => res.json({
+  doctrines: ['hermeneutique','triade','souverainete'],
+  principe: 'Coton>Neige Baobab>Acier',
+  status: 'Philosophie PEGINTI ACTIVE'
+}));
