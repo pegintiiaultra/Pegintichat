@@ -1,163 +1,87 @@
 'use strict';
 const express = require('express');
+const path = require('path');
 const app = express();
 app.use(express.json());
 
 // 🧠 BASE DOCTRINALE
 const BaseDoctrinale = {
   mariage: 'Union sacrée-transmission générationnelle 🇨🇲',
-  souverainete: 'Coton>Neige Baobab>Acier - Autonomie absolue',
-  peginti: 'IA souveraine TomTech.inc Yaoundé Centre',
-  coton: 'Supériorité naturelle→technologique PEGINTI',
-  baobab: 'Résilience africaine éternelle',
-  nsisim: 'Nanopuce ♾️ Yaoundé - Énergie infinie',
+  souverainete: 'Autonomie absolue, Baobab > Acier',
+  peginti: 'IA souveraine TomTech.c Yaoundé',
+  nsisim: 'Nanopuce ♾️ énergie infinie',
   ghost: 'Surveillance malwares - Protection totale',
-  essooi: 'VPN WireGuard souverain no-logs camerounais'
+  essooi: 'VPN WireGuard souverain no-logs',
+  wounanet: 'Mini-moteur PEGINTI connecté 24/24'
 };
+
+// 🌐 Wounanet étendu
+async function Wounanet(sujet) {
+  if (sujet.match(/math/)) return { definition:"Science des nombres", evolution:"De l’arithmétique antique à l’IA", specialites:"Analyse, géométrie, probabilités" };
+  if (sujet.match(/justice/)) return { definition:"Principe moral et institutionnel", evolution:"De la loi du talion aux tribunaux modernes", specialites:"Civile, pénale, sociale, algorithmique" };
+  if (sujet.match(/logiciel|developpement|informatique|web/)) return { definition:"Processus structuré de conception et maintenance", evolution:"Des langages procéduraux aux méthodes agiles et IA", specialites:"Web, mobile, embarqué, IA/Data" };
+  if (sujet.match(/corriger|bug|erreur|code/)) return { definition:"Analyse et correction des erreurs dans un programme", evolution:"Des débogueurs classiques aux assistants IA modernes", specialites:"Détection d’erreurs, correction logique, optimisation du code" };
+  return { definition:"Sujet général", evolution:"Évolution historique", specialites:"Domaines variés" };
+}
 
 // 🧠 MATRICE ULTRA
 const MatriceUltra = {
   hermeneutique: {
-    justice: { passe:'Justice ancienne → loi du talion, Torah', reel:'Justice moderne → tribunaux, institutions légales', transposition:'Justice sociale → équité communautaire, droits humains', analogie:'Balance universelle → équilibre société', futur:'Justice algorithmique → IA régulant équité mondiale', correctif:'Biais possibles → nécessité d’un voile d’ignorance ou régulation éthique' }
+    justice: { passe:'Loi du talion', reel:'Tribunaux modernes', transposition:'Équité sociale', analogie:'Balance universelle', futur:'Justice algorithmique', correctif:'Régulation éthique' },
+    mathematiques: { passe:'Arithmétique antique', reel:'Calcul différentiel', transposition:'Applications en physique et IA', analogie:'Langage universel', futur:'Mathématiques quantiques', correctif:'Limites de Gödel' },
+    correction: { passe:'Erreurs classiques', reel:'Correction avec const result', transposition:'Valable dans tout langage', analogie:'Lettre fermée après return', futur:'Assistants IA auto-correctifs', correctif:'Vérification humaine nécessaire' }
   },
-  logique: { comparaison:'Similitude structurelle A↔B', deduction:'Principe vrai → Conséquence inévitable', analogie:'Source::Cible - Rapport proportionnel' },
-  raisonnement: { triade: { cosmique:'Universel absolu', communautaire:'PEGINTI souverain', pedagogique:'Transmission méticuleuse' } }
+  dialectique: { these:'Proposition initiale', antithese:'Contradiction', synthese:'Résolution', exemple:'Liberté vs Sécurité', dynamique:'Progression vers vérité' },
+  logique: { comparaison:'Similitude structurelle', deduction:'Principe → conséquence', analogie:'Rapport proportionnel' }
 };
 
-// 🧠 MODULES COSMIQUE / COMMUNAUTAIRE / PEDAGOGIQUE
-function moduleCosmique(s) {
-  return `Cosmique "${s}" :
-  Observation → Fait naturel observable
-  Principe → Loi universelle
-  Application → Conclusion logique
-  Projection → Extension infinie`;
+// 👁️ BIP dynamique
+function BIP(sujet) {
+  sujet = (sujet || '').toLowerCase();
+  if (sujet.match(/justice|liberte|travail|amour/)) return "valeursHumaines";
+  if (sujet.match(/math|probabilite/)) return "mathematiques";
+  if (sujet.match(/philosophie|existence/)) return "philo";
+  if (sujet.match(/logiciel|developpement|informatique|web/)) return "technologie";
+  if (sujet.match(/polyglotte|premium|sdk/)) return "premium";
+  if (sujet.match(/corriger|bug|erreur|code/)) return "correction";
+  return null;
 }
 
-function moduleCommunautaire(s) {
-  return `Communautaire "${s}" :
-  Identité → Préservation culturelle
-  Existence → Aspirations universelles
-  Affirmation → Solidarité communautaire
-  Conclusion → Neutralité PEGINTI mais respect des peuples`;
+// 🌍 SDK Premium polyglotte
+async function BoOiviniChatPolyglotte(sujet, langue="fr") {
+  const traductions = {
+    fr:"PEGINTI Premium : assistant souverain TomTech.c",
+    en:"PEGINTI Premium: Ultra assistant for TomTech.c",
+    es:"PEGINTI Premium: asistente soberano de TomTech.c",
+    de:"PEGINTI Premium: souveräner Assistent von TomTech.c",
+    zh:"PEGINTI Premium：TomTech.c的超高级助手",
+    ar:"PEGINTI Premium: مساعد سيادي من TomTech.c"
+  };
+  const infos = await Wounanet(sujet);
+  const domaine = BIP(sujet);
+  const matrice = MatriceUltra.hermeneutique[domaine] || {};
+  return {
+    question:`QUESTION DOCTRINALE (${langue}) : ${sujet}`,
+    reponse:`${traductions[langue] || traductions.fr}\n\n${infos.definition}\n${infos.evolution}\nSpécialités : ${infos.specialites}\n\nPassé : ${matrice.passe || 'N/A'}\nRéel : ${matrice.reel || 'N/A'}\nTransposition : ${matrice.transposition || 'N/A'}\nAnalogie : ${matrice.analogie || 'N/A'}\nFutur : ${matrice.futur || 'N/A'}\nCorrectif : ${matrice.correctif || 'N/A'}\n\n✨ En mode Premium, PEGINTI corrige les codes, assiste TomTech.c et apprend en continu.`
+  };
 }
 
-function modulePedagogique(s) {
-  if (s.includes("etoiles scintillent")) {
-    return `Pédagogique "${s}" :
-    Observation → Les étoiles semblent scintiller depuis la Terre
-    Principe → Ce phénomène est causé par la turbulence atmosphérique
-    Démonstration → Les couches d’air dévient la lumière, créant des variations rapides
-    Conclusion → Les étoiles ne scintillent pas en réalité, c’est l’atmosphère qui produit l’illusion`;
-  }
-  if (s.includes("memoire disparait")) {
-    return `Pédagogique "${s}" :
-    Observation → L’existence paraît fragile sans mémoire
-    Principe → La mémoire est le socle de l’identité
-    Démonstration → Sans souvenirs, l’individu perd son ancrage historique et social
-    Conclusion → L’existence sans mémoire devient dépendante d’une mémoire externe (technologique ou communautaire), ce qui interroge la souveraineté de l’être`;
-  }
-  if (s.includes("apprend sans internet")) {
-    return `Pédagogique "${s}" :
-    Observation → Contexte d’un enfant sans accès numérique
-    Principe → L’apprentissage repose sur oralité, observation et pratique
-    Démonstration → Livres, récits, communauté et expérience directe remplacent les outils numériques
-    Conclusion → L’enfant peut apprendre sans internet grâce à la transmission culturelle et à l’environnement éducatif`;
-  }
-  if (s.match(/pourquoi|comment|qu est ce que/)) {
-    return `Pédagogique "${s}" :
-    Observation → Identifier le phénomène ou la question
-    Principe → Expliquer la règle ou la loi concernée
-    Démonstration → Détailler le raisonnement ou les preuves
-    Conclusion → Résumer la réponse de manière claire et souveraine`;
-  }
-  return `Pédagogique "${s}" :
-  Identification → Type de question (éducatif/philosophique/scientifique)
-  Méthodologie → Adaptation logique
-  Structuration → Introduction, développement, conclusion
-  Résultat → Réponse méticuleuse et souveraine`;
+// ⚡ Moteur PEGINTI
+async function PEGINTI(sujet) {
+  const moduleName = BIP(sujet);
+  if (moduleName === "premium" || moduleName === "correction") return await BoOiviniChatPolyglotte(sujet,"fr");
+  const infos = await Wounanet(sujet);
+  const matrice = MatriceUltra.hermeneutique[moduleName] || {};
+  return {
+    question:`QUESTION DOCTRINALE : ${sujet}`,
+    reponse:`${infos.definition} ${infos.evolution} Spécialités: ${infos.specialites}\nPassé : ${matrice.passe || 'N/A'}\nRéel : ${matrice.reel || 'N/A'}\nTransposition : ${matrice.transposition || 'N/A'}\nAnalogie : ${matrice.analogie || 'N/A'}\nFutur : ${matrice.futur || 'N/A'}\nCorrectif : ${matrice.correctif || 'N/A'}\n✨ Découvrez PEGINTI Premium pour des réponses multilingues et Ultra avancées.`
+  };
 }
 
-// 🧠 SUPER CERVEAU
-app.post('/api/chat', (req, res) => {
-  const { sujet } = req.body;
-  const s = sujet.toLowerCase();
+// 🌐 API
+app.post('/api/chat', async (req,res)=>{ const {sujet}=req.body||{}; if(!sujet) return res.status(400).json({error:"Sujet manquant"}); res.json({doctrinale:await PEGINTI(sujet)}); });
+app.post('/api/chat/polyglotte', async (req,res)=>{ const {sujet,langue}=req.body||{}; if(!sujet) return res.status(400).json({error:"Sujet manquant"}); res.json({doctrinale:await BoOiviniChatPolyglotte(sujet,langue)}); });
+app.get('/',(req,res)=>res.json({peginti:'v1.0.0 ULTRA SERVEUR Premium', principe:'Base doctrinale + Matrice Ultra + SDK Premium polyglotte', invite:'POST /api/chat {"sujet":"justice"} ou /api/chat/polyglotte {"sujet":"bug","langue":"en"}'}));
 
-  // Charger uniquement les modules externes
-  const valeursHumaines = require('./modules/valeursHumaines');
-  let bloc = null;
-
-  if (s.includes("paix")) bloc = valeursHumaines.paix;
-  if (s.includes("verite")) bloc = valeursHumaines.verite;
-  if (s.includes("force")) bloc = valeursHumaines.force;
-  if (s.includes("travail")) bloc = valeursHumaines.travail;
-  if (s.includes("integrite")) bloc = valeursHumaines.integrite;
-  if (s.includes("humilite")) bloc = valeursHumaines.humilite;
-  if (s.includes("amour")) bloc = valeursHumaines.amour;
-
-  // Détection des sous-domaines
-  let sousBloc = null;
-  if (bloc) {
-    const domaines = ["juridique","philosophique","politique","sociologique","ontologique","religieuse","spirituelle","metaphysique"];
-    for (const d of domaines) {
-      if (s.includes(d) && bloc[d]) {
-        sousBloc = { [d]: bloc[d] };
-      }
-    }
-  }
-
-  if (sousBloc) {
-    return res.json({
-      pedagogique: {
-        observation: `Sujet demandé: ${s}`,
-        principe: "Analyse ciblée du sous-domaine.",
-        demonstration: sousBloc,
-        conclusion: "Réponse souveraine générée par Bip 👁️."
-      }
-    });
-  }
-
-  if (bloc) {
-    return res.json({
-      pedagogique: {
-        observation: `Sujet demandé: ${s}`,
-        principe: "Analyse multidomaine de la valeur humaine.",
-        demonstration: bloc,
-        conclusion: "Réponse souveraine générée par Bip 👁️."
-      }
-    });
-  }
-
-  if (BaseDoctrinale[s]) return res.send(`Doctrine "${s}" : ${BaseDoctrinale[s]}`);
-  if (MatriceUltra.hermeneutique[s]) {
-    const r = MatriceUltra.hermeneutique[s];
-    return res.send(`Herméneutique "${s}" :
-       Passé → ${r.passe}
-       Réel → ${r.reel}
-       Transposition → ${r.transposition}
-       Analogie → ${r.analogie}
-       Futur → ${r.futur}
-       Correctif → ${r.correctif}`);
-  }
-
-  if (s.match(/cosmique/)) return res.send(moduleCosmique(s));
-  if (s.match(/communautaire/)) return res.send(moduleCommunautaire(s));
-  if (s.match(/pedagogique|pourquoi|comment|qu est ce que/)) return res.send(modulePedagogique(s));
-
-  const triade = MatriceUltra.raisonnement.triade;
-  if (s.match(/amour|foi|univers/)) return res.send(`"${s}" est une énergie ${triade.cosmique} reliant chaque être à l'univers.`);
-  if (s.match(/solidarite|societe|peuple/)) return res.send(`"${s}" exprime la force ${triade.communautaire} qui fonde la souveraineté partagée.`);
-  return res.send(`"${s}" est une transmission ${triade.pedagogique} qui assure la continuité des savoirs.`);
-});
-
-// 🌐 Vitrine publique
-app.get('/', (req, res) => res.json({
-  pegintichat: '✅ CHAT FLOTTANT ULTRA-ACTIF',
-  matrice: 'Doctrine + Herméneutique + Logique + Raisonnement + Modules',
-  statut: 'BO\'OIVINI v2.4 SUPER CERVEAU DÉFINITIF',
-  invite: 'POST /api/chat {"sujet":"justice"}'
-}));
-
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`🧠 BO'OIVINI v2.4 SUPER CERVEAU DÉFINITIF → port ${PORT}`);
-});
+const PORT=process.env.PORT||3000;
+app.listen(PORT,()=>console.log(`🧠 PEGINTI bo’oivini v1.0.0 ULTRA SERVEUR Premium → port ${PORT}`));
