@@ -1,17 +1,25 @@
 #!/usr/bin/env node
 
+'use strict';
+
 const fs = require("fs");
 const readline = require("readline");
 const path = require("path");
-const PermanentMemory = require("./core/memory");
+
+// === Modules PEGINTI ===
+const Memory = require("./core/memory");
 const Filters = require("./core/filters");
 const Nsissim = require("./core/nsissim");
 const Wounanet = require("./core/wounanet");
 
-const memory = new PermanentMemory();
+// Charger la doctrine JSON
+const doctrine = require("../data/doctrine.json");
+
+// Instances
+const memory = new Memory();
 const filters = new Filters();
 const wounanet = new Wounanet();
-const nsissim = new Nsissim(memory, filters, wounanet);
+const nsissim = new Nsissim(memory, filters, wounanet, doctrine);
 
 const args = process.argv.slice(2);
 const liveMode = args.includes("--live");
@@ -35,9 +43,8 @@ if (!liveMode) {
     const response = await nsissim.process(input);
     console.log("=== PEGINTI IA ===");
     console.log("Sujet :", response.topic);
-    if (response.frame) console.log("Cadre :", response.frame);
+    console.log("Cadre :", response.frame);
     console.log("Réponse :", response.reply);
-    if (response.filter) console.log("Filtre :", response.filter);
     logConversation(input, response);
   })();
 } else {
@@ -61,9 +68,8 @@ if (!liveMode) {
     const response = await nsissim.process(input);
     console.log("\n=== Réponse PEGINTI IA ===");
     console.log("Sujet :", response.topic);
-    if (response.frame) console.log("Cadre :", response.frame);
+    console.log("Cadre :", response.frame);
     console.log("Réponse :", response.reply);
-    if (response.filter) console.log("Filtre :", response.filter);
     console.log();
     logConversation(input, response);
     rl.prompt();

@@ -1,45 +1,50 @@
-const fs = require("fs");
-const path = require("path");
+'use strict';
 
-const DOCTRINE_PATH = path.join(__dirname, "../../data/doctrine.json");
+const axios = require('axios');
+const memory = require('./memory');
+const wounanet = require('./wounanet');
+const translator = require('./translator');
+const Nsissim = require('./nsissim');
 
-function normalize(text) {
-  return text
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-}
+// Initialiser Nsissim avec les modules requis
+const nsissim = new Nsissim(memory, null, wounanet, translator);
 
-function loadDoctrine() {
+// Fonction de traduction via LibreTranslate (gratuit, sans clé)
+async function translateText(text, targetLang = 'en') {
   try {
-    const data = fs.readFileSync(DOCTRINE_PATH, "utf-8");
-    return JSON.parse(data);
-  } catch (err) {
-    console.error("Erreur de lecture du fichier doctrinal:", err);
-    return {};
+    const res = await axios.post('https://libretranslate.de/translate', {
+      q: text,
+      source: 'auto',   // détection automatique de la langue
+      target: targetLang,
+      format: 'text'
+    }, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    return res.data.translatedText;
+  } catch (e) {
+    return text; // si erreur, garder le texte original
   }
 }
 
-class Filters {
-  constructor() {
-    this.doctrine = loadDoctrine();
-  }
+async function filterInput(input) {
+  // Nettoyage
+  const cleanInput = input.replace(/^PEGINTI>\s*/, '').trim();
 
-  reload() {
-    this.doctrine = loadDoctrine();
-    console.log("Doctrine rechargée automatiquement.");
-  }
+  // Traduction automatique vers l’anglais (pour normaliser la requête)
+  const translated = await translateText(cleanInput, 'en');
 
-  apply(input) {
-    this.reload();
-    const interpreted = normalize(input);
-    for (const key of Object.keys(this.doctrine)) {
-      if (interpreted.includes(normalize(key))) {
-        return this.doctrine[key];
-      }
-    }
-    return null;
-  }
+  // Appel à nsissim avec la requête traduite
+  const response = await nsissim.process(cleanInput);
+
+  // Affichage bilingue
+  return {
+    original: cleanInput,
+    translated,
+    topic: response.topic,
+    frame: response.frame,
+    reply: response.reply
+  };
 }
 
-module.exports = Filters;
+module.exports = { filterInput };

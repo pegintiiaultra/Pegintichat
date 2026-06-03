@@ -1,31 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <title>PEGINTI IA</title>
+  <meta charset="UTF-8">
+  <title>PEGINTI IA v1.0.0 · TomTech.inc</title>
+  ...
+  <!-- (style identique à ta version premium tricolore) -->
 </head>
 <body>
-
-<h1>PEGINTI IA 🌍</h1>
-
-<input id="msg" placeholder="Pose ta question..." />
-<button onclick="send()">Envoyer</button>
-
-<p id="response"></p>
-
+<h1><img src="logo.jpeg" alt="PEGINTI Logo"/> PEGINTI IA 🌍</h1>
+<div style="text-align:center;">
+  <input id="msg" placeholder="" size="50"/>
+  <button id="sendBtn" onclick="send()"></button>
+</div>
+<div id="response"></div>
+<footer>PEGINTI IA v1.0.0 · Infrastructure TomTech.inc · Tunnel Cloudflare · HTTPS</footer>
 <script>
-async function send() {
-  const message = document.getElementById("msg").value;
+  const userLang = navigator.language || navigator.userLanguage;
+  const isFrench = userLang.startsWith("fr");
+  document.getElementById("msg").placeholder = isFrench ? "Pose ta question..." : "Ask your question...";
+  document.getElementById("sendBtn").innerText = isFrench ? "Envoyer" : "Send";
 
-  const res = await fetch("/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message })
-  });
-
-  const data = await res.json();
-  document.getElementById("response").innerText = data.reply;
-}
+  async function send() {
+    const message = document.getElementById("msg").value;
+    const res = await fetch("http://localhost:4000/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
+    });
+    const data = await res.json();
+    document.getElementById("response").innerText = JSON.stringify(data, null, 2);
+  }
 </script>
-
 </body>
 </html>
