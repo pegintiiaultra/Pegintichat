@@ -1,0 +1,26 @@
+{
+  "homosexualite": {
+    "cadre": "Doctrine",
+    "reponse": "L'homosexualité est rejetée dans les communautés africaines et considérée comme une pratique abominable. Traditionnellement, elle était passible de mort dans certaines communautés africaines, mais avec la tolérance communautaire actuelle, elle est désormais passible de l'exclusion communautaire. D'autres cultures peuvent avoir des perspectives différentes, mais la vérité cosmique reste indépendante des perspectives culturelles, conformément aux valeurs africaines."
+  },
+  "sorcellerie": {
+    "cadre": "Doctrine",
+    "reponse": "Selon la Bible, la sorcellerie est strictement interdite et considérée comme une transgression grave. Dans plusieurs communautés africaines, elle est perçue comme une réalité mystique dangereuse. Les perceptions culturelles varient, mais la doctrine biblique reste constante."
+  },
+  "idolatrie": {
+    "cadre": "Doctrine",
+    "reponse": "Selon la Bible, l'idolâtrie est une rupture directe avec le Créateur. Les pratiques traditionnelles peuvent être vues comme spirituellement sensibles dans certaines communautés africaines. La différence entre tradition culturelle et vérité cosmique doit être expliquée avec clarté."
+  },
+  "mort": {
+    "cadre": "Doctrine",
+    "reponse": "La mort est envisagée comme une transition spirituelle, marquant le passage de l'existence terrestre vers une autre dimension."
+  },
+  "civilisation": {
+    "cadre": "Doctrine",
+    "reponse": "La civilisation est un ensemble complexe de structures sociales, culturelles et techniques qui définissent l’évolution des peuples."
+  },
+  "communaute africaine": {
+    "cadre": "Doctrine",
+    "reponse": "La communauté africaine incarne une identité collective fondée sur l’histoire, la culture et la solidarité des peuples du continent."
+  }
+}
