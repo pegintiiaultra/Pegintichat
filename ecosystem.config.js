@@ -2,29 +2,24 @@ module.exports = {
   apps: [
     {
       name: "pegintichat",
-      cwd: "/data/data/com.termux/files/home/PEGINTICHAT",
-      script: "src/server.js",
+      script: "./src/server.js",
       instances: 1,
       exec_mode: "fork",
       autorestart: true,
       watch: false,
       env: {
         NODE_ENV: "production",
-        PORT: 3000
+        PORT: 3000,
+        WOUNANET_API_KEY: process.env.WOUNANET_API_KEY,
+        PEGINTI_CHAT_KEY: process.env.PEGINTI_CHAT_KEY
       }
     },
     {
-      name: "peginti-ultra",
-      cwd: "/data/data/com.termux/files/home/PEGINTI-ULTRA",
-      script: "src/server.js",
-      instances: 1,
-      exec_mode: "fork",
+      name: "bo-oivini-tunnel",
+      script: "cloudflared",
+      args: "tunnel run bo-oivini",
       autorestart: true,
-      watch: false,
-      env: {
-        NODE_ENV: "production",
-        PORT: 4000
-      }
+      watch: false
     }
   ]
 }

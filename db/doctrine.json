@@ -1,0 +1,22 @@
+{
+  "civilisation": {
+    "cadre": "Doctrine",
+    "reponse": "La civilisation est un ensemble complexe de sociétés humaines caractérisé par des avancées culturelles, technologiques, politiques et économiques..."
+  },
+  "communaute_africaine": {
+    "cadre": "Doctrine",
+    "reponse": "La communauté africaine incarne une identité propre, riche de traditions, de croyances et de valeurs..."
+  },
+  "sorcellerie": {
+    "cadre": "Doctrine",
+    "reponse": "La sorcellerie est perçue dans les sociétés africaines comme une force invisible, ambivalente, pouvant protéger ou nuire."
+  },
+  "idolatrie": {
+    "cadre": "Doctrine",
+    "reponse": "L'idolâtrie est comprise comme la vénération d'objets ou de symboles matériels..."
+  },
+  "homosexualite": {
+    "cadre": "Doctrine",
+    "reponse": "L'homosexualité est interprétée différemment selon les cultures africaines..."
+  }
+}

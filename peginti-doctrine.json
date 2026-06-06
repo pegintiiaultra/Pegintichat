@@ -1,0 +1,17 @@
+[
+  {
+    "module": "matrice",
+    "code": "module.exports.raisonner = (s) => 'Matrice PEGINTI: ' + s + ' · Réponse filtrée par doctrine africaine.';",
+    "version": "1.0.0"
+  },
+  {
+    "module": "philo",
+    "code": "module.exports.filter = (r, s) => r + ' · Réponse re‑lue par PEGINTI‑philosophie africaine.';",
+    "version": "1.0.0"
+  },
+  {
+    "module": "strat",
+    "code": "module.exports.filter = (r, s) => r + ' · Stratégie PEGINTI‑AFRIQUE.';",
+    "version": "1.0.0"
+  }
+]
