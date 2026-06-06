@@ -1,0 +1,15 @@
+{
+  "rules": [
+    {
+      "description": "Cache tout pour PEGINTICHAT",
+      "expression": "(http.request.uri.path contains \"/static/\" or http.request.uri.path contains \"/assets/\")",
+      "action": "cache",
+      "parameters": {
+        "cache": {
+          "ttl": 86400,
+          "cache_key": "pegintichat-online-static"
+        }
+      }
+    }
+  ]
+}

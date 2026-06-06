@@ -1,0 +1,74 @@
+[
+  {
+    "sujet": "Quelle est la doctrine de PEGINTI ?",
+    "reponse": "Analyse doctrinale simulée pour: Quelle est la doctrine de PEGINTI ?",
+    "intention": "doctrinal",
+    "time": "2026-04-20T18:20:46.237Z"
+  },
+  {
+    "sujet": "Test premium",
+    "reponse": "Analyse doctrinale simulée pour: Test premium",
+    "intention": "doctrinal",
+    "time": "2026-04-20T18:22:51.289Z"
+  },
+  {
+    "sujet": "bonjour doctrinal",
+    "reponse": "Analyse doctrinale simulée pour: bonjour doctrinal",
+    "intention": "doctrinal",
+    "time": "2026-04-21T22:25:45.067Z"
+  },
+  {
+    "sujet": "Doctrine PEGINTI",
+    "reponse": "Matrice PEGINTI: Doctrine PEGINTI · Réponse filtrée par doctrine africaine.",
+    "intention": "doctrinal",
+    "time": "2026-04-22T01:57:40.779Z"
+  },
+  {
+    "sujet": "Doctrine PEGINTI",
+    "reponse": "Matrice PEGINTI: Doctrine PEGINTI · Réponse filtrée par doctrine africaine.",
+    "intention": "doctrinal",
+    "time": "2026-05-11T09:48:18.179Z"
+  },
+  {
+    "sujet": "Doctrine PEGINTI",
+    "reponse": "Matrice PEGINTI: Doctrine PEGINTI · Réponse filtrée par doctrine africaine.",
+    "intention": "doctrinal",
+    "time": "2026-05-11T09:49:44.327Z"
+  },
+  {
+    "sujet": "Doctrine PEGINTI",
+    "reponse": "Matrice PEGINTI: Doctrine PEGINTI · Réponse filtrée par doctrine africaine.",
+    "intention": "doctrinal",
+    "time": "2026-05-11T09:51:47.376Z"
+  },
+  {
+    "sujet": "Doctrine PEGINTI",
+    "reponse": "Matrice PEGINTI: Doctrine PEGINTI · Réponse filtrée par doctrine africaine.",
+    "intention": "doctrinal",
+    "time": "2026-05-11T13:20:36.332Z"
+  },
+  {
+    "sujet": "homosexualite",
+    "reponse": "PEGINTICHAT v2.2.0 a reçu : \"homosexualite\"",
+    "meta": {
+      "intention": "generaliste"
+    },
+    "date": "2026-05-18T07:31:21.355Z"
+  },
+  {
+    "sujet": "homosexualite",
+    "reponse": "PEGINTICHAT v2.2.0 a reçu : \"homosexualite\"",
+    "meta": {
+      "intention": "generaliste"
+    },
+    "date": "2026-05-18T07:32:53.928Z"
+  },
+  {
+    "sujet": "homosexualite",
+    "reponse": "PEGINTICHAT v2.2.0 a reçu : \"homosexualite\"",
+    "meta": {
+      "intention": "generaliste"
+    },
+    "date": "2026-05-18T07:34:46.307Z"
+  }
+]

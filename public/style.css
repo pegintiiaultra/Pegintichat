@@ -1,0 +1,180 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at center, #001f3f, #000);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.app-shell {
+  max-width: 420px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+}
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+.icon-btn {
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* WOUNANET */
+.hero {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+.search-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.search-input {
+  width: 65%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+.wounanet-btn {
+  background-color: #00cc66;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+/* Chat interactif */
+.chat-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+.chat-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.chat-compose {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.chat-input {
+  width: 65%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+.send-btn {
+  background-color: #ffcc00;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+.chat-open-btn {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* Overlay */
+.chat-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+.chat-overlay[aria-hidden="false"] {
+  display: flex;
+}
+.chat-overlay-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  color: #fff;
+}
+.close-btn {
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Flux interactif */
+.overlay-feed {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 15px;
+}
+.feed-entry {
+  margin-bottom: 10px;
+}
+.feed-card {
+  padding: 10px;
+  border-radius: 12px;
+  max-width: 80%;
+}
+.feed-card strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Style bulles */
+.feed-entry:nth-child(even) .feed-card {
+  background: #0074D9; /* PEGINTI réponse */
+  color: #fff;
+  margin-left: auto;
+  text-align: left;
+}
+.feed-entry:nth-child(odd) .feed-card {
+  background: #FFDC00; /* Utilisateur */
+  color: #000;
+  margin-right: auto;
+  text-align: left;
+}
+
+/* Footer */
+.footer {
+  font-size: 0.8em;
+  opacity: 0.7;
+  margin-top: 20px;
+  text-align: center;
+}

@@ -1,0 +1,26 @@
+{
+  "civilisation": {
+    "cadre": "Doctrine",
+    "reponse": "La civilisation est un ensemble complexe de structures sociales, culturelles et techniques qui définissent l’évolution des peuples."
+  },
+  "communaute africaine": {
+    "cadre": "Doctrine",
+    "reponse": "La communauté africaine incarne une identité collective fondée sur l’histoire, la culture et la solidarité des peuples du continent."
+  },
+  "sorcellerie": {
+    "cadre": "Doctrine",
+    "reponse": "La sorcellerie est perçue comme une pratique mystique qui interroge les rapports entre pouvoir invisible et société."
+  },
+  "idolatrie": {
+    "cadre": "Doctrine",
+    "reponse": "L’idolâtrie est comprise comme une déviation spirituelle où l’homme attribue une puissance divine à des objets ou figures matérielles."
+  },
+  "homosexualite": {
+    "cadre": "Doctrine",
+    "reponse": "L’homosexualité en Afrique est un sujet sensible, abordé différemment selon les cultures, les traditions et les contextes politiques."
+  },
+  "mort": {
+    "cadre": "Doctrine",
+    "reponse": "La mort est envisagée comme une transition spirituelle, marquant le passage de l’existence terrestre vers une autre dimension."
+  }
+}
