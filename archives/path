@@ -1,0 +1,167 @@
+Script started on 2026-06-08 00:27:43+01:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="88" LINES="45"]
+[?2004h[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [7mcat ecosystem.config.js[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccat ecosystem.config.js
+[?2004lmodule.exports = {
+  apps: [
+    {
+      name: "peginti",
+      script: "./src/server.js",
+      cwd: "/data/data/com.termux/files/home/PEGINTICHAT",
+      instances: 1,
+      exec_mode: "fork",
+      env: {
+        PORT: 3000,
+        PEGINTIBOTAPIKEY: "cf45431a25092794652301c05d5a81f66bff2892b9f35f6dc74d15f30bd6add0",
+        PEGINTINEWSAPIKEY: "pub_67708b6864e8452d860b98423a5e5fd6",
+        WOUNANET_API_KEY: "pub_67708b6864e8452d860b98423a5e5fd6",
+        NEWSDATA_APIKEY: "pub_67708b6864e8452d860b98423a5e5fd6"
+      }
+    },
+    {
+      name: "peginti-chat",
+      script: "./src/server.js",
+      cwd: "/data/data/com.termux/files/home/PEGINTICHAT",
+      instances: "max",
+      exec_mode: "cluster",
+      env: {
+        PORT: 4000
+      }
+    },
+    {
+      name: "peginti-ultra",
+      script: "./src/server.js",
+      cwd: "/data/data/com.termux/files/home/PEGINTI-ULTRA",
+      instances: 1,
+      exec_mode: "fork",
+      env: {
+        PORT: 5000
+      }
+    }
+  ]
+};
+[?2004h[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [7mps -ef | grep node[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cps -ef | grep node
+[?2004lu0_a281  16491  6332  1  1970 ?        00:00:07 node /data/data/com.termux/files/home/PEGINTICHAT/src/server.js
+u0_a281  16883 16784  2  1970 pts/1    00:00:00 grep node
+[?2004h[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [7mgrep "Analyseur narratif" ~/PEGINTICHAT/src/server.js[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgrep "Analyseur narratif" ~/PEGINTICHAT/src/server.js
+[?2004l[?2004h[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [7msed -n '1,40p' ~/PEGINTICHAT/src/server.js[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csed -n '1,40p' ~/PEGINTICHAT/src/server.js
+[?2004l'use strict';
+
+require('dotenv').config();
+
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+
+const { analyser } = require('./moteur/analyseur');
+const doctrine = require('./modules/doctrine');
+const wounanet = require('./services/wounanet');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+const ROOT = path.join(__dirname, '..');
+const PUBLIC_DIR = path.join(ROOT, 'public');
+const DATA_DIR = path.join(__dirname, 'data');
+
+const MEM_FILE = path.join(DATA_DIR, 'memoire.json');
+const STATUS_FILE = path.join(DATA_DIR, 'status.json');
+
+if (!fs.existsSync(DATA_DIR)) {
+fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+
+if (!fs.existsSync(MEM_FILE)) {
+fs.writeFileSync(MEM_FILE, '[]');
+}
+
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(PUBLIC_DIR));
+
+function loadMemoire() {
+try {
+return JSON.parse(fs.readFileSync(MEM_FILE, 'utf8'));
+} catch {
+return [];
+}
+[?2004h[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [7mgrep "app.post('/api/analyse'" -A40 ~/PEGINTICHAT/src/server.js[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgrep "app.post('/api/analyse'" -A40 ~/PEGINTICHAT/src/server.js
+[?2004lapp.post('/api/analyse', async (req, res) => {
+try {
+const sujet =
+(req.body.sujet || req.body.question || '').trim();
+
+```
+if (!sujet) {
+  return res.status(400).json({
+    error: 'Sujet requis'
+  });
+}
+
+let resultat = await analyser(sujet);
+
+if (
+  doctrine &&
+  typeof doctrine.filtrer === 'function'
+) {
+  resultat = doctrine.filtrer(resultat);
+}
+
+const sortie = {
+  sujet,
+  resultat,
+  createdAt: new Date().toISOString()
+};
+
+saveMemoire(sortie);
+
+res.json(sortie);
+```
+
+} catch (error) {
+res.status(500).json({
+status: 'ERROR',
+error: error.message
+});
+}
+});
+
+app.use((req, res) => {
+[?2004h[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [7mcd ~/PEGINTICHAT[27m
+
+[7mpkill -f server.js[27m
+
+[7mnode src/server.js[27m[A[A[A[Acd ~/PEGINTICHAT
+
+pkill -f server.js
+
+node src/server.js
+[?2004l◇ injected env (5) from .env [2m// tip: ⌘ override existing { override: true }[0m
+◇ injected env (0) from .env [2m// tip: ⌁ auth for agents [www.vestauth.com][0m
+🔄 Auto-update exécuté
+━━━━━━━━━━━━━━━━━━━━━━
+🚀 PEGINTICHAT V3
+🌐 PORT : 3000
+🧠 Analyseur : ACTIF
+🌍 WOUNANET : ACTIF
+💾 MEMOIRE : ACTIVE
+📜 Doctrine : ACTIVE
+━━━━━━━━━━━━━━━━━━━━━━
+^C
+[?2004h[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [7mrm -f ~/PEGINTICHAT/src/moteur/analyseur.js[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Crm -f ~/PEGINTICHAT/src/moteur/analyseur.js
+[?2004l[?2004h[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [7mconst { analyser } = require('./moteur/analyseur');[27m
+[7mconst doctrine = require('./modules/doctrine');[27m[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cconst { analyser } = require('./moteur/analyseur');
+const doctrine = require('./modules/doctrine');
+[?2004lbash: syntax error near unexpected token `('
+bash: syntax error near unexpected token `('
+[?2004h[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [7mpm2 restart peginti-chat --update-env[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cpm2 restart peginti-chat --update-env
+[?2004l[32m[PM2] [39mApplying action restartProcessId on app [peginti-chat](ids: [ 0 ])
+[32m[PM2] [39m[peginti-chat](0) ✓
+[90m┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐[39m
+[90m│[39m[1m[36m id [39m[22m[90m│[39m[1m[36m name               [39m[22m[90m│[39m[1m[36m mode     [39m[22m[90m│[39m[1m[36m ↺    [39m[22m[90m│[39m[1m[36m status    [39m[22m[90m│[39m[1m[36m cpu      [39m[22m[90m│[39m[1m[36m memory   [39m[22m[90m│[39m
+[90m├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤[39m
+[90m│[39m[1m[36m [1m[36m0[39m[36m[22m[1m  [39m[22m[90m│[39m peginti-chat       [90m│[39m [7m[1mfork[22m[27m     [90m│[39m 79   [90m│[39m [32m[1monline[22m[39m    [90m│[39m 0%       [90m│[39m 11.8mb   [90m│[39m
+[90m└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘[39m
+[?2004h[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [K[0;32m~/PEGINTICHAT[0m [0;97m$[0m [7mcurl -X POST http://localhost:3000/api/analyse \[27m
+[7m     -H "Content-Type: application/json" \[27m
+[7m     -d '{"sujet":"politique africaine"}'[27m[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccurl -X POST http://localhost:3000/api/analyse \
+     -H "Content-Type: application/json" \
+

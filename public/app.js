@@ -1,63 +1,105 @@
-const sendBtn = document.getElementById('sendBtn');
-const chatInput = document.getElementById('chatInput');
+const responseDiv = document.getElementById('response');
+const wounanetResponse = document.getElementById('wounanetResponse');
+const chatOverlay = document.getElementById('chatOverlay');
 const chatFeed = document.getElementById('chatFeed');
-const wounanetBtn = document.getElementById('wounanetBtn');
-const wounanetInput = document.getElementById('wounanetInput');
 
-async function envoyerMessage() {
-  const sujet = chatInput.value.trim();
+function escapeHTML(str) {
+  return String(str)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function renderResponse(data) {
+  // Fallback si le backend renvoie une chaîne brute
+  if (typeof data === 'string') {
+    return `<div class="answer">${escapeHTML(data)}</div>`;
+  }
+
+  const reponse = data.narration?.reponse || data.texte || '';
+  const developpement = data.narration?.developpement || '';
+  const conclusion = data.narration?.conclusion || '';
+
+  return `
+    <div class="answer">${escapeHTML(reponse)}</div>
+    <div class="develop">${escapeHTML(developpement)}</div>
+    <div class="conclusion">${escapeHTML(conclusion)}</div>
+  `;
+}
+
+function addToFeed(question, data) {
+  chatFeed.insertAdjacentHTML(
+    'beforeend',
+    `<div class="question">${escapeHTML(question)}</div>
+     ${renderResponse(data)}`
+  );
+  chatFeed.scrollTop = chatFeed.scrollHeight;
+}
+
+async function send() {
+  const input = document.getElementById('msg');
+  const sujet = input.value.trim();
   if (!sujet) return;
 
-  const userCard = document.createElement('div');
-  userCard.className = 'feed-entry';
-  userCard.innerHTML = `<div class="feed-card"><strong>👤 Vous :</strong> ${sujet}</div>`;
-  chatFeed.appendChild(userCard);
+  responseDiv.innerHTML = '🧠 PEGINTI analyse...';
 
   try {
-    const res = await fetch('https://pegintichat.online/api/chat', {
+    const res = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sujet })
     });
-    const data = await res.json();
 
-    const aiCard = document.createElement('div');
-    aiCard.className = 'feed-entry';
-    aiCard.innerHTML = `
-      <div class="feed-card">
-        <strong>🤖 PEGINTI :</strong><br>
-        <b>Réponse :</b> ${data.narration.reponse}<br>
-        <b>Développement :</b> ${data.narration.developpement}<br>
-        <b>Conclusion :</b> ${data.narration.conclusion}
-      </div>`;
-    chatFeed.appendChild(aiCard);
+    const data = await res.json();
+    responseDiv.innerHTML = renderResponse(data);
+    addToFeed(sujet, data);
+    input.value = '';
   } catch (err) {
-    const errorCard = document.createElement('div');
-    errorCard.className = 'feed-entry';
-    errorCard.innerHTML = `<div class="feed-card">❌ Erreur interne : ${err.message}</div>`;
-    chatFeed.appendChild(errorCard);
+    responseDiv.innerHTML = '❌ Erreur serveur: ' + escapeHTML(err.message);
+    console.error(err);
   }
 }
 
-async function lancerWounanet() {
-  const sujet = wounanetInput.value.trim();
+async function runWounanet() {
+  const sujet = document.getElementById('wounanetMsg').value.trim();
   if (!sujet) return;
 
+  wounanetResponse.innerHTML = '🌍 Recherche...';
+
   try {
-    const res = await fetch('https://pegintichat.online/api/wounanet?sujet=' + encodeURIComponent(sujet));
+    const res = await fetch('/api/wounanet?sujet=' + encodeURIComponent(sujet));
     const data = await res.json();
 
-    const wnCard = document.createElement('div');
-    wnCard.className = 'feed-entry';
-    wnCard.innerHTML = `<div class="feed-card"><strong>🌍 WOUNANET :</strong> ${JSON.stringify(data)}</div>`;
-    chatFeed.appendChild(wnCard);
+    wounanetResponse.innerHTML =
+      '<pre>' + escapeHTML(JSON.stringify(data, null, 2)) + '</pre>';
   } catch (err) {
-    const errorCard = document.createElement('div');
-    errorCard.className = 'feed-entry';
-    errorCard.innerHTML = `<div class="feed-card">❌ Erreur WOUNANET : ${err.message}</div>`;
-    chatFeed.appendChild(errorCard);
+    wounanetResponse.innerHTML = '❌ Erreur WOUNANET: ' + escapeHTML(err.message);
+    console.error(err);
   }
 }
 
-sendBtn.addEventListener('click', envoyerMessage);
-wounanetBtn.addEventListener('click', lancerWounanet);
+// Gestion des événements
+document.getElementById('sendBtn').onclick = send;
+document.getElementById('wounanetBtn').onclick = runWounanet;
+
+document.getElementById('msg').addEventListener('keydown', e => {
+  if (e.key === 'Enter') send();
+});
+
+document.getElementById('wounanetMsg').addEventListener('keydown', e => {
+  if (e.key === 'Enter') runWounanet();
+});
+
+document.getElementById('chatOpen').onclick = () => {
+  chatOverlay.setAttribute('aria-hidden', 'false');
+};
+
+document.getElementById('chatClose').onclick = () => {
+  chatOverlay.setAttribute('aria-hidden', 'true');
+};
+
+document.getElementById('refreshBtn').onclick = () => {
+  location.reload();
+};

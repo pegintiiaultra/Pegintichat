@@ -1,0 +1,37 @@
+[
+  {
+    "sujet": "Homosexualité",
+    "texte": "QUESTION : Homosexualité\n\nIntention : general\nConfiance : 50%\n\nPlan de réponse :\n- Répondre de façon claire et utile.\n\nRéponse finale : le serveur relie l’intention, le contexte et les sources pour produire une sortie adaptée en temps réel.",
+    "source": "wounanet",
+    "createdAt": "2026-06-12T19:47:31.321Z",
+    "version": "3.0.0"
+  },
+  {
+    "sujet": "Le Cameroun ?",
+    "texte": "QUESTION : Le Cameroun ?\n\nIntention : general\nConfiance : 50%\n\nSources :\n- Accueil Camerounweb\n- Jeune Afrique\n- Camfoot.com\n- Le Bled Parle\n- Camer.be\n- Cameroon\n- Jeune Afrique\n- Maliweb.net\n- Soleil\n- Accueil Camerounweb\n\nPlan de réponse :\n- Répondre de façon claire et utile.\n- Intégrer 10 source(s) pertinente(s).\n\nRéponse finale : le serveur relie l’intention, le contexte et les sources pour produire une sortie adaptée en temps réel.",
+    "source": "wounanet",
+    "createdAt": "2026-06-12T19:57:01.105Z",
+    "version": "3.1.0"
+  },
+  {
+    "sujet": "Souveraineté numérique",
+    "texte": "QUESTION : Souveraineté numérique\n\nIntention : general\nConfiance : 50%\n\nPlan de réponse :\n- Répondre de façon claire et utile.\n\nRéponse finale : le serveur relie l’intention, le contexte et les sources pour produire une sortie adaptée en temps réel.",
+    "source": "wounanet",
+    "createdAt": "2026-06-12T20:15:43.253Z",
+    "version": "3.1.0"
+  },
+  {
+    "sujet": "Au Cameroun ?",
+    "texte": "QUESTION : Au Cameroun ?\n\nIntention : general\nConfiance : 50%\n\nSources :\n- Camer.be\n- Allafrica Tanzania\n- Accueil Camerounweb\n- Camer.be\n- Accueil Camerounweb\n- Jeune Afrique\n- Camfoot.com\n- Le Bled Parle\n- Camer.be\n- Cameroon\n\nPlan de réponse :\n- Répondre de façon claire et utile.\n- Intégrer 10 source(s) pertinente(s).\n\nRéponse finale : le serveur relie l’intention, le contexte et les sources pour produire une sortie adaptée en temps réel.",
+    "source": "wounanet",
+    "createdAt": "2026-06-12T22:43:47.195Z",
+    "version": "3.0.0"
+  },
+  {
+    "sujet": "philosophie",
+    "texte": "QUESTION : philosophie\n\nIntention : general\nConfiance : 50%\n\nSources :\n- Fr Infos Gabon\n- Le Figaro\n- Blick\n- Gameblog Fr\n- Génération Nt\n- Jeuxvideo\n- Lepetitjournal\n- La Montagne\n- Génération Nt\n- Les Numeriques\n\nPlan de réponse :\n- Répondre de façon claire et utile.\n- Intégrer 10 source(s) pertinente(s).\n\nRéponse finale : le serveur relie l’intention, le contexte et les sources pour produire une sortie adaptée en temps réel.",
+    "source": "wounanet",
+    "createdAt": "2026-06-12T22:51:26.577Z",
+    "version": "3.0.0"
+  }
+]

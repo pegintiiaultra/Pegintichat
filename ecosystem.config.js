@@ -1,25 +1,38 @@
 module.exports = {
   apps: [
     {
-      name: "pegintichat",
+      name: "peginti",
       script: "./src/server.js",
+      cwd: "/data/data/com.termux/files/home/PEGINTICHAT",
       instances: 1,
       exec_mode: "fork",
-      autorestart: true,
-      watch: false,
       env: {
-        NODE_ENV: "production",
         PORT: 3000,
-        WOUNANET_API_KEY: process.env.WOUNANET_API_KEY,
-        PEGINTI_CHAT_KEY: process.env.PEGINTI_CHAT_KEY
+        PEGINTIBOTAPIKEY: "cf45431a25092794652301c05d5a81f66bff2892b9f35f6dc74d15f30bd6add0",
+        PEGINTINEWSAPIKEY: "pub_67708b6864e8452d860b98423a5e5fd6",
+        WOUNANET_API_KEY: "pub_67708b6864e8452d860b98423a5e5fd6",
+        NEWSDATA_APIKEY: "pub_67708b6864e8452d860b98423a5e5fd6"
       }
     },
     {
-      name: "bo-oivini-tunnel",
-      script: "cloudflared",
-      args: "tunnel run bo-oivini",
-      autorestart: true,
-      watch: false
+      name: "peginti-chat",
+      script: "./src/server.js",
+      cwd: "/data/data/com.termux/files/home/PEGINTICHAT",
+      instances: "max",
+      exec_mode: "cluster",
+      env: {
+        PORT: 4000
+      }
+    },
+    {
+      name: "peginti-ultra",
+      script: "./src/server.js",
+      cwd: "/data/data/com.termux/files/home/PEGINTI-ULTRA",
+      instances: 1,
+      exec_mode: "fork",
+      env: {
+        PORT: 5000
+      }
     }
   ]
-}
+};
