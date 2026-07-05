@@ -1,0 +1,13 @@
+tunnel: b4aadfbe-6b16-4aec-8469-a30d854b8bab
+credentials-file: /data/data/com.termux/files/home/.cloudflared/b4aadfbe-6b16-4aec-8469-a30d854b8bab.json
+
+ingress:
+  - hostname: pegintichat.online
+    service: http://localhost:3000
+  - hostname: api.pegintichat.online
+    service: http://localhost:3000
+  - hostname: premium.pegintichat.online
+    service: http://localhost:3000
+  - hostname: wounanet.pegintichat.online
+    service: http://localhost:3000
+  - service: http_status:404

@@ -1,6 +1,8 @@
 {
-  "updatedAt": "2026-06-12T23:25:27.196Z",
+  "updatedAt": "2026-06-23T19:24:21.070Z",
   "service": "PEGINTICHAT",
   "version": "3.0.0",
-  "status": "ONLINE"
+  "status": "ONLINE",
+  "uptime": 6604.521290276,
+  "port": 3000
 }

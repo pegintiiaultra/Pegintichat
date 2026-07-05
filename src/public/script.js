@@ -29,20 +29,37 @@ chatForm.addEventListener('submit', async (e) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sujet: text })
     });
-    const data = await res.json();
-    addMessage('bot', data.narration || data.reponse || 'Réponse indisponible.');
+
+    // 🔄 Lire la réponse comme texte pur
+    const texte = await res.text();
+
+    // Afficher directement le texte herméneutique
+    addMessage('bot', texte || 'Réponse indisponible.');
   } catch (err) {
     addMessage('bot', '⚠️ Erreur serveur : ' + err.message);
   }
 });
 
-// Bouton Wounanet
+// Action du bouton Wounanet (préparé, même si la route n’est pas encore activée)
 wounanetBtn.addEventListener('click', async () => {
-  addMessage('user', '🔎 Recherche Wounanet...');
+  const sujet = chatInput.value.trim();
+  if (!sujet) {
+    addMessage('bot', '⚠️ Veuillez entrer un sujet avant de lancer Wounanet.');
+    return;
+  }
+
+  addMessage('user', '[Wounanet] ' + sujet);
+  chatInput.value = '';
+
   try {
-    const res = await fetch('/api/wounanet?sujet=Afrique');
-    const data = await res.json();
-    addMessage('bot', JSON.stringify(data, null, 2));
+    const res = await fetch('/api/wounanet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sujet })
+    });
+
+    const texte = await res.text();
+    addMessage('bot', texte || 'Réponse Wounanet indisponible.');
   } catch (err) {
     addMessage('bot', '⚠️ Erreur Wounanet : ' + err.message);
   }

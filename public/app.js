@@ -1,105 +1,52 @@
-const responseDiv = document.getElementById('response');
-const wounanetResponse = document.getElementById('wounanetResponse');
-const chatOverlay = document.getElementById('chatOverlay');
-const chatFeed = document.getElementById('chatFeed');
+'use strict';
 
-function escapeHTML(str) {
-  return String(str)
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;');
-}
+// 🎨 Style PEGINTI v3 : affichage clair et dynamique
+function displayResult(result) {
+  const output = document.getElementById('output');
+  output.innerHTML = '';
 
-function renderResponse(data) {
-  // Fallback si le backend renvoie une chaîne brute
-  if (typeof data === 'string') {
-    return `<div class="answer">${escapeHTML(data)}</div>`;
+  if (!result || !result.text) {
+    output.innerHTML = '<div class="error">❌ Erreur WOUNANET</div>';
+    return;
   }
 
-  const reponse = data.narration?.reponse || data.texte || '';
-  const developpement = data.narration?.developpement || '';
-  const conclusion = data.narration?.conclusion || '';
-
-  return `
-    <div class="answer">${escapeHTML(reponse)}</div>
-    <div class="develop">${escapeHTML(developpement)}</div>
-    <div class="conclusion">${escapeHTML(conclusion)}</div>
-  `;
+  // Formatage des articles
+  const lines = result.text.split('\n').filter(l => l.trim() !== '');
+  lines.forEach(line => {
+    if (line.startsWith('-')) {
+      const item = document.createElement('div');
+      item.className = 'article';
+      item.innerHTML = line
+        .replace('-', '📰')
+        .replace(/🔗 (https?:\/\/\S+)/, '<a href="$1" target="_blank">🔗 lien</a>');
+      output.appendChild(item);
+    }
+  });
 }
 
-function addToFeed(question, data) {
-  chatFeed.insertAdjacentHTML(
-    'beforeend',
-    `<div class="question">${escapeHTML(question)}</div>
-     ${renderResponse(data)}`
-  );
-  chatFeed.scrollTop = chatFeed.scrollHeight;
-}
-
-async function send() {
-  const input = document.getElementById('msg');
-  const sujet = input.value.trim();
-  if (!sujet) return;
-
-  responseDiv.innerHTML = '🧠 PEGINTI analyse...';
-
+// 🔄 Test du serveur
+async function runPing() {
   try {
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sujet })
-    });
-
+    const res = await fetch('/ping');
     const data = await res.json();
-    responseDiv.innerHTML = renderResponse(data);
-    addToFeed(sujet, data);
-    input.value = '';
+    displayResult({ text: JSON.stringify(data, null, 2) });
   } catch (err) {
-    responseDiv.innerHTML = '❌ Erreur serveur: ' + escapeHTML(err.message);
-    console.error(err);
+    displayResult({ text: '❌ Erreur serveur' });
   }
 }
 
+// 🌍 Appel WOUNANET
 async function runWounanet() {
-  const sujet = document.getElementById('wounanetMsg').value.trim();
-  if (!sujet) return;
-
-  wounanetResponse.innerHTML = '🌍 Recherche...';
-
+  const sujet = document.getElementById('sujet').value || 'innovation';
   try {
-    const res = await fetch('/api/wounanet?sujet=' + encodeURIComponent(sujet));
+    const res = await fetch(`/api/wounanet?sujet=${encodeURIComponent(sujet)}`);
     const data = await res.json();
-
-    wounanetResponse.innerHTML =
-      '<pre>' + escapeHTML(JSON.stringify(data, null, 2)) + '</pre>';
+    displayResult(data);
   } catch (err) {
-    wounanetResponse.innerHTML = '❌ Erreur WOUNANET: ' + escapeHTML(err.message);
-    console.error(err);
+    displayResult({ text: '❌ Erreur WOUNANET' });
   }
 }
 
-// Gestion des événements
-document.getElementById('sendBtn').onclick = send;
-document.getElementById('wounanetBtn').onclick = runWounanet;
-
-document.getElementById('msg').addEventListener('keydown', e => {
-  if (e.key === 'Enter') send();
-});
-
-document.getElementById('wounanetMsg').addEventListener('keydown', e => {
-  if (e.key === 'Enter') runWounanet();
-});
-
-document.getElementById('chatOpen').onclick = () => {
-  chatOverlay.setAttribute('aria-hidden', 'false');
-};
-
-document.getElementById('chatClose').onclick = () => {
-  chatOverlay.setAttribute('aria-hidden', 'true');
-};
-
-document.getElementById('refreshBtn').onclick = () => {
-  location.reload();
-};
+// 🎛️ Attache les boutons
+document.getElementById('pingBtn').addEventListener('click', runPing);
+document.getElementById('wounanetBtn').addEventListener('click', runWounanet);
