@@ -1,160 +1,160 @@
 'use strict';
-
-require('dotenv').config();
-
 const express = require('express');
-const path = require('path');
 const fs = require('fs');
-
-const matrice = require('./src/matrice');
-const pib = require('./src/pib');
-
+const path = require('path');
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-/* =========================
-   GHOST MONITOR
-========================= */
+// === Modules internes PEGINTICHAT ===
+const matrice = require('./modules/matrice');
+const sdk = require('./modules/sdk');
+const polyglotte = require('./modules/polyglotte');
+const philo = require('./modules/philo');
+const strat = require('./modules/strat');
+const mirap = require('./modules/mirap');
+const collab = require('./modules/collab');
+
+// === WOUNANET (connecteur externe) ===
+const wounanet = require('./src/wounanet');
+
+// === Ghost : surveillance permanente ===
 function ghostMonitor(req, res, next) {
-  const log = `[${new Date().toISOString()}] ${req.method} ${req.url}`;
-  console.log(log);
-
-  try {
-    fs.appendFileSync(
-      path.join(__dirname, 'boivini.log'),
-      log + '\n',
-      'utf8'
-    );
-  } catch (e) {
-    console.error(e.message);
-  }
-
+  const logEntry = `[INFO] ${new Date().toISOString()} → ${req.method} ${req.url}`;
+  console.log(logEntry);
+  fs.appendFileSync('boivini.log', logEntry + '\n', 'utf8');
   next();
 }
-
 app.use(ghostMonitor);
 
-/* =========================
-   EXPRESS
-========================= */
+// === ESSO’OÏ VPN : gratuit vs premium ===
+function essooiVPN(req, res, next) {
+  req.vpn = { type: 'gratuit', secure: true };
+  const auth = req.get('Authorization');
+  if (auth === 'TomTech') {
+    req.vpn = { type: 'premium', secure: true, ultra: true, speed: 'rapide' };
+  }
+  const logEntry = `[INFO] ${new Date().toISOString()} → ESSO'OÏ VPN actif (${req.vpn.type})`;
+  console.log(logEntry);
+  fs.appendFileSync('boivini.log', logEntry + '\n', 'utf8');
+  next();
+}
+app.use(essooiVPN);
+
+// === Middleware JSON pour POST ===
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-/* =========================
-   INTERFACE WEB
-========================= */
-app.use(express.static(path.join(__dirname, 'public')));
+// === Servir les fichiers statiques (interface PEGINTICHAT) ===
+app.use(express.static(path.join(__dirname)));
 
+// Route principale : renvoie index.html
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-/* =========================
-   STATUS
-========================= */
+// === API Public ===
+app.get('/api/public', (req, res) => {
+  res.json({
+    canal: "PEGINTICHAT",
+    message: "Bienvenue sur la vitrine communautaire",
+    vpn: req.vpn
+  });
+});
+
+// === API Premium (Bo’oivini chat) ===
+app.get('/booivini/chat', (req, res) => {
+  const msg = req.query.message || "Message vide";
+  res.send(`Réponse premium à: ${msg}`);
+});
+
+// === WOUNANET : moteur de recherche actualités ===
+app.get('/api/wounanet', async (req, res) => {
+  const sujet = req.query.sujet || req.query.q || '';
+  if (!sujet) {
+    return res.status(400).json({ error: 'Sujet manquant pour la requête Wounanet' });
+  }
+  try {
+    const result = await wounanet.searchDirect(sujet);
+    res.json(result);
+  } catch (err) {
+    console.error(`[WOUNANET ERROR] ${err.message}`);
+    res.status(500).json({ error: 'Erreur interne Wounanet', details: err.message });
+  }
+});
+
+// === CHAT doctrinal (POST) ===
+app.post('/api/chat', async (req, res) => {
+  const sujet = req.body.sujet || '';
+  if (!sujet) {
+    return res.status(400).json({ error: "Sujet manquant pour le chat doctrinal" });
+  }
+
+  // Exemple de narration doctrinale simple
+  const reponse = {
+    status: "ok",
+    sujet,
+    intention: "doctrinal",
+    reponse: {
+      introduction: `Le sujet de "${sujet}" est fondamental pour la stabilité sociale.`,
+      developpement: `La paix et la cohésion sociale reposent sur la justice, la solidarité et la reconnaissance mutuelle. Elles permettent aux communautés de dépasser les conflits et de construire un avenir commun.`,
+      conclusion: `Ainsi, "${sujet}" demeure une exigence permanente pour toute société qui aspire à l'équilibre et au progrès.`
+    },
+    timestamp: new Date().toISOString()
+  };
+
+  res.json(reponse);
+});
+
+// === Diagnostic : ping ===
+app.get('/ping', (req, res) => {
+  res.json({ status: 'ok', message: 'pong' });
+});
+
+// === Diagnostic : status global ===
 app.get('/status', (req, res) => {
   res.json({
-    serveur: 'online',
-    matrice: 'online',
-    pib: 'online',
-    version: '3.0.0',
+    pegintichat: 'online',
+    bo_oivini: 'online',
+    tunnel: 'online',
     timestamp: new Date().toISOString()
   });
 });
 
-/* =========================
-   PING
-========================= */
-app.get('/ping', (req, res) => {
-  res.json({
-    status: 'ok',
-    message: 'pong'
-  });
-});
-
-/* =========================
-   CHAT PEGINTI IA
-========================= */
-app.post('/api/chat', async (req, res) => {
-  try {
-    const sujet = String(req.body.sujet || '').trim();
-    if (!sujet) {
-      return res.status(400).send('Sujet requis');
-    }
-
-    const intention = await matrice.scanner(sujet);
-    const donnees = await pib.rechercher(intention);
-    const reponse = await matrice.finaliser(intention, donnees);
-
-    // Réponse en texte pur
-    res.type('text/plain').send(reponse);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Erreur interne PEGINTI IA');
-  }
-});
-
-/* =========================
-   WOUNANET DIRECT
-========================= */
-app.get('/api/wounanet', async (req, res) => {
-  try {
-    const sujet = String(req.query.sujet || '').trim();
-    const resultat = await pib.collecteWounanet(sujet);
-    res.json(resultat);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-/* =========================
-   MODULES
-========================= */
-app.get('/modules', (req, res) => {
-  res.json({
-    matrice: true,
-    pib: true,
-    architecture: 'Serveur -> Matrice -> PIB -> Modules -> Memoire -> WOUNANET'
-  });
-});
-
-/* =========================
-   HEALTH
-========================= */
+// === Diagnostic : santé système ===
 app.get('/health', (req, res) => {
   const memory = process.memoryUsage();
+  const cpu = process.cpuUsage();
   res.json({
-    uptime: process.uptime(),
-    rss: memory.rss,
-    heapUsed: memory.heapUsed,
-    heapTotal: memory.heapTotal
+    memory: {
+      rss: memory.rss,
+      heapTotal: memory.heapTotal,
+      heapUsed: memory.heapUsed
+    },
+    cpu: cpu,
+    uptime: process.uptime()
   });
 });
 
-/* =========================
-   ERREUR 404
-========================= */
-app.use((req, res) => {
-  res.status(404).json({ error: 'Route introuvable' });
+// === Diagnostic : modules actifs ===
+app.get('/modules', (req, res) => {
+  res.json({
+    matrice: typeof matrice !== 'undefined',
+    sdk: typeof sdk !== 'undefined',
+    polyglotte: typeof polyglotte !== 'undefined',
+    philo: typeof philo !== 'undefined',
+    strat: typeof strat !== 'undefined',
+    mirap: typeof mirap !== 'undefined',
+    collab: typeof collab !== 'undefined',
+    wounanet: typeof wounanet !== 'undefined'
+  });
 });
 
-/* =========================
-   ERREUR GLOBALE
-========================= */
+// === Gestion des erreurs globales ===
 app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({ error: 'Erreur interne PEGINTI IA' });
+  console.error(`[ERROR] ${new Date().toISOString()} → ${err.message}`);
+  res.status(500).json({ error: 'Erreur interne PEGINTICHAT', details: err.message });
 });
 
-/* =========================
-   DEMARRAGE
-========================= */
+// === Lancement du serveur ===
+const PORT = 3000;
 app.listen(PORT, () => {
-  console.log('');
-  console.log('🧠 PEGINTI IA');
-  console.log('🚀 Serveur Orchestrateur actif');
-  console.log('🎯 Matrice Bo\'oivini active');
-  console.log('⚡ PIB Scanner actif');
-  console.log(`🌐 Port : ${PORT}`);
-  console.log('');
+  console.log(`🧠 PEGINTICHAT server lancé sur port ${PORT}`);
 });

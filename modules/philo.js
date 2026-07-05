@@ -1,3 +1,1 @@
-module.exports = {
-  doctrine: () => "Doctrine philosophique simulée"
-};
+module.exports = {};

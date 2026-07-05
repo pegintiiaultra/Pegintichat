@@ -1,133 +1,88 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>PEGINTI v3.0</title>
-
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>PEGINTICHAT v3</title>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #f5f5dc;
+      font-family: Inter, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #001f3f;
+      color: gold;
+      padding: 10px;
+      text-align: center;
+      font-size: 1.5em;
+    }
+    #search-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px;
+    }
+    #sujet {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid gold;
+      border-radius: 4px;
+      font-size: 1em;
+      background: #111;
+      color: #fff;
+    }
+    #wounanetBtn {
+      margin-left: 10px;
+      padding: 10px 20px;
+      background: #00ff66;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #pingBtn {
+      margin-left: 10px;
+      padding: 10px 20px;
+      background: #0074D9;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #output {
+      margin: 20px;
+      padding: 15px;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 6px;
+      min-height: 200px;
+      white-space: pre-wrap;
+    }
+    .article {
+      margin: 5px 0;
+      padding: 5px;
+      border-bottom: 1px solid #333;
+    }
+    .article a {
+      color: #00ff66;
+      text-decoration: none;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
 </head>
-
 <body>
-
-<div class="overlay">
-
-<header class="topbar">
-
-<div class="brand">
-
-<img src="assets/logo.jpg"
-     alt="PEGINTI"
-     class="logo-img">
-
-<div class="brand-text">
-<h1>PEGINTI</h1>
-<p>IA Souveraine • TomTech.inc</p>
-</div>
-
-</div>
-
-<button id="refreshBtn" class="icon-btn">⟳</button>
-
-</header>
-
-
-<section class="hero">
-
-<h2>Analyse mondiale WOUNANET</h2>
-
-<div class="search-row">
-
-<input
-id="wounanetMsg"
-type="text"
-placeholder="Sujet à analyser">
-
-<button id="wounanetBtn">
-WOUNANET
-</button>
-
-</div>
-
-<div id="wounanetResponse"
-class="result-card">
-
-Résultat WOUNANET...
-
-</div>
-
-</section>
-
-
-<section class="chat-card">
-
-<h2>Assistant PEGINTI</h2>
-
-<div id="response"
-class="response-card">
-
-Posez une question...
-
-</div>
-
-<div class="compose">
-
-<input
-id="msg"
-type="text"
-placeholder="Votre question">
-
-<button id="sendBtn">
-Envoyer
-</button>
-
-</div>
-
-<div class="open-chat">
-
-<button id="chatOpen">
-💬 Ouvrir le chat
-</button>
-
-</div>
-
-</section>
-
-
-<div id="chatOverlay"
-class="chat-overlay"
-aria-hidden="true">
-
-<div class="chat-window">
-
-<div class="chat-header">
-
-<span>Flux PEGINTI</span>
-
-<button id="chatClose">
-✕
-</button>
-
-</div>
-
-<div id="chatFeed"
-class="chat-feed"></div>
-
-</div>
-
-</div>
-
-
-<footer>
-
-PEGINTI v3.0 • Cloudflare Tunnel • HTTPS
-
-</footer>
-
-</div>
-
-<script src="app.js"></script>
-
+  <header>🧠 PEGINTICHAT v3 — Interface jumelée</header>
+  <div id="search-bar">
+    <input id="sujet" type="text" placeholder="Entrez un sujet...">
+    <button id="wounanetBtn">Wounanet</button>
+    <button id="pingBtn">Ping</button>
+  </div>
+  <div id="output">Résultats...</div>
+  <script src="app.js"></script>
 </body>
 </html>
