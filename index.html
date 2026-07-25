@@ -4,24 +4,71 @@
   <meta charset="UTF-8">
   <title>PEGINTICHAT - Plateforme IA</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background-image: url("assets/fond-interface.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: "Segoe UI", sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+    h2 {
+      color: #ffd700;
+      text-shadow: 0 0 10px #000;
+    }
+    section {
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      margin: 20px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    }
+    button {
+      background-color: #ffd700;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #fff;
+      color: #000;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #ffd700;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Vitrine publique -->
+  <!-- Logo principal -->
+  <header>
+    <img src="assets/logo-peginti.png" alt="Logo PEGINTI" style="width:140px; display:block; margin:20px auto;">
+    <h1>PEGINTICHAT — Plateforme IA</h1>
+  </header>
+
+  <!-- Vitrine publique (Chat interactif) -->
   <section class="public">
-    <img src="assets/logo.png" alt="Logo Public" style="width:120px; display:block; margin:0 auto;">
     <h2>PEGINTICHAT Public</h2>
-    <button onclick="fetchPublic()">Tester</button>
+    <input type="text" id="publicMessage" placeholder="Votre message..." style="width:80%; padding:8px; border-radius:6px; border:none;">
+    <button onclick="fetchPublic()">Envoyer</button>
     <pre id="publicResult"></pre>
   </section>
 
-  <!-- Vitrine premium -->
+  <!-- Vitrine premium (Boutique statique) -->
   <section class="premium">
-    <img src="assets/logo-premium.png" alt="Logo Premium" style="width:120px; display:block; margin:0 auto;">
     <h2>PEGINTICHAT Premium</h2>
-    <input type="text" id="premiumMessage" placeholder="Votre message...">
-    <button onclick="fetchPremium()">Envoyer</button>
-    <pre id="premiumResult"></pre>
+    <p>Découvrez les produits et services PEGINTI disponibles en ligne.</p>
+    <button onclick="window.location.href='https://peginti-shop.online'">Accéder à la boutique</button>
   </section>
 
   <!-- Footer -->

@@ -45,24 +45,38 @@ app.use(express.json());
 // === Servir les fichiers statiques (interface PEGINTICHAT) ===
 app.use(express.static(path.join(__dirname)));
 
-// Route principale : renvoie index.html
+// === Routes principales ===
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// === API Public ===
-app.get('/api/public', (req, res) => {
-  res.json({
-    canal: "PEGINTICHAT",
-    message: "Bienvenue sur la vitrine communautaire",
-    vpn: req.vpn
-  });
+// === API Public (Chat interactif IA) ===
+app.post('/api/chat', async (req, res) => {
+  const sujet = req.body.sujet || '';
+  if (!sujet) {
+    return res.status(400).json({ error: "Sujet manquant pour le chat public" });
+  }
+
+  const reponse = {
+    status: "ok",
+    sujet,
+    canal: "PEGINTICHAT Public",
+    vpn: req.vpn,
+    reponse: {
+      introduction: `Le sujet "${sujet}" est essentiel pour la communauté.`,
+      developpement: `La cohésion sociale repose sur la justice, la solidarité et la reconnaissance mutuelle. Ces valeurs permettent de dépasser les conflits et de construire un avenir commun.`,
+      conclusion: `Ainsi, "${sujet}" demeure une exigence permanente pour toute société qui aspire à l'équilibre et au progrès.`
+    },
+    timestamp: new Date().toISOString()
+  };
+
+  res.json(reponse);
 });
 
-// === API Premium (Bo’oivini chat) ===
+// === API Premium (Boutique statique) ===
 app.get('/booivini/chat', (req, res) => {
   const msg = req.query.message || "Message vide";
-  res.send(`Réponse premium à: ${msg}`);
+  res.send(`Réponse premium statique à: ${msg}`);
 });
 
 // === WOUNANET : moteur de recherche actualités ===
@@ -76,49 +90,27 @@ app.get('/api/wounanet', async (req, res) => {
     res.json(result);
   } catch (err) {
     console.error(`[WOUNANET ERROR] ${err.message}`);
-    res.status(500).json({ error: 'Erreur interne Wounanet', details: err.message });
+    res.json({
+      status: "error",
+      source: "wounanet",
+      sujet,
+      message: "Flux indisponible, veuillez réessayer plus tard."
+    });
   }
 });
 
-// === CHAT doctrinal (POST) ===
-app.post('/api/chat', async (req, res) => {
-  const sujet = req.body.sujet || '';
-  if (!sujet) {
-    return res.status(400).json({ error: "Sujet manquant pour le chat doctrinal" });
-  }
+// === Diagnostics ===
+app.get('/ping', (req, res) => res.json({ status: 'ok', message: 'pong' }));
 
-  // Exemple de narration doctrinale simple
-  const reponse = {
-    status: "ok",
-    sujet,
-    intention: "doctrinal",
-    reponse: {
-      introduction: `Le sujet de "${sujet}" est fondamental pour la stabilité sociale.`,
-      developpement: `La paix et la cohésion sociale reposent sur la justice, la solidarité et la reconnaissance mutuelle. Elles permettent aux communautés de dépasser les conflits et de construire un avenir commun.`,
-      conclusion: `Ainsi, "${sujet}" demeure une exigence permanente pour toute société qui aspire à l'équilibre et au progrès.`
-    },
-    timestamp: new Date().toISOString()
-  };
-
-  res.json(reponse);
-});
-
-// === Diagnostic : ping ===
-app.get('/ping', (req, res) => {
-  res.json({ status: 'ok', message: 'pong' });
-});
-
-// === Diagnostic : status global ===
 app.get('/status', (req, res) => {
   res.json({
     pegintichat: 'online',
-    bo_oivini: 'online',
+    booivini: 'online',
     tunnel: 'online',
     timestamp: new Date().toISOString()
   });
 });
 
-// === Diagnostic : santé système ===
 app.get('/health', (req, res) => {
   const memory = process.memoryUsage();
   const cpu = process.cpuUsage();
@@ -128,22 +120,22 @@ app.get('/health', (req, res) => {
       heapTotal: memory.heapTotal,
       heapUsed: memory.heapUsed
     },
-    cpu: cpu,
+    cpu,
     uptime: process.uptime()
   });
 });
 
-// === Diagnostic : modules actifs ===
-app.get('/modules', (req, res) => {
+// === Modules actifs (corrigé) ===
+app.get('/api/modules', (req, res) => {
   res.json({
-    matrice: typeof matrice !== 'undefined',
-    sdk: typeof sdk !== 'undefined',
-    polyglotte: typeof polyglotte !== 'undefined',
-    philo: typeof philo !== 'undefined',
-    strat: typeof strat !== 'undefined',
-    mirap: typeof mirap !== 'undefined',
-    collab: typeof collab !== 'undefined',
-    wounanet: typeof wounanet !== 'undefined'
+    matrice: !!matrice,
+    sdk: !!sdk,
+    polyglotte: !!polyglotte,
+    philo: !!philo,
+    strat: !!strat,
+    mirap: !!mirap,
+    collab: !!collab,
+    wounanet: !!wounanet
   });
 });
 
