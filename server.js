@@ -1,20 +1,10 @@
 'use strict';
 const express = require('express');
 const fs = require('fs');
-const path = require('path');
+const bodyParser = require('body-parser');
 const app = express();
 
-// === Modules internes PEGINTICHAT ===
-const matrice = require('./modules/matrice');
-const sdk = require('./modules/sdk');
-const polyglotte = require('./modules/polyglotte');
-const philo = require('./modules/philo');
-const strat = require('./modules/strat');
-const mirap = require('./modules/mirap');
-const collab = require('./modules/collab');
-
-// === WOUNANET (connecteur externe) ===
-const wounanet = require('./src/wounanet');
+app.use(bodyParser.json());
 
 // === Ghost : surveillance permanente ===
 function ghostMonitor(req, res, next) {
@@ -39,114 +29,40 @@ function essooiVPN(req, res, next) {
 }
 app.use(essooiVPN);
 
-// === Middleware JSON pour POST ===
-app.use(express.json());
-
-// === Servir les fichiers statiques (interface PEGINTICHAT) ===
-app.use(express.static(path.join(__dirname)));
+// === Route de contrôle serveur ===
+app.get('/status', (req, res) => {
+  res.json({
+    ok: true,
+    service: "PEGINTI-Framework",
+    vpn: req.vpn,
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString()
+  });
+});
 
 // === Routes principales ===
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.json({ canal: 'PEGINTICHAT', message: 'Bienvenue sur la vitrine communautaire', vpn: req.vpn });
 });
 
-// === API Public (Chat interactif IA) ===
-app.post('/api/chat', async (req, res) => {
-  const sujet = req.body.sujet || '';
-  if (!sujet) {
-    return res.status(400).json({ error: "Sujet manquant pour le chat public" });
-  }
-
-  const reponse = {
-    status: "ok",
-    sujet,
-    canal: "PEGINTICHAT Public",
-    vpn: req.vpn,
-    reponse: {
-      introduction: `Le sujet "${sujet}" est essentiel pour la communauté.`,
-      developpement: `La cohésion sociale repose sur la justice, la solidarité et la reconnaissance mutuelle. Ces valeurs permettent de dépasser les conflits et de construire un avenir commun.`,
-      conclusion: `Ainsi, "${sujet}" demeure une exigence permanente pour toute société qui aspire à l'équilibre et au progrès.`
-    },
-    timestamp: new Date().toISOString()
-  };
-
-  res.json(reponse);
+app.post('/api/chat', (req, res) => {
+  const sujet = req.body.sujet || 'vide';
+  res.json({ canal: 'Bo’oivinichat', message_user: sujet, reponse: "Réponse simulée", vpn: req.vpn });
 });
 
-// === API Premium (Boutique statique) ===
-app.get('/booivini/chat', (req, res) => {
-  const msg = req.query.message || "Message vide";
-  res.send(`Réponse premium statique à: ${msg}`);
-});
-
-// === WOUNANET : moteur de recherche actualités ===
-app.get('/api/wounanet', async (req, res) => {
-  const sujet = req.query.sujet || req.query.q || '';
-  if (!sujet) {
-    return res.status(400).json({ error: 'Sujet manquant pour la requête Wounanet' });
-  }
+app.post('/api/wounanet', (req, res) => {
+  const sujet = req.body.sujet || 'vide';
   try {
-    const result = await wounanet.searchDirect(sujet);
-    res.json(result);
+    // Simuler une recherche Wounanet
+    res.json({ module: 'Wounanet', resultat: `Résultats simulés pour: ${sujet}`, vpn: req.vpn });
   } catch (err) {
-    console.error(`[WOUNANET ERROR] ${err.message}`);
-    res.json({
-      status: "error",
-      source: "wounanet",
-      sujet,
-      message: "Flux indisponible, veuillez réessayer plus tard."
-    });
+    console.error("❌ Erreur API WOUNANET:", err.message);
+    res.status(500).json({ error: "Wounanet indisponible", vpn: req.vpn });
   }
-});
-
-// === Diagnostics ===
-app.get('/ping', (req, res) => res.json({ status: 'ok', message: 'pong' }));
-
-app.get('/status', (req, res) => {
-  res.json({
-    pegintichat: 'online',
-    booivini: 'online',
-    tunnel: 'online',
-    timestamp: new Date().toISOString()
-  });
-});
-
-app.get('/health', (req, res) => {
-  const memory = process.memoryUsage();
-  const cpu = process.cpuUsage();
-  res.json({
-    memory: {
-      rss: memory.rss,
-      heapTotal: memory.heapTotal,
-      heapUsed: memory.heapUsed
-    },
-    cpu,
-    uptime: process.uptime()
-  });
-});
-
-// === Modules actifs (corrigé) ===
-app.get('/api/modules', (req, res) => {
-  res.json({
-    matrice: !!matrice,
-    sdk: !!sdk,
-    polyglotte: !!polyglotte,
-    philo: !!philo,
-    strat: !!strat,
-    mirap: !!mirap,
-    collab: !!collab,
-    wounanet: !!wounanet
-  });
-});
-
-// === Gestion des erreurs globales ===
-app.use((err, req, res, next) => {
-  console.error(`[ERROR] ${new Date().toISOString()} → ${err.message}`);
-  res.status(500).json({ error: 'Erreur interne PEGINTICHAT', details: err.message });
 });
 
 // === Lancement du serveur ===
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`🧠 PEGINTICHAT server lancé sur port ${PORT}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 PEGINTI-Framework lancé sur http://0.0.0.0:${PORT}`);
 });
