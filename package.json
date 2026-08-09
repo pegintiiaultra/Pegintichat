@@ -35,5 +35,8 @@
     "glob": "^13.0.6",
     "https-proxy-agent": "^5.0.1",
     "node-domexception": "^2.0.2"
+  },
+  "allowScripts": {
+    "protobufjs@7.6.5": true
   }
 }
