@@ -7,21 +7,33 @@
 </head>
 <body>
 
+  <!-- Logo principal -->
+  <header>
+    <img src="assets/logo-peginti.jpg" alt="Logo PEGINTI">
+    <h1>PEGINTICHAT — Plateforme IA</h1>
+  </header>
+
   <!-- Vitrine publique -->
   <section class="public">
-    <img src="assets/logo.png" alt="Logo Public" style="width:120px; display:block; margin:0 auto;">
     <h2>PEGINTICHAT Public</h2>
-    <button onclick="fetchPublic()">Tester</button>
+    <input type="text" id="publicMessage" placeholder="Votre message...">
+    <button onclick="fetchPublic()">Envoyer</button>
     <pre id="publicResult"></pre>
+  </section>
+
+  <!-- Fenêtre Wounanet -->
+  <section class="wounanet">
+    <h2>Wounanet Recherche</h2>
+    <input type="text" id="wounanetMessage" placeholder="Sujet à rechercher...">
+    <button id="wounanetBtn" onclick="fetchWounanet()">Envoyer</button>
+    <pre id="wounanetResult"></pre>
   </section>
 
   <!-- Vitrine premium -->
   <section class="premium">
-    <img src="assets/logo-premium.png" alt="Logo Premium" style="width:120px; display:block; margin:0 auto;">
     <h2>PEGINTICHAT Premium</h2>
-    <input type="text" id="premiumMessage" placeholder="Votre message...">
-    <button onclick="fetchPremium()">Envoyer</button>
-    <pre id="premiumResult"></pre>
+    <p>Découvrez les produits et services PEGINTI disponibles en ligne.</p>
+    <button onclick="window.location.href='https://peginti-shop.online'">Accéder à la boutique</button>
   </section>
 
   <!-- Footer -->

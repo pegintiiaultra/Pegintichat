@@ -1,160 +1,77 @@
-'use strict';
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
+<<<<<<< HEAD
+/**
+ * SERVEUR PEGINTI - LA PORTE
+ * Point d'entrée HTTP officiel : https://pegintichat.online
+ * Propulsé par DSK PEGINTI IA (TOMTECH.INC)
+ */
+
+import express from 'express';
+
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// === Modules internes PEGINTICHAT ===
-const matrice = require('./modules/matrice');
-const sdk = require('./modules/sdk');
-const polyglotte = require('./modules/polyglotte');
-const philo = require('./modules/philo');
-const strat = require('./modules/strat');
-const mirap = require('./modules/mirap');
-const collab = require('./modules/collab');
-
-// === WOUNANET (connecteur externe) ===
-const wounanet = require('./src/wounanet');
-
-// === Ghost : surveillance permanente ===
-function ghostMonitor(req, res, next) {
-  const logEntry = `[INFO] ${new Date().toISOString()} → ${req.method} ${req.url}`;
-  console.log(logEntry);
-  fs.appendFileSync('boivini.log', logEntry + '\n', 'utf8');
-  next();
-}
-app.use(ghostMonitor);
-
-// === ESSO’OÏ VPN : gratuit vs premium ===
-function essooiVPN(req, res, next) {
-  req.vpn = { type: 'gratuit', secure: true };
-  const auth = req.get('Authorization');
-  if (auth === 'TomTech') {
-    req.vpn = { type: 'premium', secure: true, ultra: true, speed: 'rapide' };
-  }
-  const logEntry = `[INFO] ${new Date().toISOString()} → ESSO'OÏ VPN actif (${req.vpn.type})`;
-  console.log(logEntry);
-  fs.appendFileSync('boivini.log', logEntry + '\n', 'utf8');
-  next();
-}
-app.use(essooiVPN);
-
-// === Middleware JSON pour POST ===
+// Middleware pour analyser le JSON
 app.use(express.json());
 
-// === Servir les fichiers statiques (interface PEGINTICHAT) ===
-app.use(express.static(path.join(__dirname)));
-
-// Route principale : renvoie index.html
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-// === API Public ===
-app.get('/api/public', (req, res) => {
-  res.json({
-    canal: "PEGINTICHAT",
-    message: "Bienvenue sur la vitrine communautaire",
-    vpn: req.vpn
-  });
-});
-
-// === API Premium (Bo’oivini chat) ===
-app.get('/booivini/chat', (req, res) => {
-  const msg = req.query.message || "Message vide";
-  res.send(`Réponse premium à: ${msg}`);
-});
-
-// === WOUNANET : moteur de recherche actualités ===
-app.get('/api/wounanet', async (req, res) => {
-  const sujet = req.query.sujet || req.query.q || '';
-  if (!sujet) {
-    return res.status(400).json({ error: 'Sujet manquant pour la requête Wounanet' });
-  }
-  try {
-    const result = await wounanet.searchDirect(sujet);
-    res.json(result);
-  } catch (err) {
-    console.error(`[WOUNANET ERROR] ${err.message}`);
-    res.status(500).json({ error: 'Erreur interne Wounanet', details: err.message });
-  }
-});
-
-// === CHAT doctrinal (POST) ===
-app.post('/api/chat', async (req, res) => {
-  const sujet = req.body.sujet || '';
-  if (!sujet) {
-    return res.status(400).json({ error: "Sujet manquant pour le chat doctrinal" });
-  }
-
-  // Exemple de narration doctrinale simple
-  const reponse = {
-    status: "ok",
-    sujet,
-    intention: "doctrinal",
-    reponse: {
-      introduction: `Le sujet de "${sujet}" est fondamental pour la stabilité sociale.`,
-      developpement: `La paix et la cohésion sociale reposent sur la justice, la solidarité et la reconnaissance mutuelle. Elles permettent aux communautés de dépasser les conflits et de construire un avenir commun.`,
-      conclusion: `Ainsi, "${sujet}" demeure une exigence permanente pour toute société qui aspire à l'équilibre et au progrès.`
-    },
-    timestamp: new Date().toISOString()
-  };
-
-  res.json(reponse);
-});
-
-// === Diagnostic : ping ===
-app.get('/ping', (req, res) => {
-  res.json({ status: 'ok', message: 'pong' });
-});
-
-// === Diagnostic : status global ===
-app.get('/status', (req, res) => {
-  res.json({
-    pegintichat: 'online',
-    bo_oivini: 'online',
-    tunnel: 'online',
-    timestamp: new Date().toISOString()
-  });
-});
-
-// === Diagnostic : santé système ===
+// Route de santé /health
 app.get('/health', (req, res) => {
-  const memory = process.memoryUsage();
-  const cpu = process.cpuUsage();
-  res.json({
-    memory: {
-      rss: memory.rss,
-      heapTotal: memory.heapTotal,
-      heapUsed: memory.heapUsed
-    },
-    cpu: cpu,
-    uptime: process.uptime()
+  res.status(200).json({
+    status: 'UP',
+    service: 'PEGINTICHAT-SERVER',
+    timestamp: new Date().toISOString()
   });
 });
 
-// === Diagnostic : modules actifs ===
-app.get('/modules', (req, res) => {
-  res.json({
-    matrice: typeof matrice !== 'undefined',
-    sdk: typeof sdk !== 'undefined',
-    polyglotte: typeof polyglotte !== 'undefined',
-    philo: typeof philo !== 'undefined',
-    strat: typeof strat !== 'undefined',
-    mirap: typeof mirap !== 'undefined',
-    collab: typeof collab !== 'undefined',
-    wounanet: typeof wounanet !== 'undefined'
+// Route API Oracle /api/oracle
+app.post('/api/oracle', (req, res) => {
+  const { message } = req.body;
+  if (!message || typeof message !== 'string' || !message.trim()) {
+    return res.status(400).json({ error: 'Message requis' });
+  }
+  
+  res.status(200).json({
+    success: true,
+    reponse: 'Guidance reçue avec succès par DSK PEGINTI IA.',
+    prompt: message.trim()
   });
 });
 
-// === Gestion des erreurs globales ===
-app.use((err, req, res, next) => {
-  console.error(`[ERROR] ${new Date().toISOString()} → ${err.message}`);
-  res.status(500).json({ error: 'Erreur interne PEGINTICHAT', details: err.message });
+// Lancement du serveur sur 0.0.0.0
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 PEGINTI-Framework lancé sur http://0.0.0.0:${PORT}`);
+=======
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(express.json());
+app.use(express.static('public'));
+
+function pegintiProcessor(message) {
+  return {
+    module: "PEGINTICHAT",
+    type: "BIP",
+    coherence: "90%",
+    validation: "✅ PEGINTICHAT prioritaire",
+    reply: `Réponse doctrinale → ${message}`
+  };
+}
+
+app.post('/chat', (req, res) => {
+  const { message } = req.body || {};
+  if (!message) return res.json({ status: "error", reply: "⚠️ Aucun message reçu" });
+  res.json(pegintiProcessor(message));
 });
 
-// === Lancement du serveur ===
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`🧠 PEGINTICHAT server lancé sur port ${PORT}`);
+app.get('/premium', (req, res) => {
+  res.json({
+    banner: "📌 Vitrine premium TomTech.inc",
+    option: "❌ Fermer",
+    link: "https://peginti.premium"
+  });
+});
+
+app.listen(port, () => {
+  console.log(`✅ PEGINTI v2.2 prêt sur http://localhost:${port}`);
+>>>>>>> 4922328 (PEGINTI v2.2 : ajout vitrine premium ULTRA, config PM2 et scripts de déploiement)
 });

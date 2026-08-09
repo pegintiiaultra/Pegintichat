@@ -2,87 +2,155 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>PEGINTICHAT v3</title>
-  <style>
-    body {
-      background-color: #0a0a0a;
-      color: #f5f5dc;
-      font-family: Inter, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #001f3f;
-      color: gold;
-      padding: 10px;
-      text-align: center;
-      font-size: 1.5em;
-    }
-    #search-bar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 20px;
-    }
-    #sujet {
-      flex: 1;
-      padding: 10px;
-      border: 2px solid gold;
-      border-radius: 4px;
-      font-size: 1em;
-      background: #111;
-      color: #fff;
-    }
-    #wounanetBtn {
-      margin-left: 10px;
-      padding: 10px 20px;
-      background: #00ff66;
-      border: none;
-      border-radius: 4px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    #pingBtn {
-      margin-left: 10px;
-      padding: 10px 20px;
-      background: #0074D9;
-      border: none;
-      border-radius: 4px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    #output {
-      margin: 20px;
-      padding: 15px;
-      background: #111;
-      border: 1px solid #333;
-      border-radius: 6px;
-      min-height: 200px;
-      white-space: pre-wrap;
-    }
-    .article {
-      margin: 5px 0;
-      padding: 5px;
-      border-bottom: 1px solid #333;
-    }
-    .article a {
-      color: #00ff66;
-      text-decoration: none;
-    }
-    .error {
-      color: red;
-      font-weight: bold;
-    }
-  </style>
+<<<<<<< HEAD
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PEGINTI‑CHAT V3 — Vitrine Publique Interactive & API DSK</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#FFD700">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <header>🧠 PEGINTICHAT v3 — Interface jumelée</header>
-  <div id="search-bar">
-    <input id="sujet" type="text" placeholder="Entrez un sujet...">
-    <button id="wounanetBtn">Wounanet</button>
-    <button id="pingBtn">Ping</button>
-  </div>
-  <div id="output">Résultats...</div>
-  <script src="app.js"></script>
+
+  <!-- En‑tête interactif -->
+  <header class="topbar">
+    <div class="brand-box">
+      <img src="logo.png" alt="Logo PEGINTI" class="logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'50\' height=\'50\' viewBox=\'0 0 50 50\'><circle cx=\'25\' cy=\'25\' r=\'23\' fill=\'%230f172a\' stroke=\'%23FFD700\' stroke-width=\'2\'/><text x=\'50%\' y=\'55%\' font-size=\'18\' font-weight=\'bold\' fill=\'%23FFD700\' text-anchor=\'middle\' dominant-baseline=\'middle\'>P3</text></svg>'">
+      <div>
+        <h1 class="brand-title">PEGINTI‑CHAT V3</h1>
+        <div class="brand-subtitle">Matrice d'Interaction Souveraine & Studio DSK</div>
+      </div>
+    </div>
+    <div class="top-status">
+      <span id="status-badge" class="status-badge">● Vérification Serveur...</span>
+    </div>
+  </header>
+
+  <!-- Conteneur principal -->
+  <main class="app-main">
+
+    <!-- VITRINE PUBLIQUE -->
+    <div id="vitrine-publique" class="vitrine-container">
+      
+      <!-- CARTE STATUT SYSTÈME & TUNNEL CLOUDFLARE -->
+      <section class="sys-info-card">
+        <div class="sys-info-header">
+          <span>⚡ Statut Système & Noeud Souverain</span>
+          <span class="badge-tag">Termux & Cloudflare Tunnel</span>
+        </div>
+        <div class="sys-info-grid">
+          <div class="sys-info-item">
+            <span class="sys-label">Statut Serveur :</span>
+            <span id="sys-status" class="sys-value val-green">EN LIGNE 🟢</span>
+          </div>
+          <div class="sys-info-item">
+            <span class="sys-label">IP Client / Noeud :</span>
+            <span id="sys-ip" class="sys-value">127.0.0.1</span>
+          </div>
+          <div class="sys-info-item">
+            <span class="sys-label">Tunnel & Domaine :</span>
+            <span id="sys-tunnel" class="sys-value val-gold">PEGINTI-TUNNEL (pegintichat.online)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARTE D'ANALYSE UNIVERSELLE API -->
+      <section class="analyser-card">
+        <div class="chat-header-bar">
+          <span>🧠 Formulaire d'Analyse Universelle API DSK</span>
+          <span class="badge-tag">Endpoint /api/analyser</span>
+        </div>
+        <form id="form-analyser" class="analyser-form">
+          <div class="form-row">
+            <input type="password" id="api-key" class="row-input" placeholder="Clé API DSK (Optionnelle)...">
+            <input type="text" id="sujet" class="row-input" placeholder="Entrez votre sujet ou requête à analyser par la matrice DSK..." required>
+            <button type="submit" class="row-btn btn-green">🚀 Analyser</button>
+          </div>
+        </form>
+        <div id="result-box" class="result-box hidden">
+          <div class="result-title">📋 Résultat de l'Analyse DSK :</div>
+          <pre id="result-content" class="result-code">En attente de soumission...</pre>
+        </div>
+      </section>
+
+      <!-- Zone d'affichage des dialogues & résultats -->
+      <section class="chat-display-card">
+        <div class="chat-header-bar">
+          <span>📜 Chat Interactif & Résultats Wounanet</span>
+          <span class="badge-tag">Souveraineté Numérique</span>
+        </div>
+        <div id="chat-messages" class="chat-text">
+          <div class="bot-message">
+            <strong>🧠 PEGINTI IA :</strong> Bienvenue sur la vitrine publique PEGINTI-CHAT V3. Utilisez les espaces interactifs ci-dessous pour analyser un sujet, lancer une recherche Wounanet ou basculer vers la vitrine premium.
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION DES ESPACES INTERACTIFS -->
+      <section class="controls-container">
+
+        <!-- RANGÉE 1 : Espace de Recherche Wounanet -->
+        <div class="control-row row-wounanet">
+          <div class="row-label label-green">
+            <span>🌍 Wounanet</span>
+          </div>
+          <input type="text" id="wounanet-input" class="row-input" placeholder="Rechercher dans Wounanet (actualités & dépêches en temps réel)...">
+          <button id="wounanet-btn" type="button" class="row-btn btn-green">Rechercher</button>
+        </div>
+
+        <!-- RANGÉE 2 : Chat Interactif Vitrine Publique -->
+        <form id="chat-form" class="control-row row-public">
+          <div class="row-label label-yellow">
+            <span>💬 Chat Public</span>
+          </div>
+          <input type="text" id="chat-input" class="row-input" placeholder="Posez votre question au Chat Interactif PEGINTI IA...">
+          <button type="submit" id="send-btn" class="row-btn btn-yellow">Envoyer</button>
+        </form>
+
+        <!-- RANGÉE 3 : Bascule Vitrine Premium -->
+        <div class="control-row row-premium">
+          <div class="row-label label-pink">
+            <span>👑 Premium</span>
+          </div>
+          <div class="row-info-box">
+            <span>Vitrine Premium — Agent Bo'oivini Live, Studio DSK & Applications Clé-en-Main</span>
+          </div>
+          <button type="button" id="btn-switch-premium" class="row-btn btn-pink">Explorer Premium</button>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- VITRINE PREMIUM APERÇU (COMMUTABLE) -->
+    <div id="vitrine-premium" class="vitrine-container hidden">
+      <section class="premium-preview-card">
+        <div class="chat-header-bar">
+          <span>👑 Studio Premium Bo'oivini & DSK Agent</span>
+          <button type="button" id="btn-back-public" class="row-btn btn-yellow" style="width: auto; padding: 0 15px; height: 36px;">← Retour Vitrine Publique</button>
+        </div>
+        <p style="color: #cbd5e1; line-height: 1.6;">
+          Vous êtes dans le module Vitrine Premium de PEGINTI IA. Vous pouvez accéder directement au Studio Complet ou utiliser l'Agent Technique Bo'oivini en temps réel.
+        </p>
+        <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+          <a href="/premium" class="row-btn btn-pink" style="width: auto; padding: 0 20px;">🚀 Ouvrir Studio Premium DSK</a>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- Pied de page -->
+  <footer>
+    <p>© 2025-2026 PEGINTI Framework — TOMTECH.INC (Yaoundé, Cameroun) • Bo’oivini Server & Wounanet API</p>
+  </footer>
+
+=======
+  <title>PEGINTI v2.2 — Interface institutionnelle</title>
+</head>
+<body>
+  <h1>PEGINTI v2.2 — Interface institutionnelle</h1>
+  <p>Bienvenue sur TomTech.inc</p>
+>>>>>>> 4922328 (PEGINTI v2.2 : ajout vitrine premium ULTRA, config PM2 et scripts de déploiement)
 </body>
 </html>
