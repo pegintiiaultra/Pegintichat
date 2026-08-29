@@ -1,23 +1,14 @@
 /**
  * MODULES DOCTRINAUX - Application des filtres doctrinaux souverains
  * TOMTECH.INC · Tomo Ombede Barnabé Bertrand
+ * 
+ * Les modules enrichissent et orientent la réponse en profondeur 
+ * sans tronquer ni écraser le raisonnement dense et argumenté de la matrice.
  */
-
-import { scannerModulesPourRequete, PENSEE_DOCTRINALE } from '../modules/filtresDoctrinaux.js';
 
 export function appliquerDoctrine(texte, doctrine = 'souverainete') {
   if (!texte) return '';
-  const str = String(texte);
-  
-  // Vérification de filtres spécifiques directes si demandés
-  const modules = scannerModulesPourRequete(str);
-  for (const m of modules) {
-    if (m.reponseDirecte) {
-      return m.reponseDirecte;
-    }
-  }
-
-  return str;
+  return String(texte).trim();
 }
 
 export default {

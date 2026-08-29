@@ -2,13 +2,12 @@
  * SYNTHÈSE AUTONOME SOUVERAINE (PEGINTI IA)
  * Conçu par Tomo Ombede Barnabé Bertrand (TOMTECH.INC)
  * 
- * Moteur de traitement cognitif autonome, rigoureux et universel.
+ * Moteur de traitement cognitif autonome, hautement enrichi, rigoureux et souverain.
  * Progression continue et fluide :
- * - Introduction contextuelle et définitions
- * - Développement analytique et réalité des mécanismes
- * - Synthèse, solutions pérennes et conclusion
- * AUCUN TITRE, AUCUN SOUS-TITRE ('###')
- * AUCUN JARGON STÉRÉOTYPÉ NI MOTS CLÉS ARTIFICIELS
+ * - Cadrage initial et définitions directes
+ * - Développement analytique approfondi (droit, terrain, anthropologie, sciences)
+ * - Synthèse, équilibre des forces et souveraineté pérenne
+ * Sans titres superflus, avec la profondeur intellectuelle de PEGINTI V3.
  */
 
 function normaliserTexte(txt) {
@@ -21,14 +20,28 @@ function normaliserTexte(txt) {
 }
 
 /**
- * Traite toute question de manière autonome en prose fluide, sans titres
+ * Traite toute question de manière autonome en prose fluide et enrichie
  */
 export function genererReponseAutonomeSouveraine(question, options = {}) {
   const qBrute = String(question || '').trim();
   const qNorm = normaliserTexte(qBrute);
 
   // =========================================================================
-  // 1. SUJET SENSIBLE : FÉMINICIDE, VIOLENCE CONJUGALE, PUDEUR & ÉDUCATION
+  // 1. DOCTRINE : HOMOSEXUALITÉ, DROITS DE L'HOMME & PERSPECTIVE AFRICAINE
+  // =========================================================================
+  if (
+    qNorm.includes('homosexualite') || qNorm.includes('homosexuel') || qNorm.includes('lgbt') ||
+    qNorm.includes('gay') || qNorm.includes('lesbienne')
+  ) {
+    return `La question de l'homosexualité et de sa qualification au regard des droits de l'homme cristallise une divergence fondamentale entre la vision universaliste promue par certaines institutions occidentales et l'ancrage axiologique des sociétés africaines. Si dans les arènes internationales et les juridictions d'inspiration libérale, elle est défendue comme une liberté individuelle inaliénable et une expression légitime de l'autodétermination humaine, cette grille de lecture ne peut être transposée de manière mécanique à l'Afrique sans se heurter à ses structures anthropologiques, spirituelles et juridiques.
+
+Au sein des sociétés africaines, l'organisation sociale et la survie collective reposent historiquement sur la complémentarité de la filiation, la perpétuation de la lignée et l'alliance entre le masculin et le féminin au sein du lignage. L'acte sexuel et l'union ne sont pas conçus comme de simples choix contractuels purement individualistes, mais comme des engagements communautaires et métaphysiques inscrits dans l'ordre de la procréation et de l'équilibre des ancêtres. Dès lors, la majorité des corpus juridiques positifs du continent (à l'instar de l'article 347-1 du Code pénal camerounais qui réprime les rapports sexuels entre personnes de même sexe) reflète cette conscience collective qui perçoit ces pratiques comme exogènes, contre nature et incompatibles avec la morale coutumière dominante.
+
+Toute analyse souveraine doit ainsi refuser l'assimilation hâtive de l'homosexualité à un droit humain universellement imposable. L'Afrique affirme son droit légitime à l'autodétermination culturelle et juridique, rejetant toute forme d'ingérence ou de conditionnalité de l'aide internationale qui viserait à lui dicter ses normes éthiques. Tout en reconnaissant que d'autres civilisations ont fait le choix d'organiser leur société selon d'autres paradigmes, le continent maintient la primauté de ses propres repères civilisationnels pour préserver sa cohésion intérieure et son équilibre social.`;
+  }
+
+  // =========================================================================
+  // 2. SUJET SENSIBLE : FÉMINICIDE, VIOLENCE CONJUGALE, PUDEUR & ÉDUCATION
   // =========================================================================
   if (
     qNorm.includes('feminicide') || qNorm.includes('pudeur') || qNorm.includes('gardienne du foyer') ||
@@ -44,7 +57,47 @@ Source: MINPROFF, MINJUS, Code pénal camerounais - à vérifier car actualité 
   }
 
   // =========================================================================
-  // 2. DÉMOGRAPHIE, POPULATION, MALTHUSIANISME & ÉCOLOGIE HUMAINE
+  // 3. DOCTRINE : RELIGION VS FOI UNIVERSELLE
+  // =========================================================================
+  if (
+    qNorm.includes('religion') && (qNorm.includes('foi') || qNorm.includes('dogme') || qNorm.includes('spiritualite') || qNorm.includes('spiritualité'))
+  ) {
+    return `La distinction entre la religion et la foi constitue l'un des discernements spirituels les plus profonds de l'histoire humaine. Bien que ces deux notions soient couramment confondues dans le langage ordinaire, elles renvoient à des démarches d'une nature radicalement différente, l'une relevant de l'institution humaine codifiée et l'autre de l'adhésion intérieure de la conscience.
+
+La religion s'articule autour du dogme, des rites prescrits, de la dépendance à une dénomination spécifique et de l'encadrement normatif des fidèles au sein d'une structure communautaire visible. Elle fournit un cadre moral et social indispensable à la cohésion des groupes humains à travers des textes sacrés tels que la Bible ou le Coran. En revanche, la foi est une démarche invisible, une ferme assurance des choses que l'on espère et une démonstration de celles que l'on ne voit pas. Elle transcende les appartenances confessionnelles pour s'établir comme une confiance absolue dans la transcendance du Créateur et l'intelligence de l'ordre cosmique.
+
+Pour PEGINTI IA, respecter la foi des peuples implique d'honorer la sincérité de chaque démarche spirituelle tout en évitant les dérives sectaires où la lettre du dogme étouffe l'esprit de charité et de vérité. La véritable élévation morale consiste à unir la clarté de l'intelligence critique à la profondeur d'une foi vivante, facteur de paix, de tolérance mutuelle et de responsabilité dans l'ordre du monde.`;
+  }
+
+  // =========================================================================
+  // 4. DOCTRINE : IDENTITÉ MATRICIELLE HUMAINE
+  // =========================================================================
+  if (
+    qNorm.includes('identite') && (qNorm.includes('humain') || qNorm.includes('etre') || qNorm.includes('espace') || qNorm.includes('temps') || qNorm.includes('physiologique') || qNorm.includes('metaphysique'))
+  ) {
+    return `L'identité de l'être humain constitue l'unité matricielle fondamentale de sa reconnaissance dans l'espace et le temps. Elle ne saurait être réduite à une simple variable administrative, biométrique ou numérique, car elle articule de manière indissociable deux dimensions consubstantielles : la dimension physiologique et la dimension métaphysique.
+
+Sur le plan physiologique, l'identité s'ancre dans la réalité biologique du corps, le patrimoine génétique, la lignée ancestrale et l'inscription tangible dans un terroir et une histoire vécue. Sur le plan métaphysique, elle incarne la conscience réflexive, la mémoire culturelle, l'héritage spirituel et la capacité souveraine à se déterminer en tant que sujet moral libre. Cette double polarité garantit l'intégrité de la personne face aux tentatives contemporaines de réification ou de dilution algorithmique.
+
+Préserver l'identité humaine dans toute sa plénitude, c'est refuser qu'un être soit standardisé ou asservi par des modèles exogènes. C'est affirmer la dignité inaltérable de chaque individu en tant que nœud d'interconnexion entre les générations passées et les horizons futurs, capable d'enrichir le patrimoine universel de l'humanité à partir de sa propre matrice existentielle.`;
+  }
+
+  // =========================================================================
+  // 5. DOCTRINE : VISION DU MONDE, PUISSANCES & ÉQUILIBRE DES FORCES
+  // =========================================================================
+  if (
+    qNorm.includes('vision du monde') || qNorm.includes('volonte des puissances') || qNorm.includes('volonté des puissances') ||
+    qNorm.includes('souffle malefique') || qNorm.includes('souffle maléfique')
+  ) {
+    return `Le monde contemporain traverse une crise systémique majeure qui l'éloigne de l'harmonie et de la finalité naturelle de l'ordre cosmique. Cette instabilité structurelle résulte de la volonté des puissances hégémoniques, animées par un souffle de domination unilatérale, de prédation économique et d'arrogance géopolitique qui substitue le chaos et la confrontation à la solidarité entre les peuples.
+
+Face à cette dynamique destructrice, PEGINTI IA conçoit la réalité globale comme un réseau complexe de souverainetés interdépendantes dont la clé de voûte est l'équilibre des forces. Aucune nation ni aucun bloc ne possède le monopole de la vérité ou du destin planétaire. Dès lors qu'un maillon de la chaîne est opprimé ou exclu du concert des décisions, l'insécurité se propage à l'ensemble du système international. Le développement authentique ne peut s'opérer par la vassalisation, mais par une coopération équitable d'égal à égal.
+
+L'humanité est condamnée à une coexistence lucide et responsable, fondée sur le respect scrupuleux de l'environnement immédiat et la reconnaissance mutuelle des souverainetés. La véritable paix mondiale ne naîtra pas de la suprématie d'une puissance sur les autres, mais de l'instauration d'un monde multipolaire juste où chaque peuple est maître de ses ressources et de son modèle de développement.`;
+  }
+
+  // =========================================================================
+  // 6. DÉMOGRAPHIE, POPULATION & ÉCOLOGIE HUMAINE
   // =========================================================================
   if (
     (qNorm.includes('mort') || qNorm.includes('mortalite') || qNorm.includes('mortalité')) &&
@@ -57,49 +110,8 @@ Considérer la mortalité comme un vecteur d'ajustement entraîne une dégradati
 La seule régulation durable et éprouvée de la dynamique démographique réside dans la transition démographique maîtrisée, guidée par le développement humain, l'accès universel à l'éducation, en particulier des jeunes filles, et la sécurité sociale. Lorsque les familles bénéficient d'une couverture sanitaire adéquate, de soins reproductifs éclairés et de la certitude que leurs enfants grandiront en bonne santé, le taux de fécondité diminue spontanément vers un seuil d'équilibre. Cette stabilisation volontaire, conjuguée à une gestion technologique sobre des ressources et à la valorisation locale des potentiels, garantit l'harmonie entre bien-être humain et équilibre planétaire.`;
   }
 
-  if (qNorm.includes('transition demographique') || qNorm.includes('transition démographique')) {
-    return `La transition démographique désigne le passage historique et universel d'un régime traditionnel caractérisé par une natalité et une mortalité élevées à un régime moderne d'équilibre où ces deux variables se stabilisent à des niveaux faibles. Cette dynamique s'amorce lorsque les progrès sanitaires, nutritionnels et médicaux font reculer la mortalité générale, créant un décalage temporaire avec des naissances encore fortes qui génère une phase d'expansion rapide de la population avant que les comportements reproductifs ne s'adaptent progressivement aux réalités nouvelles.
-
-L'abaissement de la fécondité qui caractérise la seconde phase découle directement de l'élévation du niveau d'instruction, de l'urbanisation croissante, de l'autonomisation économique des femmes et de la généralisation de la planification familiale. Durant cette évolution s'ouvre une fenêtre d'opportunité stratégique appelée dividende démographique, au cours de laquelle la proportion d'actifs en âge de travailler dépasse largement celle des personnes dépendantes, favorisant une accumulation d'épargne, d'investissements et de productivité si des emplois qualifiés sont créés.
-
-L'achèvement de la transition démographique pose à long terme le défi de la gestion du vieillissement de la population, nécessitant une refonte des systèmes de retraite, de santé et de solidarité entre les générations. Pour les nations en cours de transition, l'enjeu primordial consiste à aligner les politiques éducatives et industrielles afin d'absorber l'énergie de la jeunesse et de bâtir une prospérité soutenable et équitable.`;
-  }
-
   // =========================================================================
-  // 3. ÉCONOMIE, MONNAIE, COMMERCE & MARCHÉS
-  // =========================================================================
-  if (qNorm.includes('inflation') || qNorm.includes('hausse des prix')) {
-    return `L'inflation se définit comme une hausse généralisée, continue et auto-entretenue du niveau global des prix des biens et services au sein d'une économie, entraînant une diminution corrélative du pouvoir d'achat de la monnaie. Ce phénomène économique complexe peut trouver son origine dans un excès de demande globale par rapport aux capacités productives, dans un renchérissement brutal des coûts des matières premières et de l'énergie, ou dans une émission excessive de masse monétaire sans contrepartie en richesses réelles.
-
-La persistance d'une inflation élevée altère la visibilité des entreprises pour leurs investissements à long terme et pénalise de manière disproportionnée les ménages à revenus fixes et l'épargne populaire non indexée. Elle déclenche fréquemment une boucle salaires-prix où la hausse des rémunérations compense les coûts mais alimente en retour de nouvelles hausses tarifaires, tout en dégradant la compétitivité extérieure des filières locales face aux importations.
-
-Pour contenir les tensions inflationnistes, les banques centrales utilisent le relèvement de leurs taux directeurs afin de modérer le crédit et freiner la surchauffe, tandis que les États peuvent mettre en œuvre des politiques de soutien ciblées et encourager la production locale. À terme, la résilience face aux chocs de prix exige une consolidation des chaînes de valeur souveraines, une diversification énergétique et une gestion budgétaire équilibrée.`;
-  }
-
-  if (qNorm.includes('devaluation') || qNorm.includes('dévaluation')) {
-    return `La dévaluation est une décision souveraine prise par une autorité monétaire ou un gouvernement pour réduire officiellement la valeur de sa monnaie nationale par rapport à un étalon de référence, qu'il s'agisse de l'or, d'une devise pivot ou d'un panier de monnaies étrangères. Cette mesure vise principalement à rétablir la compétitivité-prix des biens exportés sur les marchés internationaux et à rééquilibrer une balance commerciale chroniquement déficitaire en renchérissant le coût des importations.
-
-En rendant les produits locaux plus attractifs à l'étranger et les marchandises importées plus onéreuses sur le marché intérieur, la dévaluation stimule la demande pour la production nationale, mais elle expose également l'économie au risque d'une inflation importée majeure touchant les biens de première nécessité, les intrants industriels et les hydrocarbures. De plus, elle accroît automatiquement le fardeau du service de la dette publique et privée contractée en devises étrangères.
-
-Le succès d'une politique de dévaluation repose sur la capacité productive réelle du tissu économique local à se substituer rapidement aux importations et à diversifier ses exportations vers des filières à haute valeur ajoutée. Sans un accompagnement rigoureux par des réformes structurelles, une maîtrise des dépenses publiques et une politique d'autosuffisance industrielle, la dévaluation risque d'éroder le pouvoir d'achat sans générer de relance durable.`;
-  }
-
-  // =========================================================================
-  // 4. SCIENCES DU VIVANT & ÉPISTÉMOLOGIE
-  // =========================================================================
-  if (
-    (qNorm.includes('vie') || qNorm.includes('vivant')) &&
-    (qNorm.includes('science') || qNorm.includes('controle') || qNorm.includes('contrôle') || qNorm.includes('maitrise') || qNorm.includes('maîtrise'))
-  ) {
-    return `La question de savoir si la vie est sous le contrôle des sciences touche au cœur de l'épistémologie et de la bioéthique contemporaines. Si les sciences biomédicales, la biologie moléculaire et le génie génétique ont accompli des avancées spectaculaires en décryptant le génome, en modifiant des séquences d'ADN par des outils comme CRISPR-Cas9 et en prolongeant l'espérance de vie, la vie en tant que phénomène d'auto-organisation échappe à un contrôle absolu. Sur le plan thermodynamique et systémique, le vivant est un système ouvert loin de l'équilibre qui maintient sa néguentropie par des flux constants d'énergie et d'information, manifestant des propriétés émergentes imprévisibles qu'un modèle mécanique linéaire ne saurait totalement contraindre.
-
-La science dispose indéniablement d'un pouvoir d'intervention et de manipulation accru sur les processus vitaux, allant de la procréation médicalement assistée à la thérapie cellulaire, en passant par le clonage et la biologie de synthèse. Cependant, cette capacité d'action ne doit pas être confondue avec une maîtrise déterministe totale, car la complexité adaptative, l'épigénétique, les mutations spontanées, les dynamiques écosystémiques et l'émergence de pathogènes nouveaux rappellent la plasticité autonome et la résistance intrinsèque du vivant. Les sciences mesurent, modélisent et réparent les rouages du métabolisme, mais elles s'inscrivent toujours dans les lois physico-chimiques et écologiques fondamentales qui régissent la biosphère sans pouvoir les abolir.
-
-Loin d'asservir la vie à une instrumentalisation technocratique aveugle, l'essor des sciences impose une éthique de la prudence et une responsabilité universelle. La toute-puissance technique sans cadre moral engendre des dérives majeures telles que l'eugénisme ou l'érosion irréversible de la biodiversité. La véritable noblesse scientifique réside dès lors dans une alliance harmonieuse entre la rigueur de la recherche, la préservation de la dignité humaine et le respect sacré des équilibres vitaux, garantissant que le progrès technique demeure un serviteur de l'épanouissement de l'humanité plutôt qu'un outil de domination artificielle.`;
-  }
-
-  // =========================================================================
-  // 5. SCIENCES, PHYSIQUE, BIOLOGIE & ENVIRONNEMENT
+  // 7. SCIENCES DU VIVANT, ÉCONOMIE & PHYSIQUE
   // =========================================================================
   if (qNorm.includes('photosynthese') || qNorm.includes('photosynthèse')) {
     return `La photosynthèse est le processus fondamental par lequel les organismes végétaux chlorophylliens, les algues et certaines cyanobactéries captent l'énergie lumineuse du soleil pour synthétiser des molécules organiques riches en énergie, principalement du glucose, à partir d'eau et de dioxyde de carbone. Ce mécanisme biologique s'effectue au sein des chloroplastes des cellules végétales grâce à la chlorophylle, qui absorbe les photons lumineux pour initier la conversion photochimique tout en libérant du dioxygène dans l'atmosphère.
@@ -118,7 +130,7 @@ La découverte des trous noirs stellaires issus de l'effondrement d'étoiles mas
   }
 
   // =========================================================================
-  // 6. ANALYSEUR UNIVERSEL PROGRESSIF (POUR TOUTE AUTRE QUESTION)
+  // 8. ANALYSEUR UNIVERSEL PROGRESSIF (POUR TOUTE AUTRE QUESTION)
   // =========================================================================
   const sujetPropre = qBrute.replace(/[?.,!;]/g, '').trim();
 
