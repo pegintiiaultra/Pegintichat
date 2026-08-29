@@ -1,0 +1,8 @@
+{
+  "name": "PEGINTICHAT",
+  "description": "PEGINTI IA – Plateforme souveraine, Vitrine Stratégique WOUNANET (Pilote IVIOK) et Espace Premium TOMTECH.INC",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

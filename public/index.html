@@ -1,156 +1,822 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-<<<<<<< HEAD
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PEGINTI‑CHAT V3 — Vitrine Publique Interactive & API DSK</title>
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#FFD700">
-  <link rel="stylesheet" href="style.css">
-  <script src="app.js" defer></script>
-  <script src="script.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PEGINTI-CHAT V3 · IA Souveraine · TomTech.inc</title>
+  <meta name="description" content="Plateforme souveraine d'IA africaine avec Filtre Matriciel Doctrinal (5 Règles de Réserve & Pensée de Tomo Ombede Barnabé Bertrand), Veille Stratégique WOUNANET et Espace Premium bo'oivinichat." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
 
-  <!-- En‑tête interactif -->
-  <header class="topbar">
-    <div class="brand-box">
-      <img src="logo.png" alt="Logo PEGINTI" class="logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'50\' height=\'50\' viewBox=\'0 0 50 50\'><circle cx=\'25\' cy=\'25\' r=\'23\' fill=\'%230f172a\' stroke=\'%23FFD700\' stroke-width=\'2\'/><text x=\'50%\' y=\'55%\' font-size=\'18\' font-weight=\'bold\' fill=\'%23FFD700\' text-anchor=\'middle\' dominant-baseline=\'middle\'>P3</text></svg>'">
-      <div>
-        <h1 class="brand-title">PEGINTI‑CHAT V3</h1>
-        <div class="brand-subtitle">Matrice d'Interaction Souveraine & Studio DSK</div>
+  <!-- BANNIÈRE SOUVERAINE SUPÉRIEURE CAMEROUN (VERT - ROUGE - JAUNE) -->
+  <div class="national-top-ribbon" id="national-ribbon">
+    <div class="ribbon-strip strip-green"></div>
+    <div class="ribbon-strip strip-red">
+      <span class="ribbon-star">★</span>
+    </div>
+    <div class="ribbon-strip strip-yellow"></div>
+  </div>
+
+  <div class="app-layout" id="app-root">
+
+    <!-- BARRE D'EN-TÊTE SUPÉRIEURE -->
+    <header class="top-nav-bar" id="top-nav-bar">
+      <div class="top-nav-brand">
+        <div class="nav-brain-icon-box">
+          <img src="/logo.png" alt="PEGINTI Brain Logo" class="nav-brain-img" />
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-title">PEGINTI-CHAT V3</span>
+          <span class="nav-subtitle">IA Souveraine · TomTech.inc</span>
+        </div>
+      </div>
+
+      <div class="top-nav-actions">
+        <div class="nav-matrix-status-pill" id="nav-matrix-status-pill" title="Filtre Matriciel Actif : 5 Règles de Réserve & Pensée Doctrinale">
+          <span class="matrix-pulse-dot"></span>
+          <span class="matrix-pill-text">Filtre Matriciel Actif</span>
+        </div>
+        <button class="btn-nav-refresh" id="btn-nav-refresh" title="Actualiser le moteur souverain">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- SECTION HÉRO CENTRÉE -->
+    <section class="hero-center-section" id="hero-center-section">
+      <div class="hero-logo-frame" id="hero-logo-frame">
+        <div class="hero-logo-inner">
+          <img src="/logo.png" alt="Logo PEGINTI" class="hero-brain-img" />
+        </div>
+      </div>
+      <h1 class="hero-main-title">PEGINTI-CHAT V3</h1>
+      <p class="hero-main-subtitle">IA Souveraine · TomTech.inc</p>
+      
+      <!-- BADGE SOUVERAIN ÉPURÉ -->
+      <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
+        <div class="hero-matrix-filter-badge">
+          <span class="badge-icon">🧠</span>
+          <span class="badge-text"><strong>Matrice Bo'oivini</strong> · <strong>Techno-eecoc V3.5</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- LES 3 VITRINES DISTINCTES (ENTRÉE ET SORTIE DES REQUÊTES)    -->
+    <!-- ============================================================ -->
+    <main class="main-blocks-container" id="main-blocks-container">
+
+      <!-- VITRINE 1 : WOUNANET (MOTEUR DE RECHERCHE TEMPS RÉEL) -->
+      <section class="home-card-block" id="block-wounanet">
+        <div class="card-block-header">
+          <div class="card-header-left color-green">
+            <span class="card-icon">🌍</span>
+            <span class="card-title-badge-text">WOUNANET</span>
+          </div>
+          <button class="btn-pill-open btn-pill-green" id="btn-open-wounanet-vitrine">
+            🟢 Ouvrir la vitrine
+          </button>
+        </div>
+
+        <div class="result-label-row">
+          <span>RÉSULTAT WOUNANET...</span>
+        </div>
+
+        <!-- AFFICHAGE DES RÉSULTATS (EN DESSUS) -->
+        <div class="display-box-content" id="wounanet-home-result-box">
+          <p style="color: #94a3b8; font-size: 12px; font-weight: 500;">🌍 <strong>WOUNANET :</strong> Saisissez une recherche d'actualité puis cliquez sur <strong>WOUNANET</strong>.</p>
+        </div>
+
+        <!-- ESPACE DE RÉDACTION & RECHERCHE (EN DESSOUS) -->
+        <div class="input-action-row">
+          <input 
+            type="text" 
+            id="input-home-wounanet" 
+            class="input-main-field" 
+            value="La guerre au moyen Orient" 
+            placeholder="Saisissez une recherche d'actualité..." 
+          />
+          <button class="btn-action-submit btn-submit-green" id="btn-home-wounanet-search">
+            WOUNANET
+          </button>
+        </div>
+      </section>
+
+      <!-- VITRINE 2 : CHAT INTERACTIF (VITRINE PUBLIQUE ET GRATUITE) -->
+      <section class="home-card-block" id="block-chat">
+        <div class="card-block-header">
+          <div class="card-header-left color-white">
+            <span class="card-title-plain">Chat interactif</span>
+          </div>
+          <button class="btn-pill-open btn-pill-yellow" id="btn-open-chat-modal">
+            💬 Ouvrir le chat
+          </button>
+        </div>
+
+        <div class="result-label-row flex-between">
+          <span>CONSOLE DE CONVERSATION (HISTORIQUE CONSERVÉ) :</span>
+          <button class="btn-text-action" id="btn-home-reset-chat">🗑️ Réinitialiser le fil</button>
+        </div>
+
+        <!-- 1. LES RÉPONSES ET ÉCHANGES DE PEGINTI IA (EN DESSUS) -->
+        <div class="display-box-content chat-display-flow" id="chat-home-result-box">
+          <p>🧠 <strong>PEGINTI IA :</strong> bonjour, bienvenue sur Peginti IA, votre intelligence artificielle généraliste et souveraine. Comment puis-je vous aider aujourd'hui ?</p>
+        </div>
+
+        <!-- 2. L'ESPACE DE RÉDACTION DE L'UTILISATEUR (EN DESSOUS) -->
+        <form class="input-action-row" id="form-home-chat">
+          <input 
+            type="text" 
+            id="input-home-chat" 
+            class="input-main-field" 
+            placeholder="Écris ton message ici..." 
+            autocomplete="off"
+          />
+          <button type="submit" class="btn-action-submit btn-submit-yellow" id="btn-home-chat-send">
+            ENVOYER
+          </button>
+        </form>
+      </section>
+
+      <!-- VITRINE 3 : VITRINE PREMIUM (BOUTIQUE & SERVICES PAYANTS) -->
+      <section class="home-card-block" id="block-premium">
+        <div class="card-block-header">
+          <div class="card-header-left color-pink">
+            <span class="card-title-plain" style="color: #ec4899;">Vitrine Premium &amp; Studio SDK Pro</span>
+          </div>
+          <button class="btn-pill-open btn-pill-purple" id="btn-open-premium-modal">
+            👑 Ouvrir la Vitrine Premium
+          </button>
+        </div>
+
+        <p class="premium-summary-text">
+          Tous les logiciels et kits de développement sont accessibles via notre tunnel de paiement automatisé intégrant directement MTN Mobile Money et Orange Money.
+        </p>
+
+        <button class="btn-big-cta-gradient" id="btn-home-explore-premium">
+          ✨ Accéder à la Vitrine Premium &amp; Studio SDK Pro
+        </button>
+      </section>
+
+    </main>
+
+    <!-- PIED DE PAGE DISCRET -->
+    <footer class="bottom-page-footer">
+      <div class="footer-copy">
+        <strong>PEGINTI-CHAT V3</strong> · Infrastructure TomTech.inc · Yaoundé, Cameroun
+      </div>
+      <div class="footer-contacts">
+        <span>Tunnel de paiement : MTN MoMo (+237 676867712) &amp; Orange Money (+237 691482453)</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ICÔNES FLOTTANTES DISCRÈTES (NE PRENNENT PAS DE PLACE)       -->
+  <!-- ============================================================ -->
+  <aside class="discrete-floating-dock" id="discrete-floating-dock" aria-label="Accès aux fonctionnalités souveraines">
+    
+    <!-- ICÔNE FLOTTANTE 1 : FILTRE MATRICIEL & PENSÉE (VERT) -->
+    <button class="floating-dock-btn dock-btn-green" id="dock-btn-pensee" title="Inspecteur du Filtre Matriciel : 5 Règles de Réserve & Pensée Doctrinale">
+      <span class="dock-btn-icon">🛡️</span>
+      <span class="dock-btn-label">Filtre</span>
+    </button>
+
+    <!-- ICÔNE FLOTTANTE 2 : WOUNANET VEILLE (ROUGE) -->
+    <button class="floating-dock-btn dock-btn-red" id="dock-btn-wounanet" title="Veille Stratégique WOUNANET (Pilote IVIOK 24/24)">
+      <span class="dock-btn-icon">📡</span>
+      <span class="dock-btn-label">WOUNANET</span>
+      <span class="dock-pulse-dot"></span>
+    </button>
+
+    <!-- ICÔNE FLOTTANTE 3 : CHAT COGNITIF (BLEU/CYAN) -->
+    <button class="floating-dock-btn dock-btn-blue" id="dock-btn-chat" title="Console Cognitive PEGINTI-CHAT V3">
+      <span class="dock-btn-icon">🧠</span>
+      <span class="dock-btn-label">Console</span>
+    </button>
+
+    <!-- ICÔNE FLOTTANTE 4 : PAIEMENT MOBILE MONEY (JAUNE) -->
+    <button class="floating-dock-btn dock-btn-yellow" id="dock-btn-momo" title="Boutique & Paiement Automatisé MTN / Orange">
+      <span class="dock-btn-icon">💳</span>
+      <span class="dock-btn-label">Boutique</span>
+    </button>
+
+    <!-- ICÔNE FLOTTANTE 5 : AUTORÉFLEXION & NANO-PUCE NSISIM (VIOLET) -->
+    <button class="floating-dock-btn dock-btn-purple" id="dock-btn-autoreflexion" title="Laboratoire d'Autoréflexion Matricielle & Nano-Puce NSISIM">
+      <span class="dock-btn-icon">🔮</span>
+      <span class="dock-btn-label">Matrice</span>
+    </button>
+
+    <!-- ICÔNE FLOTTANTE 6 : TRADUCTEUR DE MÉTAPHORES CULTURELLES (ORANGE) -->
+    <button class="floating-dock-btn dock-btn-orange" id="dock-btn-metaphores" title="Traducteur Conceptuel & Métaphores Culturelles (Occident ↔ Afrique)">
+      <span class="dock-btn-icon">🔄</span>
+      <span class="dock-btn-label">Métaphores</span>
+    </button>
+
+  </aside>
+
+  <!-- ============================================================ -->
+  <!-- MODALES FLOTTANTES COMPLÈTES (S'OUVRENT AU CLIC)             -->
+  <!-- ============================================================ -->
+
+  <!-- MODALE 1 : VITRINE PREMIUM & STUDIO SDK PRO -->
+  <div class="modal-overlay hidden" id="modal-premium-catalogue">
+    <div class="modal-card modal-large modal-extra-wide">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span class="modal-icon">👑</span>
+          <div>
+            <h3>Vitrine Premium &amp; Studio SDK PEGINTI Pro</h3>
+            <span style="font-size: 11px; color: #10b981; font-weight: 600;">Tunnel de paiement automatisé MTN MoMo / Orange Money &amp; Espace Développeur Large</span>
+          </div>
+        </div>
+        <button class="btn-modal-close" id="btn-close-modal-premium">✕</button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- ONGLETS PREMIUM -->
+        <div class="premium-nav-tabs">
+          <button class="premium-tab-btn active" id="tab-btn-boutique">🛍️ Boutique &amp; Paiement Automatisé</button>
+          <button class="premium-tab-btn" id="tab-btn-sdk-studio">💻 Studio SDK PEGINTI Pro (Espace Large)</button>
+        </div>
+
+        <!-- VUE 1 : BOUTIQUE ET TUNNEL DE PAIEMENT AUTOMATISÉ -->
+        <div id="view-premium-boutique" class="premium-view-container">
+          
+          <!-- BANDEAU INFORMATION MO-MO & ORANGE MONEY -->
+          <div class="payment-methods-banner">
+            <div class="method-chip mtn-chip">
+              <span class="chip-badge">MTN</span>
+              <span>Mobile Money : <strong>+237 676867712</strong></span>
+            </div>
+            <div class="method-chip orange-chip">
+              <span class="chip-badge">Orange</span>
+              <span>Orange Money : <strong>+237 691482453</strong></span>
+            </div>
+            <div class="method-chip adil-chip-badge">
+              <span>⚡ Paiement Automatisé Sécurisé</span>
+            </div>
+          </div>
+
+          <!-- GRILLE DES PRODUITS LOGICIELS AVEC BOUTON ACHETER -->
+          <div class="products-tri-grid" id="modal-products-grid">
+            <article class="prod-card">
+              <div class="prod-card-top">
+                <span class="prod-badge badge-populaire">Populaire 🔥</span>
+              </div>
+              <h3 class="prod-name">DSK PEGINTI IA Pro</h3>
+              <div class="prod-price-text">15 000 FCFA /mois</div>
+              <p class="prod-description">Kit de développement autonome complet. Correction de code, détection de bugs et refactoring souverain.</p>
+              <button class="btn-prod-action btn-action-pink btn-open-checkout" data-prod-id="prod-dsk-peginti-ia" data-prod-name="DSK PEGINTI IA Pro" data-prod-price="15 000 FCFA">
+                ⚡ Acheter (Tunnel Automatisé)
+              </button>
+            </article>
+
+            <article class="prod-card">
+              <div class="prod-card-top">
+                <span class="prod-badge badge-souverain">Souverain ⚡</span>
+              </div>
+              <h3 class="prod-name">Code Studio Pro</h3>
+              <div class="prod-price-text">45 000 FCFA /unique</div>
+              <p class="prod-description">Générateur full-stack d'applications web et mobile sur-mesure avec architecture certifiée TOMTECH.</p>
+              <button class="btn-prod-action btn-action-green btn-open-checkout" data-prod-id="prod-code-studio-pro" data-prod-name="Code Studio Pro" data-prod-price="45 000 FCFA">
+                ⚡ Acheter (Tunnel Automatisé)
+              </button>
+            </article>
+
+            <article class="prod-card">
+              <div class="prod-card-top">
+                <span class="prod-badge badge-eecoc">Écologique 🌿</span>
+              </div>
+              <h3 class="prod-name">Matrice Techno-eecoc Enterprise</h3>
+              <div class="prod-price-text">75 000 FCFA /unique</div>
+              <p class="prod-description">Algorithmes de calcul matriciel frugal à régénération de tenseurs, réduisant la consommation de plus de 60%.</p>
+              <button class="btn-prod-action btn-action-yellow btn-open-checkout" data-prod-id="prod-matrice-eecoc" data-prod-name="Matrice Techno-eecoc Enterprise" data-prod-price="75 000 FCFA">
+                ⚡ Acheter (Tunnel Automatisé)
+              </button>
+            </article>
+          </div>
+
+          <!-- TUNNEL DE PAIEMENT AUTOMATISÉ EN LIGNE -->
+          <div class="checkout-tunnel-box" id="checkout-tunnel-box">
+            <div class="tunnel-header">
+              <h4 id="checkout-selected-product-title">🛒 Tunnel de Paiement Automatisé : DSK PEGINTI IA Pro</h4>
+              <span class="tunnel-price-badge" id="checkout-selected-price">15 000 FCFA</span>
+            </div>
+
+            <form id="form-checkout-automated" class="checkout-form-grid">
+              <div class="checkout-field-group">
+                <label>Nom complet ou Raison Sociale :</label>
+                <input type="text" id="checkout-client-name" class="checkout-input" placeholder="Ex: Jean Dupont / Entreprise SAS" required />
+              </div>
+
+              <div class="checkout-field-group">
+                <label>Adresse E-mail (pour réception du reçu officiel) :</label>
+                <input type="email" id="checkout-client-email" class="checkout-input" placeholder="nom@domaine.com" />
+              </div>
+
+              <div class="checkout-field-group">
+                <label>Numéro de Téléphone Mobile Money :</label>
+                <input type="tel" id="checkout-client-phone" class="checkout-input" placeholder="+237 6XX XX XX XX" required />
+              </div>
+
+              <div class="checkout-field-group">
+                <label>Opérateur de Paiement :</label>
+                <div class="radio-operator-group">
+                  <label class="operator-radio-card active" id="label-op-mtn">
+                    <input type="radio" name="checkout-operator" value="MTN" checked />
+                    <span class="op-title-text">MTN Mobile Money</span>
+                    <span class="op-sub-num">+237 676867712</span>
+                  </label>
+                  <label class="operator-radio-card" id="label-op-orange">
+                    <input type="radio" name="checkout-operator" value="ORANGE" />
+                    <span class="op-title-text">Orange Money</span>
+                    <span class="op-sub-num">+237 691482453</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- BOUTON DISCRET POUR BON D'ACHAT ADMIN -->
+              <div class="coupon-adil-section">
+                <button type="button" class="btn-toggle-coupon-adil" id="btn-toggle-coupon-adil">
+                  🎟️ Bon d'achat Admin (Option discrète)
+                </button>
+                <div class="coupon-input-wrap hidden" id="coupon-adil-input-wrap">
+                  <input type="password" id="input-coupon-adil" class="checkout-input" placeholder="Mot de passe du bon d'achat..." />
+                  <button type="button" id="btn-apply-coupon-adil" class="btn-apply-coupon">Valider le Bon</button>
+                </div>
+                <div id="coupon-adil-status" class="coupon-status-msg"></div>
+              </div>
+
+              <div class="checkout-actions-row">
+                <button type="submit" class="btn-submit-checkout" id="btn-submit-checkout-pay">
+                  💳 VALIDER LE PAIEMENT &amp; GÉNÉRER LE REÇU OFFICIEL
+                </button>
+              </div>
+            </form>
+
+            <!-- ZONE D'AFFICHAGE DU REÇU OFFICIEL ENREGISTRÉ -->
+            <div class="official-receipt-container hidden" id="official-receipt-container">
+              <div class="receipt-card">
+                <div class="receipt-header">
+                  <div class="receipt-logo">
+                    <img src="/logo.png" alt="Logo" class="receipt-logo-img" />
+                    <div>
+                      <h3>REÇU OFFICIEL DE TRANSACTION</h3>
+                      <span>TOMTECH.INC · YAOUNDÉ, CAMEROUN</span>
+                    </div>
+                  </div>
+                  <div class="receipt-status-stamp" id="receipt-status-stamp">PAYÉ &amp; ENREGISTRÉ</div>
+                </div>
+
+                <div class="receipt-details-grid" id="receipt-details-content">
+                  <!-- Rempli dynamiquement -->
+                </div>
+
+                <div class="receipt-footer-actions">
+                  <button type="button" class="btn-print-receipt" id="btn-print-receipt">🖨️ Imprimer / Sauvegarder le Reçu (PDF)</button>
+                  <button type="button" class="btn-copy-receipt" id="btn-copy-receipt">📋 Copier les Références</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- VUE 2 : STUDIO SDK PEGINTI PRO (ESPACE DE TRAVAIL LARGE & AÉRÉ) -->
+        <div id="view-premium-sdk-studio" class="premium-view-container hidden">
+          
+          <div class="sdk-studio-layout-large">
+            
+            <!-- PANNEAU SUPÉRIEUR : IMPORTATION GITHUB/GITLAB & CONSOLE API -->
+            <div class="sdk-top-toolbar-card">
+              <div class="sdk-toolbar-grid">
+                
+                <!-- IMPORT GITHUB / GITLAB / FICHIER SOURCE -->
+                <div class="sdk-import-box">
+                  <label class="sdk-label">📂 Importer un Projet (GitHub, GitLab ou Fichier source) :</label>
+                  <div class="sdk-input-btn-row">
+                    <input type="text" id="input-sdk-repo-url" class="sdk-text-input" placeholder="https://github.com/utilisateur/mon-projet.git ou https://gitlab.com/..." />
+                    <button type="button" id="btn-sdk-import-repo" class="btn-sdk-action-blue">⬇️ Importer Dépôt</button>
+                  </div>
+                  <div class="sdk-file-upload-row">
+                    <label for="input-sdk-file-upload" class="btn-sdk-upload-label">📁 Téléverser un fichier de code source (.js, .ts, .py, .c, .rs, .json)</label>
+                    <input type="file" id="input-sdk-file-upload" class="hidden" accept=".js,.ts,.py,.c,.cpp,.rs,.json,.html,.css,.zip,.txt" />
+                    <span id="label-uploaded-file-name" class="uploaded-file-tag">Aucun fichier sélectionné</span>
+                  </div>
+                </div>
+
+                <!-- ACTIVATION CONSOLE PEGINTI IA & CLÉ API -->
+                <div class="sdk-api-box">
+                  <label class="sdk-label">⚡ Activation de la Console PEGINTI IA &amp; Clé API :</label>
+                  <div class="sdk-input-btn-row">
+                    <input type="password" id="input-sdk-api-key" class="sdk-text-input" placeholder="Clé API PEGINTI ou Gemini (Laissez vide pour utiliser le serveur local)" />
+                    <button type="button" id="btn-sdk-activate-api" class="btn-sdk-action-green">⚡ Activer Console</button>
+                  </div>
+                  <div class="console-status-pill">
+                    <span class="dot-green"></span>
+                    <span id="sdk-console-status-text">Console PEGINTI IA V3.5 : Connectée &amp; Opérationnelle</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- ESPACE DE TRAVAIL PRINCIPAL LARGE ET AÉRÉ (2 COLONNES) -->
+            <div class="sdk-workspace-split">
+              
+              <!-- COLONNE 1 : ÉDITEUR DE CODE & CORRECTION/CONFIGURATION AUTOMATIQUE -->
+              <div class="sdk-code-editor-column">
+                <div class="editor-header-bar">
+                  <div class="editor-controls-left">
+                    <select id="select-sdk-language" class="sdk-select">
+                      <option value="javascript">JavaScript / Node.js</option>
+                      <option value="typescript">TypeScript</option>
+                      <option value="python">Python</option>
+                      <option value="c">C / Frugal (Techno-eecoc)</option>
+                      <option value="rust">Rust (Haute Résilience)</option>
+                      <option value="html">HTML / Tailwind CSS</option>
+                    </select>
+
+                    <select id="select-sdk-task-type" class="sdk-select">
+                      <option value="auto_fix">🔧 Correction &amp; Configuration Automatique</option>
+                      <option value="techno_eecoc">🌿 Optimisation Frugale Techno-eecoc</option>
+                      <option value="api_inject">⚡ Injecter l'API Souveraine PEGINTI</option>
+                      <option value="audit_sec">🛡️ Audit de Sécurité &amp; Intégrité</option>
+                    </select>
+                  </div>
+
+                  <button type="button" class="btn-copy-code-mini" id="btn-sdk-copy-code">📋 Copier le Code</button>
+                </div>
+
+                <textarea id="textarea-sdk-code-editor" class="sdk-code-editor-textarea" spellcheck="false">// Studio SDK PEGINTI Pro - Code Source de l'Application
+// Prêt pour correction, optimisation et configuration automatique
+
+import express from 'express';
+const app = express();
+app.use(express.json());
+
+// Point d'entrée de votre application
+app.get('/api/data', (req, res) => {
+  res.json({
+    status: "SUCCÈS",
+    message: "Service connecté au Studio SDK PEGINTI Pro"
+  });
+});
+
+export default app;</textarea>
+
+                <div class="editor-bottom-bar">
+                  <input type="text" id="input-sdk-custom-instruction" class="sdk-text-input" placeholder="Instruction spécifique pour la configuration ou la correction du code..." />
+                  <button type="button" id="btn-sdk-run-autofix" class="btn-sdk-run-primary">
+                    🚀 CORRIGER &amp; CONFIGURER LE CODE AVEC L'IA
+                  </button>
+                </div>
+
+                <!-- ZONE DE SORTIE DU CODE CORRIGÉ -->
+                <div class="sdk-corrected-output-box">
+                  <div class="output-box-title">
+                    <span>✓ Résultat de la Correction &amp; Configuration Automatique :</span>
+                    <button type="button" class="btn-apply-to-editor" id="btn-apply-corrected-code">⬅ Remplacer dans l'éditeur</button>
+                  </div>
+                  <div class="output-box-pre" id="sdk-corrected-code-display">
+                    <span style="color:#64748b;">Cliquez sur « Corriger &amp; Configurer » pour lancer l'analyse de votre code source par bo'oivinichat.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- COLONNE 2 : ASSISTANT TECHNIQUE BO'OIVINICHAT & GUIDE DES DÉVELOPPEURS -->
+              <div class="sdk-assistant-column">
+                <div class="assistant-header-bar">
+                  <div class="assistant-title-group">
+                    <span class="assistant-avatar">🧠</span>
+                    <div>
+                      <h4 class="assistant-name">bo'oivinichat</h4>
+                      <span class="assistant-sub">Assistant Technique &amp; Guide des Développeurs</span>
+                    </div>
+                  </div>
+                  <button type="button" class="btn-clear-chat-mini" id="btn-clear-sdk-assistant">↻ Effacer</button>
+                </div>
+
+                <div class="assistant-messages-flow" id="sdk-assistant-messages-flow">
+                  <div class="assistant-msg-bubble">
+                    <div class="msg-author">bo'oivinichat :</div>
+                    <p>Bienvenue dans votre Studio SDK PEGINTI Pro. Je suis votre assistant technique dédié. Posez-moi vos questions sur le code, l'optimisation Techno-eecoc, la configuration des API ou l'architecture de vos projets.</p>
+                  </div>
+                </div>
+
+                <form id="form-sdk-assistant-chat" class="assistant-input-row">
+                  <input type="text" id="input-sdk-assistant-query" class="assistant-text-input" placeholder="Posez une question technique à bo'oivinichat..." autocomplete="off" />
+                  <button type="submit" class="btn-assistant-send">Envoyer</button>
+                </form>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
     </div>
-    <div class="top-status">
-      <span id="status-badge" class="status-badge">● Vérification Serveur...</span>
+  </div>
+
+  <!-- MODALE 2 : VEILLE STRATÉGIQUE WOUNANET (PILOTE IVIOK 24/24) -->
+  <div class="modal-overlay hidden" id="modal-wounanet-dispatch">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span class="modal-icon">📡</span>
+          <h3>Veille Stratégique WOUNANET (Pilote IVIOK 24/24)</h3>
+        </div>
+        <button class="btn-modal-close" id="btn-close-modal-wounanet">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="wounanet-search-row">
+          <input type="text" id="wounanet-modal-search-input" placeholder="Rechercher une dépêche (Moyen-Orient, Énergie, ZLECAF)..." value="La guerre au moyen Orient" />
+          <button id="btn-wounanet-modal-search" class="btn-wounanet-search">WOUNANET</button>
+        </div>
+        <div class="wounanet-live-dispatch" id="wounanet-modal-live-box">
+          <!-- Rempli dynamiquement -->
+        </div>
+        <div class="wounanet-stream-list" id="wounanet-modal-stream-list">
+          <!-- Rempli dynamiquement -->
+        </div>
+      </div>
     </div>
-  </header>
+  </div>
 
-  <!-- Conteneur principal -->
-  <main class="app-main">
-
-    <!-- VITRINE PUBLIQUE -->
-    <div id="vitrine-publique" class="vitrine-container">
-      
-      <!-- CARTE STATUT SYSTÈME & TUNNEL CLOUDFLARE -->
-      <section class="sys-info-card">
-        <div class="sys-info-header">
-          <span>⚡ Statut Système & Noeud Souverain</span>
-          <span class="badge-tag">Termux & Cloudflare Tunnel</span>
+  <!-- MODALE 3 : CONSOLE COGNITIVE DE DIALOGUE -->
+  <div class="modal-overlay hidden" id="modal-cognitive-console">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span class="modal-icon">🧠</span>
+          <h3>Console Cognitive PEGINTI-CHAT V3</h3>
         </div>
-        <div class="sys-info-grid">
-          <div class="sys-info-item">
-            <span class="sys-label">Statut Serveur :</span>
-            <span id="sys-status" class="sys-value val-green">EN LIGNE 🟢</span>
-          </div>
-          <div class="sys-info-item">
-            <span class="sys-label">IP Client / Noeud :</span>
-            <span id="sys-ip" class="sys-value">127.0.0.1</span>
-          </div>
-          <div class="sys-info-item">
-            <span class="sys-label">Tunnel & Domaine :</span>
-            <span id="sys-tunnel" class="sys-value val-gold">PEGINTI-TUNNEL (pegintichat.online)</span>
+        <button class="btn-modal-close" id="btn-close-modal-console">✕</button>
+      </div>
+      <div class="modal-body console-modal-body">
+        <div class="chat-flow-zone" id="modal-chat-flow-zone">
+          <div class="chat-row bot-row">
+            <div class="chat-avatar">P</div>
+            <div class="chat-bubble">
+              <div class="bubble-meta">
+                <strong>PEGINTI-CHAT V3</strong> · <span>Filtre Matriciel Actif</span>
+              </div>
+              <p>Bienvenue sur la console cognitive. Posez votre question doctrinale, stratégique ou technique.</p>
+            </div>
           </div>
         </div>
-      </section>
-
-      <!-- CARTE D'ANALYSE UNIVERSELLE API -->
-      <section class="analyser-card">
-        <div class="chat-header-bar">
-          <span>🧠 Formulaire d'Analyse Universelle API DSK</span>
-          <span class="badge-tag">Endpoint /api/analyser</span>
-        </div>
-        <form id="form-analyser" class="analyser-form">
-          <div class="form-row">
-            <input type="password" id="api-key" class="row-input" placeholder="Clé API DSK (Optionnelle)...">
-            <input type="text" id="sujet" class="row-input" placeholder="Entrez votre sujet ou requête à analyser par la matrice DSK..." required>
-            <button type="submit" class="row-btn btn-green">🚀 Analyser</button>
-          </div>
+        <form class="chat-submit-row" id="modal-chat-form">
+          <input type="text" id="modal-chat-input" placeholder="Posez votre question à PEGINTI-CHAT V3..." autocomplete="off" />
+          <button type="submit" class="btn-send-chat">Envoyer ➔</button>
         </form>
-        <div id="result-box" class="result-box hidden">
-          <div class="result-title">📋 Résultat de l'Analyse DSK :</div>
-          <pre id="result-content" class="result-code">En attente de soumission...</pre>
-        </div>
-      </section>
-
-      <!-- Zone d'affichage des dialogues & résultats -->
-      <section class="chat-display-card">
-        <div class="chat-header-bar">
-          <span>📜 Chat Interactif & Résultats Wounanet</span>
-          <span class="badge-tag">Souveraineté Numérique</span>
-        </div>
-        <div id="chat-messages" class="chat-text">
-          <div class="bot-message">
-            <strong>🧠 PEGINTI IA :</strong> Bienvenue sur la vitrine publique PEGINTI-CHAT V3. Utilisez les espaces interactifs ci-dessous pour analyser un sujet, lancer une recherche Wounanet ou basculer vers la vitrine premium.
-          </div>
-        </div>
-      </section>
-
-      <!-- SECTION DES ESPACES INTERACTIFS -->
-      <section class="controls-container">
-
-        <!-- RANGÉE 1 : Espace de Recherche Wounanet -->
-        <div class="control-row row-wounanet">
-          <div class="row-label label-green">
-            <span>🌍 Wounanet</span>
-          </div>
-          <input type="text" id="wounanet-input" class="row-input" placeholder="Rechercher dans Wounanet (actualités & dépêches en temps réel)...">
-          <button id="wounanet-btn" type="button" class="row-btn btn-green">Rechercher</button>
-        </div>
-
-        <!-- RANGÉE 2 : Chat Interactif Vitrine Publique -->
-        <form id="chat-form" class="control-row row-public">
-          <div class="row-label label-yellow">
-            <span>💬 Chat Public</span>
-          </div>
-          <input type="text" id="chat-input" class="row-input" placeholder="Posez votre question au Chat Interactif PEGINTI IA...">
-          <button type="submit" id="send-btn" class="row-btn btn-yellow">Envoyer</button>
-        </form>
-
-        <!-- RANGÉE 3 : Bascule Vitrine Premium -->
-        <div class="control-row row-premium">
-          <div class="row-label label-pink">
-            <span>👑 Premium</span>
-          </div>
-          <div class="row-info-box">
-            <span>Vitrine Premium — Agent Bo'oivini Live, Studio DSK & Applications Clé-en-Main</span>
-          </div>
-          <button type="button" id="btn-switch-premium" class="row-btn btn-pink">Explorer Premium</button>
-        </div>
-
-      </section>
+      </div>
     </div>
+  </div>
 
-    <!-- VITRINE PREMIUM APERÇU (COMMUTABLE) -->
-    <div id="vitrine-premium" class="vitrine-container hidden">
-      <section class="premium-preview-card">
-        <div class="chat-header-bar">
-          <span>👑 Studio Premium Bo'oivini & DSK Agent</span>
-          <button type="button" id="btn-back-public" class="row-btn btn-yellow" style="width: auto; padding: 0 15px; height: 36px;">← Retour Vitrine Publique</button>
+  <!-- MODALE 4 : FILTRE MATRICIEL DE RAISONNEMENT (5 RÈGLES & PENSÉE DOCTRINALE) -->
+  <div class="modal-overlay hidden" id="modal-pensee-charte">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span class="modal-icon">🛡️</span>
+          <h3>Filtre Matriciel de Raisonnement &amp; Pensée Doctrinale</h3>
         </div>
-        <p style="color: #cbd5e1; line-height: 1.6;">
-          Vous êtes dans le module Vitrine Premium de PEGINTI IA. Vous pouvez accéder directement au Studio Complet ou utiliser l'Agent Technique Bo'oivini en temps réel.
-        </p>
-        <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
-          <a href="/premium" class="row-btn btn-pink" style="width: auto; padding: 0 20px;">🚀 Ouvrir Studio Premium DSK</a>
+        <button class="btn-modal-close" id="btn-close-modal-pensee">✕</button>
+      </div>
+      <div class="modal-body" id="pensee-charte-content">
+        
+        <!-- EXPLICATION DE LA FONCTIONNALITÉ MATRICIELLE -->
+        <div class="matrix-definition-banner">
+          <div class="matrix-def-badge">⚡ FONCTIONNALITÉ MATRICIELLE CENTRALE</div>
+          <p class="matrix-def-text">
+            Les 5 règles de réserve et la pensée doctrinale <strong>ne constituent pas une vitrine</strong> mais le <strong>filtre algorithmique matriciel</strong> qui traite, valide et calibre chaque étape du raisonnement de PEGINTI-CHAT V3 et du studio bo'oivinichat.
+          </p>
         </div>
-      </section>
+
+        <div class="author-banner">
+          <strong>Tomo Ombede Barnabé Bertrand</strong> · Architecte Fondateur TOMTECH.INC (Cameroun)
+        </div>
+        
+        <div class="quote-card-box">
+          <div class="quote-header-tag">AXIOME CENTRAL DE RAISONNEMENT :</div>
+          <p id="pensee-quote-text">
+            « ...découverte, où la rigueur intellectuelle se marie à la clarté visuelle. Cette quête d'excellence est un processus continu, visant toujours à rendre la connaissance plus accessible et plus vivante. »
+          </p>
+          <button class="btn-cycle-quote" id="btn-cycle-pensee-quote">↻ Autre Pensée Doctrinale</button>
+        </div>
+
+        <div class="reserve-rules-container">
+          <h4 class="rules-section-title">Les 5 Règles de Réserve Agissant comme Filtres Cognitifs :</h4>
+          <div class="reserve-rules-list" id="reserve-rules-list"></div>
+        </div>
+
+      </div>
     </div>
+  </div>
 
-  </main>
+  <!-- MODALE 5 : PAIEMENT MOBILE MONEY INSTANTANÉ -->
+  <div class="modal-overlay hidden" id="modal-momo-order">
+    <div class="modal-card modal-small">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span class="modal-icon">💳</span>
+          <h3 id="momo-modal-title">Boutique &amp; Paiement Automatisé</h3>
+        </div>
+        <button class="btn-modal-close" id="btn-close-modal-momo">✕</button>
+      </div>
+      <div class="modal-body" id="momo-modal-body"></div>
+    </div>
+  </div>
 
-  <!-- Pied de page -->
-  <footer>
-    <p>© 2025-2026 PEGINTI Framework — TOMTECH.INC (Yaoundé, Cameroun) • Bo’oivini Server & Wounanet API</p>
-  </footer>
+  <!-- MODALE 6 : LABORATOIRE D'AUTORÉFLEXION MATRICIELLE & NANO-PUCE NSISIM -->
+  <div class="modal-overlay hidden" id="modal-autoreflexion-lab">
+    <div class="modal-card modal-large modal-extra-wide">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span class="modal-icon">🔮</span>
+          <div>
+            <h3>Laboratoire d'Autoréflexion Matricielle Bo'oivini &amp; Nano-Puce NSISIM</h3>
+            <span style="font-size: 11px; color: #c084fc; font-weight: 600;">Décomposition Triadique (Cosmique / Communautaire / Pédagogique) &amp; Vecteurs Logiques</span>
+          </div>
+        </div>
+        <button class="btn-modal-close" id="btn-close-modal-autoreflexion">✕</button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- BANDEAU NANO-PUCE NSISIM -->
+        <div class="nsissim-status-banner">
+          <div class="nsissim-chip-badge">
+            <span class="nsissim-dot-pulse"></span>
+            <span>NANO-PUCE DOCTRINALE NSISIM : <strong>ACTIVE</strong></span>
+          </div>
+          <div class="nsissim-metrics-row">
+            <span>Source : <strong>Invisible</strong></span>
+            <span>Énergie : <strong>Intarissable</strong></span>
+            <span>Mode : <strong>Éternel</strong></span>
+            <span>Standard : <strong>Techno-eecoc V3.5</strong></span>
+          </div>
+        </div>
 
-=======
-  <title>PEGINTI v2.2 — Interface institutionnelle</title>
-</head>
-<body>
-  <h1>PEGINTI v2.2 — Interface institutionnelle</h1>
-  <p>Bienvenue sur TomTech.inc</p>
->>>>>>> 4922328 (PEGINTI v2.2 : ajout vitrine premium ULTRA, config PM2 et scripts de déploiement)
+        <!-- FORMULAIRE D'INSPECTION D'AUTORÉFLEXION -->
+        <div class="autoreflexion-input-box">
+          <label class="sdk-label">🧪 Saisissez un sujet ou une énigme pour inspecter le traitement matriciel autonome :</label>
+          <div class="sdk-input-btn-row">
+            <input type="text" id="input-autoreflexion-query" class="sdk-text-input" value="Souveraineté numérique et intelligence africaine" placeholder="Ex: La cohésion sociale face aux technologies modernes..." />
+            <button type="button" id="btn-run-autoreflexion-inspect" class="btn-sdk-action-purple">⚡ Décomposer la Matrice</button>
+          </div>
+          <div class="quick-prompts-row">
+            <span style="font-size:11px; color:#94a3b8;">Exemples rapides :</span>
+            <button type="button" class="btn-quick-tag" data-prompt="L'ordre universel et la transcendance cosmique">🌌 Ordre Cosmique</button>
+            <button type="button" class="btn-quick-tag" data-prompt="La tradition et les valeurs communautaires en Afrique">🌍 Communautaire</button>
+            <button type="button" class="btn-quick-tag" data-prompt="L'enseignement des sciences et la transmission du code">📚 Pédagogique</button>
+            <button type="button" class="btn-quick-tag" data-prompt="Comparaison entre la dialectique occidentale et la pensée africaine">⚖️ Dialectique</button>
+          </div>
+        </div>
+
+        <!-- AFFICHAGE DES RÉSULTATS DE LA DÉCOMPOSITION -->
+        <div class="autoreflexion-grid-results" id="autoreflexion-grid-results">
+          
+          <!-- CARTE 1 : RAISONNEMENT DÉTECTÉ -->
+          <div class="matrice-feature-card">
+            <div class="feature-card-header">
+              <span class="feature-icon">🧠</span>
+              <h4>1. Type de Raisonnement</h4>
+            </div>
+            <div class="feature-card-body" id="autoreflexion-box-raisonnement">
+              <div class="stat-highlight" id="stat-raisonnement-titre">Pédagogique</div>
+              <p id="stat-raisonnement-desc">Raisonnement fondé sur la transmission des sciences diverses et l'enseignement.</p>
+            </div>
+          </div>
+
+          <!-- CARTE 2 : LOGIQUE DÉTECTÉE -->
+          <div class="matrice-feature-card">
+            <div class="feature-card-header">
+              <span class="feature-icon">📐</span>
+              <h4>2. Inférence Logique</h4>
+            </div>
+            <div class="feature-card-body" id="autoreflexion-box-logique">
+              <div class="stat-highlight" id="stat-logique-titre">Déduction</div>
+              <p id="stat-logique-desc">Partir du général pour conclure au particulier.</p>
+            </div>
+          </div>
+
+          <!-- CARTE 3 : INTENTION HERMÉNEUTIQUE -->
+          <div class="matrice-feature-card">
+            <div class="feature-card-header">
+              <span class="feature-icon">🎯</span>
+              <h4>3. Intention Herméneutique</h4>
+            </div>
+            <div class="feature-card-body" id="autoreflexion-box-intention">
+              <div class="stat-highlight" id="stat-intention-titre">Souveraineté (Priorité 9)</div>
+              <p id="stat-intention-desc">Axe souverain : Souveraineté numérique et cognitive africaine.</p>
+            </div>
+          </div>
+
+          <!-- CARTE 4 : PLAN DE DÉPLOIEMENT TRIADIQUE -->
+          <div class="matrice-feature-card full-width-card">
+            <div class="feature-card-header">
+              <span class="feature-icon">📜</span>
+              <h4>4. Déploiement Triadique &amp; Validation Matricielle</h4>
+            </div>
+            <div class="feature-card-body">
+              <ul class="triadique-step-list" id="autoreflexion-box-plan">
+                <li><strong>• Étape 1 :</strong> Analyse du contexte et diagnostic d'alignement doctrinal.</li>
+                <li><strong>• Étape 2 :</strong> Traitement matriciel autonome Bo'oivini sous standard Techno-eecoc.</li>
+                <li><strong>• Étape 3 :</strong> Synthèse souveraine et ancrage par la nano-puce NSISIM.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALE 7 : TRADUCTEUR CONCEPTUEL & MÉTAPHORES CULTURELLES -->
+  <div class="modal-overlay hidden" id="modal-metaphores-translator">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span class="modal-icon">🔄</span>
+          <div>
+            <h3>Traducteur Conceptuel &amp; Métaphores Culturelles (Occident ↔ Afrique)</h3>
+            <span style="font-size: 11px; color: #fb923c; font-weight: 600;">Préservation de la fonction et ancrage culturel matriciel</span>
+          </div>
+        </div>
+        <button class="btn-modal-close" id="btn-close-modal-metaphores">✕</button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="translator-description-box">
+          <p>Ce moteur convertit les concepts occidentaux vers leurs équivalents africains matriciels tout en préservant strictement leur fonction logique et leur rigueur universelle.</p>
+        </div>
+
+        <div class="translator-interactive-area">
+          <div class="translator-inputs-split">
+            <div class="trans-col">
+              <label class="sdk-label">📝 Texte ou Concept à analyser :</label>
+              <textarea id="textarea-metaphores-input" class="sdk-code-editor-textarea" style="height:110px;" placeholder="Ex: Une volonté pure comme la neige et une solidité d'acier avec un édifice de marbre...">Une pureté de neige, une structure d'acier et la transparence du verre.</textarea>
+            </div>
+            <div class="trans-col">
+              <label class="sdk-label">🌿 Traduction Conceptuelle Matricielle :</label>
+              <div id="box-metaphores-output" class="output-box-pre" style="height:110px; color:#f8fafc; font-weight:600;">
+                Cliquez sur « Traduire &amp; Analyser » pour voir la métaphore africaine correspondante.
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px; display:flex; gap:10px; justify-content:flex-end;">
+            <button type="button" id="btn-run-metaphores-translate" class="btn-sdk-action-green" style="background:#ea580c; border-color:#f97316;">
+              🔄 Traduire &amp; Analyser les Métaphores
+            </button>
+          </div>
+        </div>
+
+        <!-- TABLEAU DES MAPPING MATRICIELS -->
+        <div class="metaphores-table-wrapper">
+          <h4 style="font-size:13px; color:#f8fafc; margin-bottom:8px; font-weight:700;">Mapping Conceptuel de Référence :</h4>
+          <div class="metaphores-grid-cards">
+            <div class="metaphore-item-card">
+              <div class="meta-tag">Pureté</div>
+              <div class="meta-comparison">Neige ➔ <strong>Coton</strong></div>
+              <p class="meta-desc">Éclat naturel et douceur fertile issue de la terre nourricière.</p>
+            </div>
+            <div class="metaphore-item-card">
+              <div class="meta-tag">Force</div>
+              <div class="meta-comparison">Acier ➔ <strong>Baobab</strong></div>
+              <p class="meta-desc">Solidité inébranlable, longévité millénaire et racines profondes.</p>
+            </div>
+            <div class="metaphore-item-card">
+              <div class="meta-tag">Clarté</div>
+              <div class="meta-comparison">Verre ➔ <strong>Eau de source</strong></div>
+              <p class="meta-desc">Transparence vivifiante, pureté essentielle et vérité désaltérante.</p>
+            </div>
+            <div class="metaphore-item-card">
+              <div class="meta-tag">Noblesse</div>
+              <div class="meta-comparison">Marbre ➔ <strong>Terre rouge</strong></div>
+              <p class="meta-desc">Fondation ancestrale solide et chaleur de l'habitat souverain.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
 </body>
 </html>

@@ -1,9 +1,12 @@
-'use strict';
+/**
+ * MOTEUR DIALECTIQUE ULTRA - PEGINTI IA
+ * Conçu par Tomo Ombede Barnabé Bertrand (TOMTECH.INC)
+ */
 
-const { interpreterSujet } = require('./hermeneutique');
-const { choisirIntention } = require('./intentions');
+import { interpreterSujet } from './hermeneutique.js';
+import { choisirIntention } from './intentions.js';
 
-function confronterLectures(sujet, contexte = {}) {
+export function confronterLectures(sujet, contexte = {}) {
   const categorie = interpreterSujet(sujet);
   const intention = choisirIntention(categorie);
 
@@ -16,7 +19,7 @@ function confronterLectures(sujet, contexte = {}) {
   };
 }
 
-function construireReponseFinale(sujet, base, contexte = {}) {
+export function construireReponseFinale(sujet, base, contexte = {}) {
   const lecture = confronterLectures(sujet, contexte);
   return [
     `QUESTION : ${sujet}`,
@@ -29,7 +32,17 @@ function construireReponseFinale(sujet, base, contexte = {}) {
   ].join('\n');
 }
 
-module.exports = {
+export function structurerDialectique(these, antithese) {
+  return {
+    these,
+    antithese,
+    synthese: "Dépassement par l'excellence et l'intégration des paradoxes",
+    methode: "Rigueur analytique continue"
+  };
+}
+
+export default {
   confronterLectures,
-  construireReponseFinale
+  construireReponseFinale,
+  structurerDialectique
 };

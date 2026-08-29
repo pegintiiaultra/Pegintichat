@@ -1,11 +1,18 @@
-// Module statique Wounanet : encyclopédie permanente
-module.exports = {
-  lookup: (query) => {
-    const base = {
-      "PEGINTI": "Plateforme souveraine d'intelligence artificielle.",
-      "Nsissim": "Orchestrateur doctrinal et mémoire PEGINTI.",
-      "Wounanet": "Encyclopédie hybride (statique + dynamique via NewsAPI)."
-    };
-    return base[query] || null;
-  }
+/**
+ * MATRICE WOUNANET - Connecteur de veille et analyse d'actualité matricielle
+ */
+import { rechercherWounanet, getActualites, getIndicateurs, getRapportVeille } from '../wounanet.js';
+
+export {
+  rechercherWounanet,
+  getActualites,
+  getIndicateurs,
+  getRapportVeille
+};
+
+export default {
+  rechercherWounanet,
+  getActualites,
+  getIndicateurs,
+  getRapportVeille
 };

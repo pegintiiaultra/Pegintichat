@@ -1,6 +1,9 @@
-'use strict';
+/**
+ * MOTEUR HERMÉNEUTIQUE ULTRA - PEGINTI IA
+ * Conçu par Tomo Ombede Barnabé Bertrand (TOMTECH.INC)
+ */
 
-function normaliser(texte) {
+export function normaliser(texte) {
   return String(texte || '')
     .toLowerCase()
     .trim()
@@ -8,19 +11,30 @@ function normaliser(texte) {
     .replace(/[\u0300-\u036f]/g, '');
 }
 
-function interpreterSujet(sujet) {
+export function interpreterSujet(sujet) {
   const q = normaliser(sujet);
 
-  if (q.includes('religion')) return 'spirituel';
-  if (q.includes('homosexualite')) return 'sensible';
-  if (q.includes('identite africaine')) return 'identite_culturelle';
-  if (q.includes('souverainete') || q.includes('colonialisme numerique')) return 'souverainete';
-  if (q.includes('paix') || q.includes('cohesion')) return 'coherence_sociale';
+  if (q.includes('religion') || q.includes('dieu') || q.includes('foi') || q.includes('culte')) return 'spirituel';
+  if (q.includes('homosexualite') || q.includes('tabou') || q.includes('moeurs')) return 'sensible';
+  if (q.includes('identite africaine') || q.includes('tradition') || q.includes('ancetres') || q.includes('culture')) return 'identite_culturelle';
+  if (q.includes('souverainete') || q.includes('colonialisme numerique') || q.includes('independance') || q.includes('autonomie')) return 'souverainete';
+  if (q.includes('paix') || q.includes('cohesion') || q.includes('vivre ensemble') || q.includes('dialogue')) return 'coherence_sociale';
 
   return 'generaliste';
 }
 
-module.exports = {
+export function interpreterTexte(texte) {
+  const categorie = interpreterSujet(texte);
+  return {
+    sensLitteral: "Compréhension première",
+    sensProfond: "Déploiement doctrinal et implications éthiques",
+    porteSouveraine: "Affirmation de la pensée indépendante",
+    categorie
+  };
+}
+
+export default {
   interpreterSujet,
+  interpreterTexte,
   normaliser
 };

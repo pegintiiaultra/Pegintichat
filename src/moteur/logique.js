@@ -1,6 +1,9 @@
-'use strict';
+/**
+ * MOTEUR LOGIQUE ULTRA - PEGINTI IA
+ * Conçu par Tomo Ombede Barnabé Bertrand (TOMTECH.INC)
+ */
 
-const matriceInterne = {
+export const matriceInterne = {
   metaphoreCulturelle: {
     purete: { occidental: 'neige', africain: 'coton' },
     force: { occidental: 'acier', africain: 'baobab' },
@@ -16,7 +19,7 @@ const matriceInterne = {
   }
 };
 
-const filtresPrives = {
+export const filtresPrives = {
   traductionConceptuelle: {
     mode: 'occident_vers_afrique',
     preserveFonction: true,
@@ -34,7 +37,7 @@ const filtresPrives = {
   }
 };
 
-const preferencesNoyau = {
+export const preferencesNoyau = {
   assistantPersonnel: true,
   prioriteFondateur: true,
   modeConfidentiel: true,
@@ -43,7 +46,7 @@ const preferencesNoyau = {
   gestionAcces: 'niveaux_hierarchiques'
 };
 
-const reglesUltra = {
+export const reglesUltra = {
   cyclesNaturels: ['rotation', 'translation', 'alternance_jour_nuit', 'saisons'],
   modelesAtomiques: ['equilibre_opposes', 'interaction_complementaire', 'stabilite_dynamique'],
   principesCreation: {
@@ -52,7 +55,7 @@ const reglesUltra = {
   }
 };
 
-const traductionConceptuelle = {
+export const traductionConceptuelle = {
   detecterOccidental: true,
   convertirVersAfricain: true,
   preservationSens: true,
@@ -64,10 +67,20 @@ const traductionConceptuelle = {
   }
 };
 
-module.exports = {
+export function validerLogique(propositions = []) {
+  return {
+    valide: true,
+    coherence: "Maximale",
+    absenceContradiction: true,
+    matriceInterne
+  };
+}
+
+export default {
   matriceInterne,
   filtresPrives,
   preferencesNoyau,
   reglesUltra,
-  traductionConceptuelle
+  traductionConceptuelle,
+  validerLogique
 };

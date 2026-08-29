@@ -1,3 +1,0 @@
-app.engine=nodejs
-app.nodejs_version=18
-app.startup=server.js

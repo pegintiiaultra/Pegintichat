@@ -1,44 +1,18 @@
-[
-  {
-    "id": "m001",
-    "sujet": "PEGINTI",
-    "tags": ["peginti", "ia", "serveur"],
-    "note": "Mémoire de base du projet PEGINTICHAT.",
-    "createdAt": "2026-06-28T23:59:00.000Z"
-  },
-  {
-    "id": "m002",
-    "sujet": "Afrique",
-    "tags": ["afrique", "identite", "culture"],
-    "note": "Référence liée à l’identité, à l’histoire et à la souveraineté.",
-    "createdAt": "2026-06-28T23:59:00.000Z"
-  },
-  {
-    "id": "m003",
-    "sujet": "Souverainete",
-    "tags": ["souverainete", "geopolitique"],
-    "note": "Entrée sur l’autonomie, les intérêts propres et l’indépendance des infrastructures.",
-    "createdAt": "2026-06-28T23:59:00.000Z"
-  },
-  {
-    "id": "m004",
-    "sujet": "Paix",
-    "tags": ["paix", "coherence", "social"],
-    "note": "Mémoire autour de l’équilibre, de la retenue et de l’harmonie sociale.",
-    "createdAt": "2026-06-28T23:59:00.000Z"
-  },
-  {
-    "id": "m005",
-    "sujet": "Religion",
-    "tags": ["religion", "spirituel", "vivre-ensemble"],
-    "note": "Mémoire sur les convictions, les traditions et le vivre-ensemble.",
-    "createdAt": "2026-06-28T23:59:00.000Z"
-  },
-  {
-    "id": "m006",
-    "sujet": "Vision",
-    "tags": ["vision", "prospective", "avenir"],
-    "note": "Mémoire pour les projections à long terme et les effets durables.",
-    "createdAt": "2026-06-28T23:59:00.000Z"
-  }
-]
+{
+  "version": "3.5.0",
+  "statut": "SYNCHRONISÉE",
+  "cyclesMemoire": 128,
+  "dernierCycle": "2026-08-24T04:13:00.000Z",
+  "registres": [
+    {
+      "cle": "SOUL_AXIOM",
+      "valeur": "Rigueur intellectuelle unie à la clarté visuelle",
+      "auteur": "Tomo Ombede Barnabé Bertrand"
+    },
+    {
+      "cle": "TECHNO_EECOC",
+      "valeur": "Optimisation des cycles de calcul matriciel et régénération computationnelle",
+      "efficience": "60%+"
+    }
+  ]
+}

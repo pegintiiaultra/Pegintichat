@@ -1,0 +1,13 @@
+{
+  "engine": "bo'oivinichat",
+  "version": "3.5.0",
+  "archetype": "Universal Sovereign Intelligence",
+  "langueRacine": "Beti (« La toute sagesse »)",
+  "doctrine": "TOMTECH.INC / Tomo Ombede Barnabé Bertrand",
+  "parametres": {
+    "temperature": 0.35,
+    "rigueurConceptuelle": 1.0,
+    "clarteVisuelle": 1.0,
+    "frugalite": "Techno-eecoc"
+  }
+}
