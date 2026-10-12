@@ -96,3 +96,15 @@ export function scannerEtRedirigerBIP(requeteBrute, vitrineEmettrice = 'CHAT_INT
 
   return paquetMatrice;
 }
+
+export function traiterScannerBIP(options = {}) {
+  const message = options.message || options.requete || '';
+  const vitrine = options.vitrine || 'CHAT_INTERACTIF';
+  return scannerEtRedirigerBIP(message, vitrine, options);
+}
+
+export default {
+  scannerEtRedirigerBIP,
+  traiterScannerBIP
+};
+

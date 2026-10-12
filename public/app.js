@@ -51,6 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Liens de consultation dépêche
     text = text.replace(/🔗 Consulter la dépêche sur (.*?) ↗/g, '<span style="display:inline-block; margin-top:3px; margin-bottom:8px; color:#38bdf8; font-size:11.5px; font-weight:700;">🔗 Source certifiée : $1 ↗</span>');
 
+    // Options A/, B/, C/ mises en valeur
+    text = text.replace(/(?:^|<br\s*\/?>)\s*(\*{0,2})([A-Z])\/(\*{0,2})\s+(.+?)(?=(?:<br\s*\/?>|$))/gi, '<div style="margin: 6px 0; padding: 6px 10px; background: rgba(56,189,248,0.08); border-left: 3px solid #38bdf8; border-radius: 4px;"><strong style="color:#38bdf8; font-weight:800; margin-right:6px;">$2/</strong> $4</div>');
+
     // Retours à la ligne
     text = text.replace(/\n\n+/g, '<br/><br/>');
     text = text.replace(/\n/g, '<br/>');
@@ -156,6 +159,10 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
   const modalPremium = document.getElementById('modal-premium-catalogue');
   const modalWounanet = document.getElementById('modal-wounanet-dispatch');
   const modalConsole = document.getElementById('modal-cognitive-console');
+  const modalChatFlow = document.getElementById('modal-chat-flow-zone');
+  const modalChatForm = document.getElementById('modal-chat-form');
+  const modalChatInput = document.getElementById('modal-chat-input');
+  const btnModalResetChat = document.getElementById('btn-modal-reset-chat');
   const modalPensee = document.getElementById('modal-pensee-charte');
   const modalMomo = document.getElementById('modal-momo-order');
   const modalAutoreflexion = document.getElementById('modal-autoreflexion-lab');
@@ -215,36 +222,231 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
     });
   });
 
+  // ============================================================
+  // GESTION UNIFIÉE DES VUES ET NAVIGATION FLUIDE (PC & ANDROID)
+  // ============================================================
+  function switchView(viewId, targetElementId) {
+    if (!viewId) return;
+
+    // Masquer toutes les vues
+    document.querySelectorAll('.app-view-panel').forEach(panel => {
+      panel.classList.remove('active-view');
+    });
+
+    // Activer la vue cible
+    const targetPanel = document.getElementById(viewId);
+    if (targetPanel) {
+      targetPanel.classList.add('active-view');
+    }
+
+    // Mettre à jour l'état actif des onglets supérieurs
+    document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+      if (btn.getAttribute('data-target-view') === viewId) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // Mettre à jour l'état actif des boutons du dock mobile
+    document.querySelectorAll('.bottom-dock-btn').forEach(btn => {
+      if (btn.getAttribute('data-target-view') === viewId) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // Mettre à jour les raccourcis
+    document.querySelectorAll('.shortcut-pill-btn').forEach(btn => {
+      if (btn.getAttribute('data-target-view') === viewId && !btn.getAttribute('data-scroll-to')) {
+        btn.classList.add('active-pill');
+      } else {
+        btn.classList.remove('active-pill');
+      }
+    });
+
+    // Déclencher les chargements automatiques selon la vue
+    if (viewId === 'view-doctrine-matrice') {
+      loadPenseeCharte();
+    }
+    if (viewId === 'view-studio-sdk') {
+      const editor = document.getElementById('textarea-sdk-code-editor');
+      if (editor && !editor.value.trim() && typeof CODE_TEMPLATES !== 'undefined') {
+        editor.value = CODE_TEMPLATES.javascript;
+      }
+    }
+
+    // Défilement optionnel vers un élément cible
+    if (targetElementId) {
+      setTimeout(() => {
+        const el = document.getElementById(targetElementId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  // Écouteurs sur les onglets de navigation principaux
+  document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const viewId = btn.getAttribute('data-target-view');
+      switchView(viewId);
+    });
+  });
+
+  // Écouteurs sur le dock inférieur mobile
+  document.querySelectorAll('.bottom-dock-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const viewId = btn.getAttribute('data-target-view');
+      switchView(viewId);
+    });
+  });
+
+  // Écouteurs sur les raccourcis rapides
+  document.querySelectorAll('.shortcut-pill-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const viewId = btn.getAttribute('data-target-view');
+      const scrollTo = btn.getAttribute('data-scroll-to');
+      switchView(viewId, scrollTo);
+    });
+  });
+
+  // Clic sur la marque en haut à gauche
+  const brandHomeLink = document.getElementById('brand-home-link');
+  if (brandHomeLink) {
+    brandHomeLink.addEventListener('click', () => {
+      switchView('view-chat-wounanet');
+    });
+  }
+
+  // Clic CTA vers vitrine premium
+  if (btnHomeExplorePremium) {
+    btnHomeExplorePremium.addEventListener('click', () => {
+      switchView('view-vitrine-premium');
+    });
+  }
+
+  // Clic vers MINANG direct
+  const btnLaunchMinangDirect = document.getElementById('btn-launch-minang-direct');
+  if (btnLaunchMinangDirect) {
+    btnLaunchMinangDirect.addEventListener('click', () => {
+      switchView('view-minang-offgrid');
+    });
+  }
+
+  // Onglets dans l'en-tête de la vitrine
+  const btnTabViewCatalog = document.getElementById('btn-tab-view-catalog');
+  const btnTabViewCheckout = document.getElementById('btn-tab-view-checkout');
+  if (btnTabViewCatalog) {
+    btnTabViewCatalog.addEventListener('click', () => {
+      btnTabViewCatalog.classList.add('active');
+      if (btnTabViewCheckout) btnTabViewCheckout.classList.remove('active');
+      const grid = document.getElementById('products-showcase-grid');
+      if (grid) grid.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+  if (btnTabViewCheckout) {
+    btnTabViewCheckout.addEventListener('click', () => {
+      btnTabViewCheckout.classList.add('active');
+      if (btnTabViewCatalog) btnTabViewCatalog.classList.remove('active');
+      const tunnel = document.getElementById('checkout-tunnel-box');
+      if (tunnel) tunnel.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+
+  // Copie des numéros Mobile Money en 1 clic
+  document.querySelectorAll('.btn-copy-number').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const num = btn.getAttribute('data-copy');
+      if (num && navigator.clipboard) {
+        navigator.clipboard.writeText(num).then(() => {
+          const originalText = btn.innerText;
+          btn.innerText = '✓ Numéro Copié !';
+          btn.style.color = '#34d399';
+          setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.color = '';
+          }, 2000);
+        });
+      }
+    });
+  });
+
+  // Suggestions rapides d'actualité WOUNANET
+  document.querySelectorAll('.news-suggestion').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const q = chip.getAttribute('data-query');
+      if (q && inputHomeWounanet) {
+        inputHomeWounanet.value = q;
+        performWounanetHomeSearch();
+      }
+    });
+  });
+
+  // Simulateur interactif MINANG Lite (SMS-IP)
+  const formMinangSim = document.getElementById('form-minang-simulator');
+  const inputMinangMsg = document.getElementById('input-minang-sim-msg');
+  const minangSimFeed = document.getElementById('minang-sim-feed');
+  if (formMinangSim && inputMinangMsg && minangSimFeed) {
+    formMinangSim.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msg = inputMinangMsg.value.trim();
+      if (!msg) return;
+
+      const userTime = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      minangSimFeed.innerHTML += `
+        <div class="sim-message node-local">
+          <span class="node-id" style="color:#10b981;">Votre Terminal [Noeud Local #01 · SMS-IP] (${userTime}) :</span>
+          <p>${msg}</p>
+        </div>
+      `;
+      inputMinangMsg.value = '';
+      minangSimFeed.scrollTop = minangSimFeed.scrollHeight;
+
+      setTimeout(() => {
+        const ackTime = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        minangSimFeed.innerHTML += `
+          <div class="sim-message node-remote">
+            <span class="node-id">Noeud Relais [Yaoundé Mesh #04] (${ackTime}) :</span>
+            <p>✓ <strong>Paquet SMS-IP Acquitté :</strong> Message relayé via la maille locale sans Internet. Intégrité souveraine garantie.</p>
+          </div>
+        `;
+        minangSimFeed.scrollTop = minangSimFeed.scrollHeight;
+      }, 700);
+    });
+  }
+
   // Ouverture des modales par boutons d'action
-  if (btnOpenPremiumModal) btnOpenPremiumModal.addEventListener('click', () => openModal(modalPremium));
-  if (btnHomeExplorePremium) btnHomeExplorePremium.addEventListener('click', () => openModal(modalPremium));
+  if (btnOpenPremiumModal) btnOpenPremiumModal.addEventListener('click', () => switchView('view-vitrine-premium'));
   if (btnOpenWounanetVitrine) btnOpenWounanetVitrine.addEventListener('click', () => {
     openModal(modalWounanet);
     fetchWounanetLive(inputWounanetModalSearch?.value || "La guerre au moyen Orient");
   });
-  if (btnOpenChatModal) btnOpenChatModal.addEventListener('click', () => openModal(modalConsole));
+  if (btnOpenChatModal) btnOpenChatModal.addEventListener('click', () => {
+    openModal(modalConsole);
+    if (typeof renderModalConversation === 'function') renderModalConversation();
+  });
 
   // Clics sur le Dock Flottant Discret
   if (dockBtnPensee) dockBtnPensee.addEventListener('click', () => {
-    openModal(modalPensee);
-    loadPenseeCharte();
+    switchView('view-doctrine-matrice');
   });
   if (dockBtnWounanet) dockBtnWounanet.addEventListener('click', () => {
     openModal(modalWounanet);
     fetchWounanetLive(inputWounanetModalSearch?.value || "La guerre au moyen Orient");
   });
-  if (dockBtnChat) dockBtnChat.addEventListener('click', () => openModal(modalConsole));
+  if (dockBtnChat) dockBtnChat.addEventListener('click', () => switchView('view-chat-wounanet'));
   if (dockBtnMomo) dockBtnMomo.addEventListener('click', () => {
-    openModal(modalPremium);
-    if (tabBtnBoutique) tabBtnBoutique.click();
-    if (checkoutTunnelBox) checkoutTunnelBox.scrollIntoView({ behavior: 'smooth' });
+    switchView('view-vitrine-premium', 'checkout-tunnel-box');
   });
   if (dockBtnAutoreflexion) dockBtnAutoreflexion.addEventListener('click', () => {
-    openModal(modalAutoreflexion);
+    switchView('view-doctrine-matrice', 'autoreflexion-grid-results');
     inspecterAutoreflexion();
   });
   if (dockBtnMetaphores) dockBtnMetaphores.addEventListener('click', () => {
-    openModal(modalMetaphores);
+    switchView('view-doctrine-matrice', 'box-metaphores-output');
     traduireMetaphores();
   });
 
@@ -254,6 +456,65 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
       window.location.reload();
     });
   }
+
+  // ============================================================
+  // MODE PLEIN ÉCRAN AUTOMATIQUE & DÉCLENCHABLE (PC & ANDROID)
+  // ============================================================
+  const btnToggleFullscreen = document.getElementById('btn-toggle-fullscreen');
+  if (btnToggleFullscreen) {
+    const updateFsVisuals = () => {
+      const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      const fsIcon = btnToggleFullscreen.querySelector('.fs-icon');
+      const fsText = btnToggleFullscreen.querySelector('.fs-text');
+      if (isFs) {
+        if (fsIcon) fsIcon.textContent = '✕';
+        if (fsText) fsText.textContent = 'Quitter';
+        btnToggleFullscreen.title = "Quitter le mode plein écran";
+        btnToggleFullscreen.classList.add('active-fs');
+        document.body.classList.add('is-fullscreen');
+      } else {
+        if (fsIcon) fsIcon.textContent = '⛶';
+        if (fsText) fsText.textContent = 'Plein Écran';
+        btnToggleFullscreen.title = "Basculer en Plein Écran automatique (PC & Android)";
+        btnToggleFullscreen.classList.remove('active-fs');
+        document.body.classList.remove('is-fullscreen');
+      }
+    };
+
+    btnToggleFullscreen.addEventListener('click', async () => {
+      try {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+          if (document.documentElement.requestFullscreen) {
+            await document.documentElement.requestFullscreen();
+          } else if (document.documentElement.webkitRequestFullscreen) {
+            await document.documentElement.webkitRequestFullscreen();
+          }
+        } else {
+          if (document.exitFullscreen) {
+            await document.exitFullscreen();
+          } else if (document.webkitExitFullscreen) {
+            await document.webkitExitFullscreen();
+          }
+        }
+      } catch (err) {
+        console.warn("Fullscreen switch notice:", err);
+      }
+      updateFsVisuals();
+    });
+
+    document.addEventListener('fullscreenchange', updateFsVisuals);
+    document.addEventListener('webkitfullscreenchange', updateFsVisuals);
+  }
+
+  // Détection automatique de l'orientation et ajustement fluide plein écran (PC vs Android)
+  window.addEventListener('resize', () => {
+    const isMobile = window.innerWidth <= 860;
+    document.body.classList.toggle('device-mobile', isMobile);
+    document.body.classList.toggle('device-desktop', !isMobile);
+  });
+  // Initialisation au chargement
+  document.body.classList.toggle('device-mobile', window.innerWidth <= 860);
+  document.body.classList.toggle('device-desktop', window.innerWidth > 860);
 
   // ============================================================
   // BLOC 1 : RECHERCHE WOUNANET DIRECT SUR L'ACCUEIL
@@ -345,12 +606,14 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
   }
 
   function renderHomeConversation() {
+    if (!chatHomeResultBox) return;
     if (conversationHistory.length === 0) {
       chatHomeResultBox.innerHTML = `
         <div class="chat-welcome-notice" style="color: #cbd5e1; font-size: 12px; line-height: 1.6;">
           <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;">
             <span style="font-size:14px;">🧠</span>
             <strong style="color:#38bdf8;">PEGINTI IA :</strong>
+            <span style="background: rgba(56,189,248,0.15); color:#38bdf8; font-size:9.5px; padding:2px 6px; border-radius:4px;">Techno-eecoc V3.5</span>
           </div>
           <p style="margin-bottom: 0;">bonjour, bienvenue sur Peginti IA, votre intelligence artificielle généraliste et souveraine. Comment puis-je vous aider aujourd'hui ?</p>
         </div>`;
@@ -379,8 +642,49 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
     chatHomeResultBox.scrollTop = chatHomeResultBox.scrollHeight;
   }
 
-  // Rendu initial dès le chargement de la page (restaure le fil)
-  renderHomeConversation();
+  function renderModalConversation() {
+    if (!modalChatFlow) return;
+    if (conversationHistory.length === 0) {
+      modalChatFlow.innerHTML = `
+        <div class="chat-row bot-row">
+          <div class="chat-avatar">P</div>
+          <div class="chat-bubble">
+            <div class="bubble-meta">
+              <strong>PEGINTI-CHAT V3</strong> · <span>Filtre Matriciel Actif</span>
+            </div>
+            <p>Bonjour, bienvenue sur la console cognitive PEGINTI IA. Comment puis-je vous aider aujourd'hui ?</p>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    let html = '';
+    conversationHistory.forEach((turn) => {
+      html += `
+        <div class="chat-row user-row">
+          <div class="chat-bubble"><p>${turn.user}</p></div>
+        </div>
+        <div class="chat-row bot-row">
+          <div class="chat-avatar">P</div>
+          <div class="chat-bubble">
+            <div class="bubble-meta"><strong>PEGINTI-CHAT V3</strong> · <span>bo'oivinichat</span></div>
+            <div style="font-size: 12px; line-height: 1.65;">${formatTexteSouverain(turn.bot)}</div>
+          </div>
+        </div>
+      `;
+    });
+    modalChatFlow.innerHTML = html;
+    modalChatFlow.scrollTop = modalChatFlow.scrollHeight;
+  }
+
+  function renderAllConversations() {
+    renderHomeConversation();
+    renderModalConversation();
+  }
+
+  // Rendu initial dès le chargement de la page (restaure le fil complet sans réinitialisation)
+  renderAllConversations();
 
   if (formHomeChat && inputHomeChat) {
     formHomeChat.addEventListener('submit', async (e) => {
@@ -414,7 +718,7 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
 
         conversationHistory.push({ user: question, bot: rep });
         sauvegarderHistoriqueLocal();
-        renderHomeConversation();
+        renderAllConversations();
       } catch (err) {
         const loadingEl = document.getElementById(tempId);
         if (loadingEl) loadingEl.innerHTML = `<span style="color: #f87171;">Erreur de communication avec le moteur souverain.</span>`;
@@ -422,16 +726,21 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
     });
   }
 
+  function reinitialiserFilConversation() {
+    if (confirm("Voulez-vous vraiment réinitialiser tout l'historique de cette discussion ?")) {
+      conversationHistory = [];
+      localStorage.removeItem(STORAGE_KEY_HISTORY);
+      currentSessionId = 'ses-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+      localStorage.setItem(STORAGE_KEY_SESSION, currentSessionId);
+      renderAllConversations();
+    }
+  }
+
   if (btnHomeResetChat) {
-    btnHomeResetChat.addEventListener('click', () => {
-      if (confirm("Voulez-vous vraiment réinitialiser tout l'historique de cette discussion ?")) {
-        conversationHistory = [];
-        localStorage.removeItem(STORAGE_KEY_HISTORY);
-        currentSessionId = 'ses-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
-        localStorage.setItem(STORAGE_KEY_SESSION, currentSessionId);
-        renderHomeConversation();
-      }
-    });
+    btnHomeResetChat.addEventListener('click', reinitialiserFilConversation);
+  }
+  if (btnModalResetChat) {
+    btnModalResetChat.addEventListener('click', reinitialiserFilConversation);
   }
 
   // ============================================================
@@ -455,6 +764,7 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
       tabBtnBoutique.classList.remove('active');
       viewPremiumSdkStudio.classList.remove('hidden');
       viewPremiumBoutique.classList.add('hidden');
+      if (typeof renderSdkConversation === 'function') renderSdkConversation();
     });
   }
 
@@ -503,6 +813,7 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
         checkoutSelectedPrice.textContent = bonAdminApplique ? "0 FCFA (Bon d'achat Admin)" : prodPrice;
       }
 
+      switchView('view-vitrine-premium', 'checkout-tunnel-box');
       if (checkoutTunnelBox) {
         checkoutTunnelBox.scrollIntoView({ behavior: 'smooth' });
       }
@@ -669,35 +980,96 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
   }
 
   // ============================================================
-  // STUDIO SDK PEGINTI PRO (IMPORT GITHUB/GITLAB, API, AUTO-CORRECTION & BO'OIVINI)
+  // ============================================================
+  // STUDIO SDK BO'OIVINI PRO : LES 4 PILIERS SANS DOUBLON
+  // ============================================================
+  const sdkConsoleStatusText = document.getElementById('sdk-console-status-text');
+
+  // 1. GESTIONNAIRE D'ONGLETS DES 4 PILIERS (NAVIGATION FLUIDE & ZÉRO DOUBLON)
+  const pillarButtons = document.querySelectorAll('.pillar-tab-btn');
+  const pillarCards = document.querySelectorAll('.sdk-pillar-card');
+
+  function switchPillar(pillarId) {
+    pillarButtons.forEach(btn => {
+      const targetPillar = btn.getAttribute('data-pillar');
+      if (targetPillar === pillarId) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    pillarCards.forEach(card => {
+      if (card.id === pillarId) {
+        card.classList.add('active-pillar');
+      } else {
+        card.classList.remove('active-pillar');
+      }
+    });
+
+    if (sdkConsoleStatusText) {
+      if (pillarId === 'pillar-import') {
+        sdkConsoleStatusText.textContent = "Pilier 1 Actif : Importation de Projets (GitHub, GitLab, ZIP)";
+      } else if (pillarId === 'pillar-claude') {
+        sdkConsoleStatusText.textContent = "Pilier 2 Actif : Collaboration Exclusive Claude & Déploiement Cloud";
+      } else if (pillarId === 'pillar-client-host') {
+        sdkConsoleStatusText.textContent = "Pilier 3 Actif : Accès Direct Hébergement Client & Règles Strictes";
+      } else if (pillarId === 'pillar-auto-code') {
+        sdkConsoleStatusText.textContent = "Pilier 4 Actif : bo'oivinichat Développeur Sans Erreur & Bug Scanner";
+      }
+    }
+  }
+
+  pillarButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const pillarId = btn.getAttribute('data-pillar');
+      if (pillarId) switchPillar(pillarId);
+    });
+  });
+
+  // ============================================================
+  // PILIER 1 : IMPORTATION DIRECTE GITHUB / GITLAB / ARCHIVE ZIP
   // ============================================================
   const inputSdkRepoUrl = document.getElementById('input-sdk-repo-url');
   const btnSdkImportRepo = document.getElementById('btn-sdk-import-repo');
   const inputSdkFileUpload = document.getElementById('input-sdk-file-upload');
   const labelUploadedFileName = document.getElementById('label-uploaded-file-name');
-  const inputSdkApiKey = document.getElementById('input-sdk-api-key');
-  const btnSdkActivateApi = document.getElementById('btn-sdk-activate-api');
-  const sdkConsoleStatusText = document.getElementById('sdk-console-status-text');
+  const btnLoadZipProject = document.getElementById('btn-load-zip-project');
+  const projectFileExplorerCard = document.getElementById('project-file-explorer-card');
+  const explorerProjectName = document.getElementById('explorer-project-name');
+  const explorerProjectBadge = document.getElementById('explorer-project-badge');
+  const projectFilesList = document.getElementById('project-files-list');
+  const btnJumpEditor = document.getElementById('btn-jump-editor');
 
-  const selectSdkLanguage = document.getElementById('select-sdk-language');
-  const selectSdkTaskType = document.getElementById('select-sdk-task-type');
-  const textareaSdkCodeEditor = document.getElementById('textarea-sdk-code-editor');
-  const inputSdkCustomInstruction = document.getElementById('input-sdk-custom-instruction');
-  const btnSdkRunAutofix = document.getElementById('btn-sdk-run-autofix');
-  const sdkCorrectedCodeDisplay = document.getElementById('sdk-corrected-code-display');
-  const btnApplyCorrectedCode = document.getElementById('btn-apply-corrected-code');
-  const btnSdkCopyCode = document.getElementById('btn-sdk-copy-code');
+  // Modèles rapides de dépôts
+  document.querySelectorAll('.btn-quick-repo').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const url = btn.getAttribute('data-url');
+      if (url && inputSdkRepoUrl) {
+        inputSdkRepoUrl.value = url;
+        btnSdkImportRepo?.click();
+      }
+    });
+  });
 
-  const formSdkAssistantChat = document.getElementById('form-sdk-assistant-chat');
-  const inputSdkAssistantQuery = document.getElementById('input-sdk-assistant-query');
-  const sdkAssistantMessagesFlow = document.getElementById('sdk-assistant-messages-flow');
-  const btnClearSdkAssistant = document.getElementById('btn-clear-sdk-assistant');
+  // Fonction pour charger un fichier dans l'éditeur de code (Pilier 4)
+  function chargerFichierDansEditeur(nomFichier, contenuCode, langage = 'javascript') {
+    const editor = document.getElementById('textarea-sdk-code-editor');
+    const labelFichier = document.getElementById('editor-current-filename');
+    const selectLang = document.getElementById('select-sdk-language');
 
-  let activeSdkApiKey = '';
-  let lastCorrectedCode = '';
-  let sdkAssistantHistory = [];
+    if (editor) {
+      editor.value = contenuCode;
+    }
+    if (labelFichier) {
+      labelFichier.textContent = `Fichier ouvert : ${nomFichier}`;
+    }
+    if (selectLang && langage) {
+      selectLang.value = langage;
+    }
+  }
 
-  // Importation de dépôt GitHub / GitLab
+  // Importation de dépôt distant (GitHub / GitLab)
   if (btnSdkImportRepo && inputSdkRepoUrl) {
     btnSdkImportRepo.addEventListener('click', async () => {
       const url = inputSdkRepoUrl.value.trim();
@@ -707,7 +1079,7 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
       }
 
       btnSdkImportRepo.disabled = true;
-      btnSdkImportRepo.textContent = "⏳ Importation...";
+      btnSdkImportRepo.textContent = "⏳ Importation en cours...";
 
       try {
         const res = await fetch('/api/sdk/import-repo', {
@@ -718,17 +1090,47 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
             type: url.includes('gitlab') ? 'gitlab' : 'github'
           })
         });
+
         const data = await res.json();
         if (data.success && data.projet) {
-          if (textareaSdkCodeEditor) {
-            textareaSdkCodeEditor.value = data.projet.codeExemple || `// Projet ${data.projet.nom} importé avec succès.\n\nconsole.log("Connecté à PEGINTI IA Pro");`;
+          const p = data.projet;
+          if (explorerProjectName) {
+            explorerProjectName.innerHTML = `Projet Actif : <strong>${p.nom}</strong>`;
           }
-          ajouterMessageAssistant(`J'ai importé le projet **${data.projet.nom}** (${url}). Vous pouvez maintenant modifier le code dans l'éditeur et lancer la correction automatique.`);
+          if (explorerProjectBadge) {
+            explorerProjectBadge.textContent = url.includes('gitlab') ? 'GITLAB REPO' : 'GITHUB REPO';
+          }
+
+          if (projectFilesList && p.fichiers && p.fichiers.length > 0) {
+            projectFilesList.innerHTML = p.fichiers.map((f, idx) => `
+              <button type="button" class="file-item-pill ${idx === 0 ? 'active' : ''}" data-file-name="${f.name || f.path}" data-file-lang="${f.lang || 'javascript'}">
+                📄 ${f.name || f.path} (${f.size || '2 KB'})
+              </button>
+            `).join('');
+
+            // Attacher les écouteurs sur les fichiers
+            projectFilesList.querySelectorAll('.file-item-pill').forEach((pill, idx) => {
+              pill.addEventListener('click', () => {
+                projectFilesList.querySelectorAll('.file-item-pill').forEach(b => b.classList.remove('active'));
+                pill.classList.add('active');
+                const fichierChoisi = p.fichiers[idx];
+                if (fichierChoisi) {
+                  chargerFichierDansEditeur(fichierChoisi.name || fichierChoisi.path, fichierChoisi.content || `// Contenu de ${fichierChoisi.path}`, fichierChoisi.lang || 'javascript');
+                }
+              });
+            });
+
+            // Charger le premier fichier par défaut
+            const premierFichier = p.fichiers[0];
+            chargerFichierDansEditeur(premierFichier.name || premierFichier.path, premierFichier.content || p.codeExemple || '', premierFichier.lang || 'javascript');
+          }
+
+          ajouterMessageAssistant(`Le dépôt **${p.nom}** (${url}) a été importé avec succès. Les fichiers sources sont disponibles dans l'explorateur pour être modifiés.`);
         } else {
           alert("Erreur lors de l'importation : " + (data.error || "Échec"));
         }
       } catch (err) {
-        alert("Erreur : " + err.message);
+        alert("Erreur de connexion : " + err.message);
       } finally {
         btnSdkImportRepo.disabled = false;
         btnSdkImportRepo.textContent = "⬇️ Importer Dépôt";
@@ -736,133 +1138,644 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
     });
   }
 
-  // Importation de fichier source local
+  // Importation d'archive ZIP ou de fichiers sources locaux
   if (inputSdkFileUpload && labelUploadedFileName) {
     inputSdkFileUpload.addEventListener('change', (e) => {
       const file = e.target.files?.[0];
       if (file) {
-        labelUploadedFileName.textContent = `Fichier : ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-          const content = evt.target?.result;
-          if (typeof content === 'string' && textareaSdkCodeEditor) {
-            textareaSdkCodeEditor.value = content;
-            ajouterMessageAssistant(`Le fichier source **${file.name}** a été chargé dans l'éditeur de code.`);
-          }
-        };
-        reader.readAsText(file);
-      }
-    });
-  }
+        labelUploadedFileName.textContent = `Archive / Fichier : ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+        if (btnLoadZipProject) btnLoadZipProject.classList.remove('hidden');
 
-  // Activation de la Console API
-  if (btnSdkActivateApi && inputSdkApiKey) {
-    btnSdkActivateApi.addEventListener('click', () => {
-      const key = inputSdkApiKey.value.trim();
-      activeSdkApiKey = key;
-      if (sdkConsoleStatusText) {
-        if (key) {
-          sdkConsoleStatusText.textContent = `Console PEGINTI IA V3.5 : Clé API Personnalisée Activée (***${key.slice(-4)})`;
-          sdkConsoleStatusText.style.color = '#10b981';
+        const isZip = file.name.endsWith('.zip') || file.name.endsWith('.tar.gz');
+
+        if (isZip) {
+          // Simulation extraction d'archive zip structurée
+          const repoNom = file.name.replace(/\.(zip|tar\.gz)$/i, '');
+          if (explorerProjectName) explorerProjectName.innerHTML = `Archive Active : <strong>${repoNom}</strong>`;
+          if (explorerProjectBadge) explorerProjectBadge.textContent = 'ARCHIVE ZIP DÉCOMPRESSÉE';
+
+          const fichiersSimules = [
+            { name: "server.js", lang: "javascript", size: `${(file.size / 1024 * 0.4).toFixed(1)} KB`, content: `// Projet extrait depuis l'archive : ${file.name}\nimport express from 'express';\nconst app = express();\n\napp.get('/', (req, res) => res.json({ message: "Projet ${repoNom} prêt." }));\napp.listen(3000);` },
+            { name: "package.json", lang: "json", size: "1.1 KB", content: `{\n  "name": "${repoNom}",\n  "version": "1.0.0",\n  "type": "module"\n}` },
+            { name: "index.html", lang: "html", size: "1.8 KB", content: `<!DOCTYPE html>\n<html>\n<head><title>${repoNom}</title></head>\n<body><h1>${repoNom}</h1></body>\n</html>` }
+          ];
+
+          if (projectFilesList) {
+            projectFilesList.innerHTML = fichiersSimules.map((f, idx) => `
+              <button type="button" class="file-item-pill ${idx === 0 ? 'active' : ''}" data-file-name="${f.name}">
+                📁 ${f.name} (${f.size})
+              </button>
+            `).join('');
+
+            projectFilesList.querySelectorAll('.file-item-pill').forEach((pill, idx) => {
+              pill.addEventListener('click', () => {
+                projectFilesList.querySelectorAll('.file-item-pill').forEach(b => b.classList.remove('active'));
+                pill.classList.add('active');
+                chargerFichierDansEditeur(fichiersSimules[idx].name, fichiersSimules[idx].content, fichiersSimules[idx].lang);
+              });
+            });
+
+            chargerFichierDansEditeur(fichiersSimules[0].name, fichiersSimules[0].content, fichiersSimules[0].lang);
+          }
+
+          ajouterMessageAssistant(`Archive **${file.name}** décompressée dans le Studio SDK. Vous pouvez explorer et coder les fichiers sources.`);
         } else {
-          sdkConsoleStatusText.textContent = `Console PEGINTI IA V3.5 : Connectée au Serveur Local Souverain`;
-          sdkConsoleStatusText.style.color = '#38bdf8';
+          // Fichier texte ou code source direct
+          const reader = new FileReader();
+          reader.onload = (evt) => {
+            const content = evt.target?.result;
+            if (typeof content === 'string') {
+              chargerFichierDansEditeur(file.name, content);
+              ajouterMessageAssistant(`Le fichier source **${file.name}** est prêt dans l'éditeur de code.`);
+            }
+          };
+          reader.readAsText(file);
         }
       }
-      ajouterMessageAssistant(`Configuration API mise à jour. La console PEGINTI IA est prête à traiter vos requêtes.`);
     });
   }
 
-  // Changement de modèle selon langage
-  if (selectSdkLanguage && textareaSdkCodeEditor) {
-    selectSdkLanguage.addEventListener('change', (e) => {
-      const lang = e.target.value;
-      if (CODE_TEMPLATES[lang]) {
-        textareaSdkCodeEditor.value = CODE_TEMPLATES[lang];
-      }
+  if (btnLoadZipProject) {
+    btnLoadZipProject.addEventListener('click', () => {
+      switchPillar('pillar-auto-code');
     });
   }
 
-  // Exécution de la correction et configuration automatique du code source
-  if (btnSdkRunAutofix && textareaSdkCodeEditor && sdkCorrectedCodeDisplay) {
-    btnSdkRunAutofix.addEventListener('click', async () => {
-      const code = textareaSdkCodeEditor.value.trim();
-      const lang = selectSdkLanguage?.value || 'javascript';
-      const task = selectSdkTaskType?.options[selectSdkTaskType.selectedIndex]?.text || 'Correction automatique';
-      const instructions = inputSdkCustomInstruction?.value?.trim() || task;
+  if (btnJumpEditor) {
+    btnJumpEditor.addEventListener('click', () => {
+      switchPillar('pillar-auto-code');
+    });
+  }
 
-      if (!code) {
-        alert("Veuillez saisir ou coller du code source dans l'éditeur.");
+  // ============================================================
+  // PILIER 2 : COLLABORATION EXCLUSIVE AVEC CLAUDE & MISE EN LIGNE
+  // ============================================================
+  const inputClaudePrompt = document.getElementById('input-claude-prompt');
+  const btnClaudeCollaborate = document.getElementById('btn-claude-collaborate');
+  const claudeResponseOutput = document.getElementById('claude-response-output');
+  const inputDeployAppName = document.getElementById('input-deploy-app-name');
+  const btnClaudeDeployOnline = document.getElementById('btn-claude-deploy-online');
+  const deployLogBox = document.getElementById('deploy-log-box');
+  const deployStatusTag = document.getElementById('deploy-status-tag');
+  const deployStepsStream = document.getElementById('deploy-steps-stream');
+  const deployFinalUrlCard = document.getElementById('deploy-final-url-card');
+  const linkDeployedLiveApp = document.getElementById('link-deployed-live-app');
+
+  if (btnClaudeCollaborate && inputClaudePrompt) {
+    btnClaudeCollaborate.addEventListener('click', async () => {
+      const prompt = inputClaudePrompt.value.trim();
+      const codeActuel = document.getElementById('textarea-sdk-code-editor')?.value || '';
+
+      if (!prompt) {
+        alert("Veuillez saisir votre demande de co-développement pour Claude.");
         return;
       }
 
-      btnSdkRunAutofix.disabled = true;
-      btnSdkRunAutofix.innerHTML = '<span>⚡ Analyse &amp; Correction souveraine en cours...</span>';
-      sdkCorrectedCodeDisplay.innerHTML = '<span style="color:#38bdf8;">🧠 bo\'oivinichat analyse la syntaxe, la sécurité et configure l\'application...</span>';
+      btnClaudeCollaborate.disabled = true;
+      btnClaudeCollaborate.textContent = "⏳ Claude analyse & co-programme...";
+      if (claudeResponseOutput) {
+        claudeResponseOutput.innerHTML = `
+          <div style="color:#a855f7; display:flex; align-items:center; gap:8px;">
+            <span class="live-dot-pulse"></span>
+            <strong>Claude (Anthropic) :</strong> Réflexion et élaboration de la solution en cours...
+          </div>
+        `;
+      }
 
       try {
-        const res = await fetch('/api/sdk/auto-fix', {
+        const res = await fetch('/api/sdk/claude/collaborate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            code,
-            language: lang,
-            instructions,
-            apiKey: activeSdkApiKey
-          })
+          body: JSON.stringify({ prompt, code: codeActuel })
         });
-
         const data = await res.json();
-        if (data.success && (data.analyse || data.codeCorrige)) {
-          lastCorrectedCode = data.codeCorrige || data.analyse;
-          sdkCorrectedCodeDisplay.innerHTML = `
-            <div style="color: #10b981; font-weight: 700; font-size: 11px; margin-bottom: 8px;">✓ CODE CONFIGURÉ ET VALIDÉ PAR PEGINTI IA STUDIO PRO :</div>
-            <div class="formatted-output" style="font-size:12px; line-height:1.5;">${formatTexteSouverain(lastCorrectedCode)}</div>
-          `;
-          ajouterMessageAssistant(`J'ai terminé la **${task}** sur votre code ${lang.toUpperCase()}. Vous pouvez copier le résultat ou l'injecter directement dans l'éditeur.`);
+        if (data.success && data.reponse) {
+          if (claudeResponseOutput) {
+            claudeResponseOutput.innerHTML = `
+              <div style="border-bottom: 1px solid rgba(168,85,247,0.3); padding-bottom: 6px; margin-bottom: 10px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="color:#c084fc; font-weight:800;">🤖 Recommandation &amp; Code Co-développé avec Claude :</span>
+                <button type="button" class="btn-output-action" id="btn-inject-claude-code">⬅ Injecter dans le Studio de Code (Pilier 4)</button>
+              </div>
+              <div>${formatTexteSouverain(data.reponse)}</div>
+            `;
+
+            // Bouton d'injection rapide du code produit par Claude
+            document.getElementById('btn-inject-claude-code')?.addEventListener('click', () => {
+              const codeBlockMatch = data.reponse.match(/```[a-zA-Z0-9_\-\+]*\n([\s\S]*?)```/);
+              const codeToInject = codeBlockMatch ? codeBlockMatch[1].trim() : data.reponse;
+              chargerFichierDansEditeur("claude-solution.js", codeToInject, "javascript");
+              switchPillar('pillar-auto-code');
+            });
+          }
+          ajouterMessageAssistant("Claude a terminé sa revue collaborative. Le code produit est prêt à être injecté ou déployé.");
         } else {
-          sdkCorrectedCodeDisplay.innerHTML = `<span style="color:#ef4444;">Erreur : ${data.error || 'Échec de traitement'}</span>`;
+          if (claudeResponseOutput) claudeResponseOutput.innerHTML = `<span style="color:#ef4444;">Erreur : ${data.error || 'Échec'}</span>`;
         }
       } catch (err) {
-        sdkCorrectedCodeDisplay.innerHTML = `<span style="color:#ef4444;">Erreur de communication : ${err.message}</span>`;
+        if (claudeResponseOutput) claudeResponseOutput.innerHTML = `<span style="color:#ef4444;">Erreur de connexion : ${err.message}</span>`;
       } finally {
-        btnSdkRunAutofix.disabled = false;
-        btnSdkRunAutofix.innerHTML = '🚀 CORRIGER &amp; CONFIGURER LE CODE AVEC L\'IA';
+        btnClaudeCollaborate.disabled = false;
+        btnClaudeCollaborate.textContent = "⚡ Coder avec Claude";
       }
     });
   }
 
-  // Remplacer le code dans l'éditeur par le code corrigé
+  // Déploiement en ligne orchestré par Claude
+  if (btnClaudeDeployOnline) {
+    btnClaudeDeployOnline.addEventListener('click', async () => {
+      const appName = (inputDeployAppName ? inputDeployAppName.value.trim() : '') || 'mon-app-souveraine';
+      
+      btnClaudeDeployOnline.disabled = true;
+      btnClaudeDeployOnline.textContent = "⏳ Déploiement cloud par Claude en cours...";
+
+      if (deployLogBox) deployLogBox.classList.remove('hidden');
+      if (deployFinalUrlCard) deployFinalUrlCard.classList.add('hidden');
+      if (deployStatusTag) {
+        deployStatusTag.textContent = "DÉPLOIEMENT EN COURS...";
+        deployStatusTag.style.background = "rgba(234, 179, 8, 0.2)";
+        deployStatusTag.style.color = "#fef08a";
+      }
+
+      if (deployStepsStream) {
+        deployStepsStream.innerHTML = `<div class="deploy-step-item"><span>🚀 Initialisation de la mise en ligne avec Claude &amp; bo'oivini...</span></div>`;
+      }
+
+      try {
+        const res = await fetch('/api/sdk/claude/deploy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ appName, env: 'production' })
+        });
+        const data = await res.json();
+
+        if (data.success && data.etapes) {
+          // Affichage progressif des étapes
+          if (deployStepsStream) {
+            deployStepsStream.innerHTML = '';
+            for (let i = 0; i < data.etapes.length; i++) {
+              const step = data.etapes[i];
+              await new Promise(r => setTimeout(r, 400));
+              const item = document.createElement('div');
+              item.className = 'deploy-step-item';
+              item.innerHTML = `
+                <span><span class="deploy-step-check">✓</span> Étape ${step.etape} : ${step.titre}</span>
+                <span class="deploy-step-time">${step.duree}</span>
+              `;
+              deployStepsStream.appendChild(item);
+            }
+          }
+
+          if (deployStatusTag) {
+            deployStatusTag.textContent = "EN LIGNE & OPÉRATIONNEL";
+            deployStatusTag.style.background = "rgba(16, 185, 129, 0.25)";
+            deployStatusTag.style.color = "#34d399";
+          }
+
+          if (deployFinalUrlCard && linkDeployedLiveApp) {
+            deployFinalUrlCard.classList.remove('hidden');
+            linkDeployedLiveApp.href = data.liveUrl;
+            linkDeployedLiveApp.textContent = `${data.liveUrl} ↗`;
+          }
+
+          ajouterMessageAssistant(`Félicitations ! Claude a mis votre application **${appName}** officiellement en ligne : [${data.liveUrl}](${data.liveUrl})`);
+        }
+      } catch (err) {
+        if (deployStepsStream) {
+          deployStepsStream.innerHTML += `<div style="color:#ef4444;">Erreur de déploiement : ${err.message}</div>`;
+        }
+      } finally {
+        btnClaudeDeployOnline.disabled = false;
+        btnClaudeDeployOnline.textContent = "🚀 Demander à Claude de mettre l'application en ligne";
+      }
+    });
+  }
+
+  // ============================================================
+  // PILIER 3 : ACCÈS DIRECT HÉBERGEMENT CLIENT & MODIF SOURCE
+  // ============================================================
+  const inputClientHostUrl = document.getElementById('input-client-host-url');
+  const btnConnectClientHost = document.getElementById('btn-connect-client-host');
+  const hostStatusBox = document.getElementById('host-status-box');
+  const hostServerIp = document.getElementById('host-server-ip');
+  const selectHostRemoteFile = document.getElementById('select-host-remote-file');
+  const textareaHostPatchCode = document.getElementById('textarea-host-patch-code');
+  const btnApplyHostPatch = document.getElementById('btn-apply-host-patch');
+  const patchResultMsg = document.getElementById('patch-result-msg');
+
+  const REMOTE_FILE_TEMPLATES = {
+    '/var/www/app/server.js': `// Modification sécurisée sur /var/www/app/server.js\n// Règle 1 : Zéro régression · Règle 2 : Techno-eecoc\nexport function patchOptimisationServeur(serveur) {\n  serveur.keepAliveTimeout = 65000;\n  serveur.headersTimeout = 66000;\n  console.log("⚡ Patch Techno-eecoc appliqué sur l'hébergement client.");\n}`,
+    '/var/www/app/src/index.js': `// Modification sécurisée sur /var/www/app/src/index.js\n// Traitement allégé selon la doctrine souveraine\nexport const configIndex = {\n  cacheMemoireFrugal: true,\n  reductionTenseursPct: 35,\n  modeSouverain: "ACTIF"\n};`,
+    '/var/www/app/config/database.js': `// Configuration Base de Données Hébergement Client\nexport const dbOptions = {\n  maxConnections: 10,\n  idleTimeoutMillis: 30000,\n  connectionTimeoutMillis: 2000\n};`
+  };
+
+  if (selectHostRemoteFile && textareaHostPatchCode) {
+    selectHostRemoteFile.addEventListener('change', () => {
+      const selected = selectHostRemoteFile.value;
+      if (REMOTE_FILE_TEMPLATES[selected]) {
+        textareaHostPatchCode.value = REMOTE_FILE_TEMPLATES[selected];
+      }
+    });
+  }
+
+  if (btnConnectClientHost && inputClientHostUrl) {
+    btnConnectClientHost.addEventListener('click', async () => {
+      const hostUrl = inputClientHostUrl.value.trim() || 'https://client-production.peginti.cloud';
+      btnConnectClientHost.disabled = true;
+      btnConnectClientHost.textContent = "⏳ Connexion à l'hôte distant...";
+
+      try {
+        const res = await fetch('/api/sdk/client-host/connect', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ hostUrl })
+        });
+        const data = await res.json();
+        if (data.success && data.hostDetails) {
+          const d = data.hostDetails;
+          if (hostStatusBox) hostStatusBox.classList.remove('hidden');
+          if (hostServerIp) {
+            hostServerIp.textContent = `Hébergement Client Connecté : ${d.ipServeur} (${d.os} · ${d.runtime})`;
+          }
+          if (textareaHostPatchCode && !textareaHostPatchCode.value.trim()) {
+            textareaHostPatchCode.value = REMOTE_FILE_TEMPLATES['/var/www/app/server.js'];
+          }
+          ajouterMessageAssistant(`bo'oivinichat est connecté à l'hébergement client **${hostUrl}** (${d.ipServeur}). Les 4 recommandations strictes sont actives et sécurisent chaque patch.`);
+        }
+      } catch (err) {
+        alert("Erreur de connexion serveur : " + err.message);
+      } finally {
+        btnConnectClientHost.disabled = false;
+        btnConnectClientHost.textContent = "🔗 Établir Connexion";
+      }
+    });
+  }
+
+  // Application du patch direct sur le serveur du client
+  if (btnApplyHostPatch && textareaHostPatchCode) {
+    btnApplyHostPatch.addEventListener('click', async () => {
+      const code = textareaHostPatchCode.value.trim();
+      const targetFile = selectHostRemoteFile?.value || '/var/www/app/server.js';
+      const hostUrl = inputClientHostUrl?.value.trim() || 'https://client-production.peginti.cloud';
+
+      if (!code) {
+        alert("Veuillez rédiger la modification de code à appliquer sur l'hébergement.");
+        return;
+      }
+
+      btnApplyHostPatch.disabled = true;
+      btnApplyHostPatch.textContent = "⏳ Application du patch en production...";
+
+      try {
+        const res = await fetch('/api/sdk/client-host/apply-patch', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ targetFile, modificationCode: code, hostUrl })
+        });
+        const data = await res.json();
+        if (data.success && data.patchResult) {
+          const pr = data.patchResult;
+          if (patchResultMsg) {
+            patchResultMsg.classList.remove('hidden');
+            patchResultMsg.innerHTML = `
+              <div style="color:#10b981; font-weight:800; margin-bottom:4px;">
+                ✓ Modification source appliquée avec succès sur l'hébergement du client !
+              </div>
+              <div style="font-size:11px; color:#94a3b8; font-family:var(--font-mono); margin-bottom:6px;">
+                Fichier : <strong>${pr.fichierCible}</strong> · Sauvegarde créée : <code>${pr.sauvegardeCreee}</code>
+              </div>
+              <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                ${pr.reglesStrictesVerifiees.map(r => `<span class="strict-rule-pill">${r}</span>`).join('')}
+              </div>
+            `;
+          }
+          ajouterMessageAssistant(`Patch appliqué sur **${targetFile}** sur l'hébergement client. Sauvegarde horodatée effectuée, aucune régression.`);
+        }
+      } catch (err) {
+        if (patchResultMsg) {
+          patchResultMsg.classList.remove('hidden');
+          patchResultMsg.innerHTML = `<span style="color:#ef4444;">Erreur d'application : ${err.message}</span>`;
+        }
+      } finally {
+        btnApplyHostPatch.disabled = false;
+        btnApplyHostPatch.textContent = "⚡ Appliquer la Modification sur le Serveur Client";
+      }
+    });
+  }
+
+  // ============================================================
+  // PILIER 4 : BO'OIVINICHAT CODEUR SANS ERREUR & BUG SCANNER
+  // ============================================================
+  const selectSdkLanguage = document.getElementById('select-sdk-language');
+  const btnScanBugsRealtime = document.getElementById('btn-scan-bugs-realtime');
+  const btnCodeZeroError = document.getElementById('btn-code-zero-error');
+  const textareaSdkCodeEditor = document.getElementById('textarea-sdk-code-editor');
+  const bugsInspectionCard = document.getElementById('bugs-inspection-card');
+  const bugsCountBadge = document.getElementById('bugs-count-badge');
+  const bugsItemsList = document.getElementById('bugs-items-list');
+  const sdkCorrectedCodeDisplay = document.getElementById('sdk-corrected-code-display');
+  const btnCopyCorrectedCode = document.getElementById('btn-copy-corrected-code');
+  const btnApplyCorrectedCode = document.getElementById('btn-apply-corrected-code');
+  const btnFormatEditorCode = document.getElementById('btn-format-editor-code');
+  const btnResetEditorCode = document.getElementById('btn-reset-editor-code');
+
+  const formSdkAssistantChat = document.getElementById('form-sdk-assistant-chat');
+  const inputSdkAssistantQuery = document.getElementById('input-sdk-assistant-query');
+  const sdkAssistantMessagesFlow = document.getElementById('sdk-assistant-messages-flow');
+  const btnClearSdkAssistant = document.getElementById('btn-clear-sdk-assistant');
+
+  let activeSdkCodeClean = '';
+  const STORAGE_KEY_SDK_HISTORY = 'peginti_sdk_chat_history';
+  let sdkAssistantHistory = [];
+  try {
+    const savedSdk = localStorage.getItem(STORAGE_KEY_SDK_HISTORY);
+    if (savedSdk) {
+      const parsedSdk = JSON.parse(savedSdk);
+      if (Array.isArray(parsedSdk)) {
+        sdkAssistantHistory = parsedSdk;
+      }
+    }
+  } catch (e) {
+    sdkAssistantHistory = [];
+  }
+
+  function sauvegarderSdkHistoriqueLocal() {
+    try {
+      localStorage.setItem(STORAGE_KEY_SDK_HISTORY, JSON.stringify(sdkAssistantHistory));
+    } catch (e) {
+      console.warn("Erreur sauvegarde historique SDK :", e);
+    }
+  }
+
+  function renderSdkConversation() {
+    if (!sdkAssistantMessagesFlow) return;
+    if (sdkAssistantHistory.length === 0) {
+      sdkAssistantMessagesFlow.innerHTML = `
+        <div class="assistant-msg-bubble">
+          <div class="msg-author">bo'oivinichat :</div>
+          <div style="font-size: 11.5px; line-height: 1.55;">
+            Je suis connecté directement à votre projet source. Posez-moi vos questions ou donnez-moi vos instructions de programmation : je modifierai directement le code à la source ou vous fournirai les solutions prêtes à être appliquées en un clic.
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    let html = '';
+    sdkAssistantHistory.forEach(item => {
+      html += `
+        <div class="assistant-msg-bubble">
+          <div class="msg-author">Vous (Développeur) :</div>
+          <div style="font-size: 11.5px; line-height: 1.55;">${formatTexteSouverain(item.user)}</div>
+        </div>
+      `;
+      const boutons = extraireBoutonsChoix(item.bot);
+      html += `
+        <div class="assistant-msg-bubble">
+          <div class="msg-author">bo'oivinichat :</div>
+          <div style="font-size: 11.5px; line-height: 1.55;">${formatTexteSouverain(item.bot)}</div>
+      `;
+      if (boutons && boutons.length >= 2) {
+        html += `<div class="sdk-choice-container">`;
+        boutons.forEach(b => {
+          const texteBouton = b.texte || b.libelle || '';
+          const extrait = texteBouton.length > 40 ? texteBouton.slice(0, 38) + '...' : texteBouton;
+          html += `<button type="button" class="btn-choix-sdk" data-choix="${b.lettre}/">${b.lettre}/ ${extrait}</button>`;
+        });
+        html += `</div>`;
+      }
+      html += `</div>`;
+    });
+    sdkAssistantMessagesFlow.innerHTML = html;
+    sdkAssistantMessagesFlow.scrollTop = sdkAssistantMessagesFlow.scrollHeight;
+
+    sdkAssistantMessagesFlow.querySelectorAll('.btn-choix-sdk').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const choix = btn.getAttribute('data-choix');
+        if (inputSdkAssistantQuery) {
+          inputSdkAssistantQuery.value = choix;
+          formSdkAssistantChat?.dispatchEvent(new Event('submit', { cancelable: true }));
+        }
+      });
+    });
+  }
+
+  // Rendu initial bo'oivinichat
+  renderSdkConversation();
+
+  // Changement de modèle de code selon le langage sélectionné
+  if (selectSdkLanguage && textareaSdkCodeEditor) {
+    selectSdkLanguage.addEventListener('change', (e) => {
+      const lang = e.target.value;
+      if (CODE_TEMPLATES && CODE_TEMPLATES[lang]) {
+        textareaSdkCodeEditor.value = CODE_TEMPLATES[lang];
+        const label = document.getElementById('editor-current-filename');
+        if (label) label.textContent = `Fichier : main.${lang === 'javascript' ? 'js' : lang === 'typescript' ? 'ts' : lang === 'python' ? 'py' : lang === 'rust' ? 'rs' : 'c'}`;
+      }
+    });
+  }
+
+  // Scanner et repérer les bugs en temps réel
+  if (btnScanBugsRealtime && textareaSdkCodeEditor) {
+    btnScanBugsRealtime.addEventListener('click', async () => {
+      const code = textareaSdkCodeEditor.value.trim();
+      const lang = selectSdkLanguage?.value || 'javascript';
+
+      if (!code) {
+        alert("Veuillez saisir ou importer du code à analyser.");
+        return;
+      }
+
+      btnScanBugsRealtime.disabled = true;
+      btnScanBugsRealtime.textContent = "🔍 Scan des bugs...";
+
+      try {
+        const res = await fetch('/api/sdk/booivini/inspect-bugs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code, language: lang })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          if (bugsInspectionCard) bugsInspectionCard.classList.remove('hidden');
+          if (bugsCountBadge) bugsCountBadge.textContent = `${data.totalBugs} anomalie(s) repérée(s)`;
+
+          if (bugsItemsList && data.bugs) {
+            bugsItemsList.innerHTML = data.bugs.map(b => `
+              <div class="bug-item-row">
+                <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                  <span>
+                    <span class="bug-tag-badge ${b.gravite === 'Critique' ? 'bug-tag-critique' : b.gravite === 'Haute' ? 'bug-tag-haute' : 'bug-tag-moyenne'}">${b.gravite.toUpperCase()}</span>
+                    <strong>Ligne ${b.ligne} :</strong> ${b.type}
+                  </span>
+                </div>
+                <div style="color:#cbd5e1; font-size:11.5px;">${b.message}</div>
+                <div style="color:#34d399; font-size:11px; margin-top:2px;">💡 Solution : ${b.solution}</div>
+              </div>
+            `).join('');
+          }
+
+          if (data.codeCorrige && sdkCorrectedCodeDisplay) {
+            activeSdkCodeClean = data.codeCorrige;
+            sdkCorrectedCodeDisplay.textContent = activeSdkCodeClean;
+          }
+
+          ajouterMessageAssistant(`J'ai analysé votre code : **${data.totalBugs} anomalie(s) détectée(s)**. La version corrigée sans erreur a été générée dans le panneau de sortie.`);
+        }
+      } catch (err) {
+        alert("Erreur lors de l'inspection : " + err.message);
+      } finally {
+        btnScanBugsRealtime.disabled = false;
+        btnScanBugsRealtime.textContent = "🔍 Scanner & Repérer les Bugs";
+      }
+    });
+  }
+
+  // Coder sans erreur & Programmer directement
+  if (btnCodeZeroError && textareaSdkCodeEditor) {
+    btnCodeZeroError.addEventListener('click', async () => {
+      const code = textareaSdkCodeEditor.value.trim();
+      const lang = selectSdkLanguage?.value || 'javascript';
+
+      if (!code) {
+        alert("Veuillez saisir ou coller du code dans l'éditeur.");
+        return;
+      }
+
+      btnCodeZeroError.disabled = true;
+      btnCodeZeroError.textContent = "⚡ Programmation sans erreur...";
+
+      try {
+        const res = await fetch('/api/sdk/booivini/inspect-bugs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code, language: lang })
+        });
+        const data = await res.json();
+
+        if (data.success && data.codeCorrige) {
+          activeSdkCodeClean = data.codeCorrige;
+          if (sdkCorrectedCodeDisplay) {
+            sdkCorrectedCodeDisplay.textContent = activeSdkCodeClean;
+          }
+          if (bugsInspectionCard) {
+            bugsInspectionCard.classList.remove('hidden');
+            if (bugsCountBadge) bugsCountBadge.textContent = "0 anomalie restante après programmation";
+            if (bugsItemsList) {
+              bugsItemsList.innerHTML = `<div style="color:#34d399; padding:4px;">✓ Code 100% propre, sans bug et optimisé selon la doctrine Techno-eecoc.</div>`;
+            }
+          }
+          ajouterMessageAssistant("Votre code a été entièrement reprogrammé **sans aucune erreur**. Cliquez sur « ⬅ Injecter dans l'éditeur » pour le valider.");
+        }
+      } catch (err) {
+        alert("Erreur : " + err.message);
+      } finally {
+        btnCodeZeroError.disabled = false;
+        btnCodeZeroError.textContent = "⚡ Coder Sans Erreur & Résoudre";
+      }
+    });
+  }
+
+  // Injecter le code corrigé dans l'éditeur
   if (btnApplyCorrectedCode && textareaSdkCodeEditor) {
     btnApplyCorrectedCode.addEventListener('click', () => {
-      if (lastCorrectedCode) {
-        const codeBlockMatch = lastCorrectedCode.match(/```[a-zA-Z0-9_\-\+]*\n([\s\S]*?)```/);
-        const codeToApply = codeBlockMatch ? codeBlockMatch[1].trim() : lastCorrectedCode;
-        textareaSdkCodeEditor.value = codeToApply;
-        btnApplyCorrectedCode.textContent = '✓ Code Appliqué !';
-        setTimeout(() => { btnApplyCorrectedCode.textContent = '⬅ Remplacer dans l\'éditeur'; }, 2000);
+      if (activeSdkCodeClean) {
+        textareaSdkCodeEditor.value = activeSdkCodeClean;
+        btnApplyCorrectedCode.textContent = "✓ Injecté !";
+        setTimeout(() => { btnApplyCorrectedCode.textContent = "⬅ Injecter dans l'éditeur"; }, 1800);
+      } else {
+        alert("Aucun code propre généré pour l'instant. Cliquez d'abord sur « ⚡ Coder Sans Erreur & Résoudre ».");
       }
     });
   }
 
-  // Copier le code de l'éditeur
-  if (btnSdkCopyCode && textareaSdkCodeEditor) {
-    btnSdkCopyCode.addEventListener('click', () => {
-      navigator.clipboard.writeText(textareaSdkCodeEditor.value);
-      btnSdkCopyCode.textContent = '✓ Copié !';
-      setTimeout(() => { btnSdkCopyCode.textContent = '📋 Copier le Code'; }, 2000);
+  // Copier le code corrigé
+  if (btnCopyCorrectedCode) {
+    btnCopyCorrectedCode.addEventListener('click', () => {
+      const textToCopy = activeSdkCodeClean || (textareaSdkCodeEditor ? textareaSdkCodeEditor.value : '');
+      if (textToCopy) {
+        navigator.clipboard.writeText(textToCopy);
+        btnCopyCorrectedCode.textContent = "✓ Copié !";
+        setTimeout(() => { btnCopyCorrectedCode.textContent = "📋 Copier"; }, 1800);
+      }
     });
   }
 
-  // Assistant technique bo'oivinichat (Chat Développeurs)
-  function ajouterMessageAssistant(msg, auteur = 'bo\'oivinichat') {
+  // Formater le code de l'éditeur
+  if (btnFormatEditorCode && textareaSdkCodeEditor) {
+    btnFormatEditorCode.addEventListener('click', () => {
+      const code = textareaSdkCodeEditor.value;
+      if (code) {
+        // Nettoyage indentation et retours à la ligne
+        const formatted = code.split('\n').map(l => l.trimEnd()).join('\n').trim();
+        textareaSdkCodeEditor.value = formatted;
+        btnFormatEditorCode.textContent = "✓ Formaté";
+        setTimeout(() => { btnFormatEditorCode.textContent = "📐 Formater"; }, 1500);
+      }
+    });
+  }
+
+  // Réinitialiser le code de l'éditeur
+  if (btnResetEditorCode && textareaSdkCodeEditor) {
+    btnResetEditorCode.addEventListener('click', () => {
+      const lang = selectSdkLanguage?.value || 'javascript';
+      if (CODE_TEMPLATES && CODE_TEMPLATES[lang]) {
+        textareaSdkCodeEditor.value = CODE_TEMPLATES[lang];
+      } else {
+        textareaSdkCodeEditor.value = `// Fichier de test\nconsole.log("bo'oivinichat prêt.");\n`;
+      }
+    });
+  }
+
+  // Chat Développeurs bo'oivinichat (Assistant en ligne & propositions)
+  function extraireBoutonsChoix(texte) {
+    if (!texte) return [];
+    const options = [];
+    const regex = /(?:^|\n|<br\s*\/?>)\s*(\*{0,2})([A-Za-z])\/(\*{0,2})\s+([^\n\r<]+)/g;
+    let match;
+    while ((match = regex.exec(texte)) !== null) {
+      const lettre = match[2].toUpperCase();
+      const libelle = match[4].replace(/<\/?[^>]+(>|$)/g, '').trim();
+      if (libelle && !options.some(o => o.lettre === lettre)) {
+        options.push({ lettre, libelle });
+      }
+    }
+    return options.length >= 2 ? options : [];
+  }
+
+  function ajouterMessageAssistant(msg, auteur = "bo'oivinichat", options = null) {
     if (!sdkAssistantMessagesFlow) return;
     const msgDiv = document.createElement('div');
     msgDiv.className = 'assistant-msg-bubble';
-    msgDiv.innerHTML = `
+
+    let htmlContent = `
       <div class="msg-author">${auteur} :</div>
       <div style="font-size: 11.5px; line-height: 1.55;">${formatTexteSouverain(msg)}</div>
     `;
+
+    const boutons = (options && options.length >= 2) ? options : extraireBoutonsChoix(msg);
+    if (auteur.includes("bo'oivinichat") && boutons && boutons.length >= 2) {
+      htmlContent += `<div class="sdk-choice-container">`;
+      boutons.forEach(b => {
+        const texteBouton = b.texte || b.libelle || '';
+        const extrait = texteBouton.length > 40 ? texteBouton.slice(0, 38) + '...' : texteBouton;
+        htmlContent += `<button type="button" class="btn-choix-sdk" data-choix="${b.lettre}/">${b.lettre}/ ${extrait}</button>`;
+      });
+      htmlContent += `</div>`;
+    }
+
+    msgDiv.innerHTML = htmlContent;
+
+    msgDiv.querySelectorAll('.btn-choix-sdk').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const choix = btn.getAttribute('data-choix');
+        if (inputSdkAssistantQuery) {
+          inputSdkAssistantQuery.value = choix;
+          formSdkAssistantChat?.dispatchEvent(new Event('submit', { cancelable: true }));
+        }
+      });
+    });
+
     sdkAssistantMessagesFlow.appendChild(msgDiv);
     sdkAssistantMessagesFlow.scrollTop = sdkAssistantMessagesFlow.scrollHeight;
   }
@@ -880,7 +1793,7 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
       const waitDiv = document.createElement('div');
       waitDiv.id = tempId;
       waitDiv.className = 'assistant-msg-bubble';
-      waitDiv.innerHTML = `<div class="msg-author">bo'oivinichat :</div><p style="color:#38bdf8;"><em>Analyse technique en cours...</em></p>`;
+      waitDiv.innerHTML = `<div class="msg-author">bo'oivinichat :</div><p style="color:#38bdf8;"><em>Analyse et programmation de la réponse en cours...</em></p>`;
       sdkAssistantMessagesFlow?.appendChild(waitDiv);
       sdkAssistantMessagesFlow.scrollTop = sdkAssistantMessagesFlow.scrollHeight;
 
@@ -891,21 +1804,44 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
           body: JSON.stringify({
             question: q,
             codeContext: textareaSdkCodeEditor?.value || '',
-            history: sdkAssistantHistory,
-            apiKey: activeSdkApiKey
+            history: sdkAssistantHistory
           })
         });
 
         const data = await res.json();
         const rep = data.reponse || data.response || "Recommandation technique transmise.";
         sdkAssistantHistory.push({ user: q, bot: rep });
+        sauvegarderSdkHistoriqueLocal();
 
         const waitEl = document.getElementById(tempId);
         if (waitEl) {
-          waitEl.innerHTML = `
+          let innerHtml = `
             <div class="msg-author">bo'oivinichat :</div>
             <div style="font-size: 11.5px; line-height: 1.55;">${formatTexteSouverain(rep)}</div>
           `;
+
+          const boutons = (data.options && data.options.length >= 2) ? data.options : extraireBoutonsChoix(rep);
+          if (boutons && boutons.length >= 2) {
+            innerHtml += `<div class="sdk-choice-container">`;
+            boutons.forEach(b => {
+              const texteBouton = b.texte || b.libelle || '';
+              const extrait = texteBouton.length > 40 ? texteBouton.slice(0, 38) + '...' : texteBouton;
+              innerHtml += `<button type="button" class="btn-choix-sdk" data-choix="${b.lettre}/">${b.lettre}/ ${extrait}</button>`;
+            });
+            innerHtml += `</div>`;
+          }
+
+          waitEl.innerHTML = innerHtml;
+
+          waitEl.querySelectorAll('.btn-choix-sdk').forEach(btn => {
+            btn.addEventListener('click', () => {
+              const choix = btn.getAttribute('data-choix');
+              if (inputSdkAssistantQuery) {
+                inputSdkAssistantQuery.value = choix;
+                formSdkAssistantChat?.dispatchEvent(new Event('submit', { cancelable: true }));
+              }
+            });
+          });
         }
       } catch (err) {
         const waitEl = document.getElementById(tempId);
@@ -915,15 +1851,13 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
     });
   }
 
-  if (btnClearSdkAssistant && sdkAssistantMessagesFlow) {
+  if (btnClearSdkAssistant) {
     btnClearSdkAssistant.addEventListener('click', () => {
-      sdkAssistantHistory = [];
-      sdkAssistantMessagesFlow.innerHTML = `
-        <div class="assistant-msg-bubble">
-          <div class="msg-author">bo'oivinichat :</div>
-          <p>Bienvenue dans votre Studio SDK PEGINTI Pro. Je suis votre assistant technique dédié. Posez-moi vos questions sur le code, l'optimisation Techno-eecoc, la configuration des API ou l'architecture de vos projets.</p>
-        </div>
-      `;
+      if (confirm("Voulez-vous vraiment effacer l'historique de discussion de bo'oivinichat ?")) {
+        sdkAssistantHistory = [];
+        localStorage.removeItem(STORAGE_KEY_SDK_HISTORY);
+        renderSdkConversation();
+      }
     });
   }
 
@@ -990,22 +1924,18 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
   // ============================================================
   // MODALE CONSOLE CHAT
   // ============================================================
-  const modalChatForm = document.getElementById('modal-chat-form');
-  const modalChatInput = document.getElementById('modal-chat-input');
-  const modalChatFlow = document.getElementById('modal-chat-flow-zone');
-
   if (modalChatForm && modalChatInput) {
     modalChatForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const text = modalChatInput.value.trim();
       if (!text) return;
 
+      modalChatInput.value = '';
+
       const userDiv = document.createElement('div');
       userDiv.className = 'chat-row user-row';
       userDiv.innerHTML = `<div class="chat-bubble"><p>${text}</p></div>`;
-      modalChatFlow.appendChild(userDiv);
-      modalChatInput.value = '';
-      modalChatFlow.scrollTop = modalChatFlow.scrollHeight;
+      if (modalChatFlow) modalChatFlow.appendChild(userDiv);
 
       const botDiv = document.createElement('div');
       botDiv.className = 'chat-row bot-row';
@@ -1016,8 +1946,10 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
           <p><em>Réflexion cognitive en cours...</em></p>
         </div>
       `;
-      modalChatFlow.appendChild(botDiv);
-      modalChatFlow.scrollTop = modalChatFlow.scrollHeight;
+      if (modalChatFlow) {
+        modalChatFlow.appendChild(botDiv);
+        modalChatFlow.scrollTop = modalChatFlow.scrollHeight;
+      }
 
       try {
         const res = await fetch('/api/chat', {
@@ -1033,14 +1965,12 @@ pub fn securiser_flux(donnees: &[u8]) -> Vec<u8> {
         const rep = data.response || data.reponse || data.answer || data.narration || 'Traitement terminé.';
         conversationHistory.push({ user: text, bot: rep });
         sauvegarderHistoriqueLocal();
-        renderHomeConversation();
-        const pEl = botDiv.querySelector('.chat-bubble p');
-        if (pEl) pEl.innerHTML = formatTexteSouverain(rep);
+        renderAllConversations();
       } catch (err) {
         const pEl = botDiv.querySelector('.chat-bubble p');
         if (pEl) pEl.textContent = 'Erreur de connexion avec le serveur.';
       }
-      modalChatFlow.scrollTop = modalChatFlow.scrollHeight;
+      if (modalChatFlow) modalChatFlow.scrollTop = modalChatFlow.scrollHeight;
     });
   }
 

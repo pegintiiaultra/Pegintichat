@@ -5,33 +5,34 @@
  * Rôles clés :
  * 1. Transforme les résultats bruts de la Matrice en texte fluide, élégant et soigné.
  * 2. Structure la réponse en paragraphes clairs et intelligibles.
- * 3. Organise les trois niveaux cognitifs :
- *    - Niveau 1 : Factuel (réponse immédiate et précise aux faits)
- *    - Niveau 2 : Enrichi (perspective doctrinale, contexte africain/mondial, analyse systémique)
- *    - Niveau 3 : Stratégique (orientations, prospective et souveraineté durable)
+ * 3. Organise les trois niveaux cognitifs (Factuel, Enrichi, Stratégique).
  * 4. Adapte le ton selon la vitrine de destination (WOUNANET, CHAT INTERACTIF, VITRINE PREMIUM).
  */
 
-export function narrerResultatMatrice({
-  donneesMatrice,
-  paquetBIP,
-  vitrine = 'CHAT_INTERACTIF',
-  reponseBrute = ''
-}) {
-  const { analyseIntention, modulesSignales } = paquetBIP;
-  const texteSource = String(reponseBrute || donneesMatrice?.synthese || '').trim();
+export function narrerResultatMatrice(options = {}) {
+  const texteSource = String(
+    options.synthèseTexte || 
+    options.syntheseTexte || 
+    options.reponseBrute || 
+    options.donneesMatrice?.synthese || 
+    ''
+  ).trim();
 
-  // Si c'est déjà un formatage textuel complet (ex: retour IA Gemini), on garantit la clarté et la structure
+  const vitrine = options.vitrineCible || options.vitrine || 'CHAT_INTERACTIF';
+  const depeche = options.dépêcheAssociee || options.depecheAssociee || options.donneesMatrice?.depechePrincipale;
+  const modules = options.modulesAppliques || options.paquetBIP?.modulesSignales || [];
+
   if (vitrine === 'WOUNANET') {
-    // Structure spécifique pour la vitrine WOUNANET (Moteur de recherche temps réel)
     return {
       vitrine: 'WOUNANET',
-      titre: donneesMatrice?.depechePrincipale?.titre || "Résultats de Recherche Souveraine WOUNANET",
+      titre: depeche?.titre || "Résultats de Recherche Souveraine WOUNANET",
+      reponseTexte: texteSource,
+      synthèseTexte: texteSource,
       narrationFluide: texteSource,
       niveaux: {
-        factuel: donneesMatrice?.syntheseFactuelle || texteSource,
-        enrichi: donneesMatrice?.contexteEnrichi || "Données recoupées et vérifiées en temps réel via le réseau mondial WOUNANET sous le contrôle du pilote IVIOK 24/24.",
-        strategique: "Perspective panafricaine : Maîtrise souveraine des flux informationnels et indépendance stratégique des analyses géopolitiques."
+        factuel: texteSource,
+        enrichi: "Données recoupées et vérifiées en direct via le réseau mondial WOUNANET (Pilote IVIOK 24/24).",
+        strategique: "Perspective souveraine : Maîtrise des flux informationnels et indépendance stratégique."
       },
       source: "WOUNANET (Pilote IVIOK 24/24)",
       timestamp: new Date().toISOString()
@@ -39,29 +40,36 @@ export function narrerResultatMatrice({
   }
 
   if (vitrine === 'VITRINE_PREMIUM') {
-    // Structure spécifique pour la Vitrine Premium / Studio DSK
     return {
       vitrine: 'VITRINE_PREMIUM',
+      reponseTexte: texteSource,
+      synthèseTexte: texteSource,
       narrationFluide: texteSource,
       niveaux: {
-        factuel: "Solution logicielle / Optimisation de code validée par bo'oivinichat DSK V3.5.",
-        enrichi: "Application stricte des règles d'efficience algorithmique et de réduction de l'empreinte énergétique Techno-eecoc.",
-        strategique: "Garantie d'intégrité industrielle et d'activation instantanée par Mobile Money (MTN MoMo & Orange Money au Cameroun)."
+        factuel: texteSource,
+        enrichi: "Optimisation de code validée par bo'oivinichat DSK V3.5 (Techno-eecoc).",
+        strategique: "Garantie d'intégrité industrielle et d'activation instantanée par Mobile Money (MTN MoMo & Orange Money)."
       },
       timestamp: new Date().toISOString()
     };
   }
 
-  // Vitrine par défaut : CHAT INTERACTIF (Vitrine publique et gratuite)
   return {
     vitrine: 'CHAT_INTERACTIF',
+    reponseTexte: texteSource,
+    synthèseTexte: texteSource,
     narrationFluide: texteSource,
     niveaux: {
       factuel: texteSource,
-      enrichi: "Traitement cognitif articulé autour de la pensée de Tomo Ombede Barnabé Bertrand et de la frugalité Techno-eecoc.",
-      strategique: "Quête continue d'excellence unissant la rigueur intellectuelle à la clarté visuelle."
+      enrichi: "Traitement cognitif universel sous immunité doctrinale souveraine.",
+      strategique: "Rigueur intellectuelle universelle mariée à la clarté d'exposition."
     },
-    filtresAppliques: modulesSignales?.map(m => m.nom) || ["Rigueur Intellectuelle & Clarté Visuelle"],
+    filtresAppliques: Array.isArray(modules) ? modules.map(m => (typeof m === 'string' ? m : m.nom || 'Souveraineté')) : ["Souveraineté & Rigueur Intellectuelle"],
     timestamp: new Date().toISOString()
   };
 }
+
+export default {
+  narrerResultatMatrice
+};
+

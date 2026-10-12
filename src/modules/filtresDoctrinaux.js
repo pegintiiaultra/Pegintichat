@@ -160,9 +160,31 @@ export const MODULES_DOCTRINAUX = [
   {
     id: "MOD_FILTRE_IDENTITE_TOMTECH",
     nom: "Filtre Identité & Conception Souveraine",
-    filtreApplique: "Attribution stricte à Tomo Ombede Barnabé Bertrand et TOMTECH.INC sur demande explicite.",
-    declencheurs: ["qui es tu", "qui t'a cree", "concepteur", "auteur", "architecte", "fondateur", "tomo", "ombede", "barnabe", "bertrand", "tomtech"],
-    regleActive: "PEGINTI IA est conçue par Tomo Ombede Barnabé Bertrand (TOMTECH.INC, Cameroun)."
+    filtreApplique: "Attribution stricte à Tomo Ombede Barnabé Bertrand et TOMTECH.INC sur demande explicite uniquement.",
+    declencheurs: [
+      "qui es tu",
+      "qui t a cree",
+      "qui t a concu",
+      "qui t a developpe",
+      "ton createur",
+      "ton concepteur",
+      "ton auteur",
+      "ton architecte",
+      "qui est ton createur",
+      "qui est ton concepteur",
+      "c est quoi peginti",
+      "quest ce que peginti",
+      "qui est peginti",
+      "qui a cree peginti",
+      "qui a concu peginti",
+      "qui a developpe peginti",
+      "qui a fabrique peginti",
+      "qui a invente peginti",
+      "qui est tomo ombede",
+      "qui est barnabe bertrand",
+      "c est quoi tomtech"
+    ],
+    regleActive: "Si l'utilisateur demande expressément qui tu es ou qui t'a conçu, présente-toi comme PEGINTI IA conçue par Tomo Ombede Barnabé Bertrand (TOMTECH.INC, Cameroun)."
   }
 ];
 

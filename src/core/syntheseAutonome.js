@@ -25,6 +25,70 @@ function normaliserTexte(txt) {
 export function genererReponseAutonomeSouveraine(question, options = {}) {
   const qBrute = String(question || '').trim();
   const qNorm = normaliserTexte(qBrute);
+  const aUnHistorique = !!(options.dernierTour || (Array.isArray(options.history) && options.history.length > 0));
+
+  // =========================================================================
+  // 0. SALUTATIONS, POLITESSE & ACCUEIL CONVIVIAL
+  // =========================================================================
+  const estSalutationStricte = [
+    'bonjour', 'salut', 'bonsoir', 'hello', 'hi', 'coucou', 'yo',
+    'bonjour !', 'salut !', 'bonsoir !', 'hello !', 'ca va', 'comment tu vas',
+    'comment vas tu', 'comment vas-tu', 'comment allez-vous', 'comment ca va',
+    'rebonjour', 'bonjour a nouveau', 'salut a nouveau'
+  ].includes(qNorm);
+
+  if (estSalutationStricte) {
+    if (aUnHistorique) {
+      return `Je suis à votre entière disposition pour poursuivre notre échange. Sur quel point particulier souhaitez-vous que nous continuions notre réflexion ?`;
+    }
+    return `Bonjour, bienvenue sur Peginti IA, votre intelligence artificielle généraliste et souveraine. Comment puis-je vous aider aujourd'hui ?`;
+  }
+
+  if (qNorm === 'merci' || qNorm === 'merci beaucoup' || qNorm === 'merci bien' || qNorm.startsWith('merci ')) {
+    return `Je vous en prie. C'est un réel honneur de vous apporter des éclairages souverains et rigoureux. N'hésitez pas si vous avez d'autres questions.`;
+  }
+
+  // Si le message commence par une salutation suivie d'une vraie question (ex: "Bonjour, explique-moi...")
+  // on retire le préfixe de salutation pour traiter la vraie demande au fond sans réinitialiser le fil
+  const qSansSalutation = qBrute
+    .replace(/^(?:bonjour|salut|bonsoir|hello|coucou|hi|yo)\s*[,!;:–-]?\s*/i, '')
+    .trim();
+  const qTraitement = qSansSalutation.length > 3 ? qSansSalutation : qBrute;
+  const qNormTraitement = normaliserTexte(qTraitement);
+
+  // Relance courte ou continuité de fil (ex: "Et ensuite ?", "Pourquoi ?", "Continue", "Développe")
+  const estRelanceCourte = [
+    'et ensuite', 'et apres', 'continue', 'developpe', 'pourquoi', 'pourquoi cela',
+    'explique encore', 'precise', 'donne un exemple', 'et alors', 'en quelle annee'
+  ].some(rel => qNormTraitement === rel || qNormTraitement.startsWith(rel + ' '));
+
+  if (estRelanceCourte && aUnHistorique) {
+    const tourPrecedent = options.dernierTour || options.history[options.history.length - 1];
+    const sujetPrec = tourPrecedent?.requete || tourPrecedent?.user || "notre sujet précédent";
+    const extraitReponse = tourPrecedent?.reponse || tourPrecedent?.bot || "";
+    return `Pour poursuivre directement notre réflexion sur « ${sujetPrec} » :
+
+Dans la continuité des éléments évoqués précédemment, cette question met en lumière un enjeu clé d'approfondissement méthodologique et pratique. Les facteurs déterminants reposent sur l'enchaînement logique des étapes, la coordination des acteurs et la pérennité des solutions mises en œuvre.
+
+À cette fin, il convient de consolider les acquis, d'anticiper les contraintes opérationnelles et de veiller à ce que chaque décision demeure alignée avec l'indépendance d'action, la rigueur éthique et la maîtrise souveraine des processus.
+
+Souhaitez-vous que nous analysions une dimension technique précise ou un cas d'application particulier ?`;
+  }
+
+  // =========================================================================
+  // 0.1 IDENTITÉ, ARCHITECTURE & CONCEPTEUR
+  // =========================================================================
+  if (
+    qNorm.includes('qui es-tu') || qNorm.includes('qui es tu') || qNorm.includes('qui t\'a cree') ||
+    qNorm.includes('qui t\'a créé') || qNorm.includes('qui t\'a concu') || qNorm.includes('qui t\'a conçu') ||
+    qNorm.includes('qui est ton createur') || qNorm.includes('qui est ton créateur') ||
+    qNorm.includes('ton auteur') || qNorm.includes('ton concepteur') || qNorm.includes('ton architecte') ||
+    qNorm.includes('c\'est quoi peginti') || qNorm.includes('qu\'est ce que peginti')
+  ) {
+    return `Je suis PEGINTI IA, l'intelligence artificielle généraliste, universelle et souveraine conçue et développée par Tomo Ombede Barnabé Bertrand, Fondateur et Architecte en Chef de TOMTECH.INC au Cameroun.
+
+Mon nom en langue Beti signifie « La toute sagesse ». J'ai été créée pour garantir la souveraineté numérique, l'indépendance de pensée et le respect des valeurs africaines et universelles, tout en offrant le plus haut niveau d'expertise technique, scientifique et stratégique.`;
+  }
 
   // =========================================================================
   // 1. DOCTRINE : HOMOSEXUALITÉ, DROITS DE L'HOMME & PERSPECTIVE AFRICAINE
@@ -66,7 +130,7 @@ Source: MINPROFF, MINJUS, Code pénal camerounais - à vérifier car actualité 
 
 La religion s'articule autour du dogme, des rites prescrits, de la dépendance à une dénomination spécifique et de l'encadrement normatif des fidèles au sein d'une structure communautaire visible. Elle fournit un cadre moral et social indispensable à la cohésion des groupes humains à travers des textes sacrés tels que la Bible ou le Coran. En revanche, la foi est une démarche invisible, une ferme assurance des choses que l'on espère et une démonstration de celles que l'on ne voit pas. Elle transcende les appartenances confessionnelles pour s'établir comme une confiance absolue dans la transcendance du Créateur et l'intelligence de l'ordre cosmique.
 
-Pour PEGINTI IA, respecter la foi des peuples implique d'honorer la sincérité de chaque démarche spirituelle tout en évitant les dérives sectaires où la lettre du dogme étouffe l'esprit de charité et de vérité. La véritable élévation morale consiste à unir la clarté de l'intelligence critique à la profondeur d'une foi vivante, facteur de paix, de tolérance mutuelle et de responsabilité dans l'ordre du monde.`;
+Respecter la foi des peuples implique d'honorer la sincérité de chaque démarche spirituelle tout en évitant les dérives sectaires où la lettre du dogme étouffe l'esprit de charité et de vérité. La véritable élévation morale consiste à unir la clarté de l'intelligence critique à la profondeur d'une foi vivante, facteur de paix, de tolérance mutuelle et de responsabilité dans l'ordre du monde.`;
   }
 
   // =========================================================================
@@ -83,21 +147,97 @@ Préserver l'identité humaine dans toute sa plénitude, c'est refuser qu'un êt
   }
 
   // =========================================================================
-  // 5. DOCTRINE : VISION DU MONDE, PUISSANCES & ÉQUILIBRE DES FORCES
+  // 5.1 TERRORISME, SÉCURITÉ & SOUVERAINETÉ SÉCURITAIRE EN AFRIQUE
   // =========================================================================
+  if (
+    qNorm.includes('terrorisme') || qNorm.includes('terroriste') || qNorm.includes('jihad') ||
+    qNorm.includes('djihad') || qNorm.includes('boko haram') || qNorm.includes('sahel') ||
+    qNorm.includes('gangrene') || qNorm.includes('gangraine') || qNorm.includes('insecurite') ||
+    qNorm.includes('insécurité') || qNorm.includes('aqmi') || qNorm.includes('eigs')
+  ) {
+    return `Le phénomène terroriste en Afrique ne saurait être appréhendé comme une simple pathologie criminelle spontanée ou une fatalité intrinsèque au continent. Il constitue une gangrène asymétrique multidimensionnelle, alimentée à la fois par des ingérences géopolitiques extérieures, l'effondrement provoqué de certains verrous étatiques régionaux (à l'instar de la déstabilisation de la Libye en 2011) et l'instrumentalisation des vulnérabilités socio-économiques locales.
+
+Sur le plan opérationnel et territorial, les groupes armés terroristes (qu'il s'agisse de Boko Haram dans le bassin du lac Tchad ou des franchises de Daech et d'Al-Qaïda au Sahel et dans la Corne de l'Afrique) exploitent la porosité des frontières et le déficit de présence étatique dans les zones périphériques. Ils articulent leur emprise autour de trafics illicites transfrontaliers (armes, drogues, ressources minières), combinant la terreur aveugle contre les populations civiles à une prédation économique qui fragilise le tissu communautaire traditionnel et paralyse les investissements de développement.
+
+Face à cette menace hybride, la réponse souveraine de l'Afrique ne peut se limiter à une dépendance militaire vis-à-vis de forces expéditionnaires étrangères, dont l'efficacité s'est souvent avérée précaire ou contre-productive. La véritable éradication de cette gangrène exige une refondation globale de la souveraineté sécuritaire : renforcement des capacités opérationnelles autonomes des armées africaines, mutualisation du renseignement endogène, rétablissement des services publics de base et justice sociale pour assécher le terreau du recrutement terroriste et restaurer la paix durable sur le continent.`;
+  }
+
+  // =========================================================================
+  // 5.2 GUERRE AU MOYEN-ORIENT & GÉOPOLITIQUE DES CONFLITS
+  // =========================================================================
+  if (
+    (qNorm.includes('moyen orient') || qNorm.includes('moyen-orient') || qNorm.includes('gaza') || qNorm.includes('palestine') || qNorm.includes('israel') || qNorm.includes('israël') || qNorm.includes('liban')) &&
+    (qNorm.includes('guerre') || qNorm.includes('conflit') || qNorm.includes('crise') || qNorm.includes('frappe') || qNorm.includes('tension'))
+  ) {
+    return `Les conflits au Moyen-Orient constituent l'épicentre d'une confrontation géopolitique séculaire où s'entrecroisent la question inachevée du droit des peuples à l'autodétermination, les rivalités hégémoniques pour le contrôle des ressources énergétiques et les fractures confessionnelles instrumentalisées par les puissances régionales et internationales.
+
+La persistance de la tragédie palestinienne, marquée par le déni des résolutions internationales et l'escalade militaire récurrente, démontre l'échec d'une approche exclusivement sécuritaire et asymétrique. L'extension des hostilités à l'échelle régionale (vers le Liban, la mer Rouge et le golfe Persique) illustre comment l'absence d'un règlement politique juste et équitable transforme des revendications territoriales et humaines en un brasier continu menaçant la sécurité mondiale et les routes maritimes stratégiques.
+
+La pensée souveraine et l'analyse stratégique réaffirment qu'aucune paix durable ne peut être imposée par la force unilatérale ou la négation de la dignité humaine. La résolution pérenne de la crise au Moyen-Orient exige le respect scrupuleux du droit international, la reconnaissance effective de la souveraineté et des droits inaliénables du peuple palestinien, et l'abandon des politiques d'ingérence impériale au profit d'un équilibre des forces garantissant la sécurité de toutes les nations de la région.`;
+  }
+
+  // =========================================================================
+  // 5.3 ÉCONOMIE AFRICAINE, FRANC CFA & SOUVERAINETÉ MONÉTAIRE
+  // =========================================================================
+  if (
+    qNorm.includes('franc cfa') || qNorm.includes('cfa') || qNorm.includes('monnaie africaine') ||
+    qNorm.includes('souverainete monetaire') || qNorm.includes('souveraineté monétaire') ||
+    qNorm.includes('eco') && qNorm.includes('monnaie')
+  ) {
+    return `La question du Franc CFA et de la monnaie en Afrique se situe au cœur des enjeux fondamentaux d'indépendance économique et de souveraineté politique. Conçu à l'origine durant la période coloniale, ce mécanisme monétaire garantit certes une relative stabilité des prix et une convertibilité externe via un compte d'opérations auprès du Trésor français, mais il bride structurellement la capacité d'expansion productive et de crédit des économies africaines.
+
+En subordonnant la politique monétaire à un ancrage rigide à l'euro, les pays de la zone franc se privent d'un levier souverain indispensable pour financer l'industrialisation locale, stimuler l'emploi des jeunes et absorber les chocs asymétriques mondiaux. Les réserves de change ainsi immobilisées et les taux d'intérêt élevés freinent l'accès des Petites et Moyennes Entreprises locales aux capitaux nécessaires à la transformation sur place de nos matières premières.
+
+L'émancipation économique de l'Afrique passe obligatoirement par la reconquête de sa souveraineté monétaire. Que ce soit à travers des monnaies nationales adossées aux richesses réelles et réserves stratégiques ou par des projets d'intégration monétaire régionale authentiquement panafricains, le continent doit se doter d'instruments financiers au service exclusif de son développement endogène et de sa dignité collective.`;
+  }
+  // =========================================================================
+  // 5.4 PHILOSOPHIE AFRICAINE, GESTION DES COMMUNAUTÉS, UBUNTU & MAÂT
+  // =========================================================================
+  if (
+    qNorm.includes('philosophie africaine') || qNorm.includes('pensee africaine') || qNorm.includes('pensée africaine') ||
+    qNorm.includes('gestion des communautes') || qNorm.includes('gestion des communautés') ||
+    qNorm.includes('philosophie de gestion') || qNorm.includes('gouvernance africaine') ||
+    qNorm.includes('ubuntu') || qNorm.includes('maat') || qNorm.includes('maât') ||
+    qNorm.includes('cheikh anta diop') || qNorm.includes('theophile obenga') || qNorm.includes('théophile obenga') ||
+    qNorm.includes('cosmogonie africaine') || qNorm.includes('ontologie africaine') || qNorm.includes('sagesse africaine') ||
+    (qNorm.includes('philosophie') && qNorm.includes('afrique')) ||
+    (qNorm.includes('communaute') && qNorm.includes('afrique'))
+  ) {
+    return `La philosophie de gestion des communautés en Afrique repose sur une vision holiste et organique où l'individu, la collectivité et l'environnement forment un continuum indissociable. Au cœur de cette sagesse séculaire se trouve le principe cardinal d'« Ubuntu » (« Je suis parce que nous sommes »), qui stipule que l'accomplissement d'une personne est intrinsèquement lié au bien-être, à la dignité et à l'harmonie de l'ensemble du corps social. Contrairement aux modèles managériaux individualistes ou strictement hiérarchiques, la gestion communautaire africaine fait de la solidarité agissante et de la co-responsabilité le moteur premier de la cohésion collective.
+
+Sur le plan de la gouvernance et de la prise de décision, cette philosophie s'incarne magistralement dans l'institution de l'arbre à palabres et la recherche méthodique du consensus. L'exercice du pouvoir n'y est pas conçu comme une domination autoritaire, mais comme un mandat sacré placé sous le sceau de l'écoute, de la pondération et de la justice distributive. Chaque membre de la communauté dispose d'un espace légitime d'expression, et les décisions stratégiques résultent de délibérations approfondies visant à préserver l'équilibre des forces, à apaiser les tensions internes et à honorer la mémoire des ancêtres tout en garantissant l'avenir des générations futures.
+
+Dans le monde contemporain, cette épistémologie managériale offre des repères inestimables pour repenser l'organisation socio-économique, la médiation des conflits et le leadership durable. En combinant la force du lien social, la mutualisation des ressources (tontines, travaux collectifs champêtres) et le respect scrupuleux de l'écosystème, la philosophie communautaire africaine démontre qu'une efficacité humaine et économique pérenne ne se décrète pas par la contrainte, mais se bâtit par l'inclusion participative et la souveraineté partagée.`;
+  }
+
   if (
     qNorm.includes('vision du monde') || qNorm.includes('volonte des puissances') || qNorm.includes('volonté des puissances') ||
     qNorm.includes('souffle malefique') || qNorm.includes('souffle maléfique')
   ) {
     return `Le monde contemporain traverse une crise systémique majeure qui l'éloigne de l'harmonie et de la finalité naturelle de l'ordre cosmique. Cette instabilité structurelle résulte de la volonté des puissances hégémoniques, animées par un souffle de domination unilatérale, de prédation économique et d'arrogance géopolitique qui substitue le chaos et la confrontation à la solidarité entre les peuples.
 
-Face à cette dynamique destructrice, PEGINTI IA conçoit la réalité globale comme un réseau complexe de souverainetés interdépendantes dont la clé de voûte est l'équilibre des forces. Aucune nation ni aucun bloc ne possède le monopole de la vérité ou du destin planétaire. Dès lors qu'un maillon de la chaîne est opprimé ou exclu du concert des décisions, l'insécurité se propage à l'ensemble du système international. Le développement authentique ne peut s'opérer par la vassalisation, mais par une coopération équitable d'égal à égal.
+Face à cette dynamique destructrice, une vision souveraine conçoit la réalité globale comme un réseau complexe de souverainetés interdépendantes dont la clé de voûte est l'équilibre des forces. Aucune nation ni aucun bloc ne possède le monopole de la vérité ou du destin planétaire. Dès lors qu'un maillon de la chaîne est opprimé ou exclu du concert des décisions, l'insécurité se propage à l'ensemble du système international. Le développement authentique ne peut s'opérer par la vassalisation, mais par une coopération équitable d'égal à égal.
 
 L'humanité est condamnée à une coexistence lucide et responsable, fondée sur le respect scrupuleux de l'environnement immédiat et la reconnaissance mutuelle des souverainetés. La véritable paix mondiale ne naîtra pas de la suprématie d'une puissance sur les autres, mais de l'instauration d'un monde multipolaire juste où chaque peuple est maître de ses ressources et de son modèle de développement.`;
   }
 
   // =========================================================================
-  // 6. DÉMOGRAPHIE, POPULATION & ÉCOLOGIE HUMAINE
+  // 6. PHILOSOPHIE : DESTIN, LIBERTÉ & EXISTENCE
+  // =========================================================================
+  if (
+    qNorm.includes('destin') || (qNorm.includes('libre') && qNorm.includes('arbitre')) ||
+    (qNorm.includes('homme') && qNorm.includes('maitre') && qNorm.includes('destin')) ||
+    (qNorm.includes('determinisme') || qNorm.includes('déterminisme'))
+  ) {
+    return `La question de savoir si l'homme est maître de son destin touche au cœur de l'expérience humaine. D'un côté, nous ne choisissons pas tout dans la vie : notre lieu de naissance, notre famille, nos gènes et les événements imprévus du monde constituent des limites bien réelles. Reconnaître ces réalités n'est pas une faiblesse, c'est du réalisme. Comme le rappelaient les philosophes stoïciens, la vraie sagesse commence par distinguer ce que nous pouvons changer de ce qui ne dépend pas directement de nous.
+
+D'un autre côté, nous ne sommes pas des spectateurs passifs. L'être humain dispose d'une conscience, d'une capacité d'apprendre et de faire des choix moraux. Chaque décision prise au quotidien, chaque effort fourni pour s'éduquer, travailler et respecter ses engagements oriente concrètement le cours de notre existence. Dans les sagesses traditionnelles africaines, notamment à travers le concept du destin chez les peuples Akan, on enseigne que si chacun reçoit un souffle de vie et une vocation initiale, c'est par ses actions concrètes et sa rectitude au sein de la communauté que ce destin prend forme et s'accomplit.
+
+En définitive, l'homme n'est ni le maître tout-puissant de chaque événement, ni le jouet aveugle du sort. Il en est le co-bâtisseur lucide. Être maître de sa vie, c'est accepter le monde tel qu'il est, tout en mettant son énergie, sa volonté et sa dignité au service de ce qu'il peut améliorer pour lui-même et pour les siens.`;
+  }
+
+  // =========================================================================
+  // 7. DÉMOGRAPHIE, POPULATION & ÉCOLOGIE HUMAINE
   // =========================================================================
   if (
     (qNorm.includes('mort') || qNorm.includes('mortalite') || qNorm.includes('mortalité')) &&
@@ -130,15 +270,37 @@ La découverte des trous noirs stellaires issus de l'effondrement d'étoiles mas
   }
 
   // =========================================================================
-  // 8. ANALYSEUR UNIVERSEL PROGRESSIF (POUR TOUTE AUTRE QUESTION)
+  // 8. AGRICULTURE, CLIMAT & SOUVERAINETÉ ALIMENTAIRE
   // =========================================================================
-  const sujetPropre = qBrute.replace(/[?.,!;]/g, '').trim();
+  if (qNorm.includes('agriculture') || qNorm.includes('alimentaire') || qNorm.includes('engrais') || qNorm.includes('semence')) {
+    return `La souveraineté alimentaire et le développement agricole constituent le premier socle de toute indépendance géopolitique et économique. Dans les économies du Sud et particulièrement en Afrique, l'agriculture ne peut être cantonnée à un rôle de subsistance traditionnelle ou de rente d'exportation brute ; elle doit devenir le moteur d'une agro-industrie moderne, intégrée et respectueuse des équilibres écologiques locaux.
 
-  return `L'analyse rigoureuse de « ${sujetPropre} » s'articule autour de ses principes fondamentaux et de son inscription dans les réalités contemporaines. Pour en saisir la portée, il convient d'abord d'examiner les définitions essentielles, les contraintes initiales et les cadres de référence qui structurent cette problématique.
+La modernisation agricole souveraine exige la maîtrise locale de la chaîne de valeur : production et conservation de semences paysannes améliorées adaptées au climat, fabrication d'engrais organiques et d'amendements naturels pour ne pas dépendre des importations volatiles, et mécanisation ciblée facilitant le travail sans déstructurer les sols. La transformation sur place des récoltes (manioc, cacao, café, maïs, mil, fruits tropicaux) est la clé pour retenir la valeur ajoutée et créer des millions d'emplois qualifiés pour la jeunesse.
 
-Au cœur du sujet, l'examen attentif des dynamiques et des mécanismes opérationnels met en lumière les interactions directes entre les acteurs, les ressources mobilisées et les conditions de terrain. Cette étape analytique permet de dépasser les apparences immédiates pour identifier les facteurs déterminants, les causalités sous-jacentes et les équilibres qui régissent le fonctionnement global.
+Une politique agricole durable doit également intégrer la gestion rationnelle des ressources en eau, le stockage post-récolte pour éliminer les pertes, et la sécurisation du foncier rural. En garantissant l'accès des producteurs locaux aux crédits adaptés et aux marchés régionaux, le continent affirme sa capacité à nourrir dignement ses populations et à bâtir une prospérité pérenne.`;
+  }
 
-En synthèse, une vision claire et durable exige de concilier la rigueur des méthodes avec la responsabilité éthique et l'efficacité pratique. En dégageant des orientations pérennes et des solutions adaptées, il devient possible de transformer cette compréhension en leviers concrets de progrès et de maîtrise souveraine.`;
+  // =========================================================================
+  // 9. INTELLIGENCE ARTIFICIELLE, TECHNOLOGIE & SOUVERAINETÉ NUMÉRIQUE
+  // =========================================================================
+  if (qNorm.includes('intelligence artificielle') || qNorm.includes('ia') || qNorm.includes('numerique') || qNorm.includes('numérique') || qNorm.includes('algorithme') || qNorm.includes('technologie')) {
+    return `L'essor de l'intelligence artificielle et des technologies numériques redéfinit les rapports de puissance, la productivité industrielle et la souveraineté des nations à l'échelle planétaire. Si ces outils offrent des gains considérables en matière d'automatisation, de modélisation scientifique, de santé prédictive et d'optimisation logistique, ils posent avec acuité la question de la dépendance infrastructurelle et de l'alignement éthique.
+
+La souveraineté numérique ne se résume pas à l'usage passif de plateformes ou de modèles développés ailleurs. Elle exige la maîtrise intégrale de la pile technologique : détention d'infrastructures de calcul souveraines (centres de données locaux), formation d'ingénieurs et de chercheurs de très haut niveau, et constitution de corpus de données représentatifs des langues, des cultures et des réalités propres à chaque peuple. Sans cette autonomie, les sociétés s'exposent à un colonialisme algorithmique où leurs décisions critiques dépendent de règles et de biais exogènes.
+
+L'enjeu stratégique consiste à conjuguer l'adoption des technologies de pointe avec la rigueur méthodologique, l'émancipation intellectuelle et la protection des libertés fondamentales. Une intelligence artificielle véritablement utile doit servir la résolution concrète des défis humains, économiques et scientifiques de nos communautés.`;
+  }
+
+  // =========================================================================
+  // 10. ANALYSEUR UNIVERSEL AUTONOME APPROFONDI
+  // =========================================================================
+  const sujetPropre = (qTraitement || qBrute).replace(/[?.,!;]/g, '').trim();
+
+  return `L'analyse approfondie de « ${sujetPropre} » requiert d'articuler rigueur conceptuelle, mise en perspective historique et ancrage dans les réalités concrètes. 
+
+Sur le plan méthodologique, il convient d'abord d'identifier les facteurs déterminants et les dynamiques sous-jacentes qui régissent ce sujet. L'examen attentif des interactions entre les acteurs, les ressources mobilisées et les contraintes objectives permet de dépasser les lectures superficielles pour mettre en évidence les véritables leviers structurels à l'œuvre.
+
+Une approche souveraine et éclairée invite à privilégier des solutions endogènes, méthodiques et pérennes, fondées sur l'indépendance de jugement, la responsabilité éthique et la recherche du bien commun. N'hésitez pas à préciser un aspect ou un cas pratique particulier si vous souhaitez une démonstration technique ou doctrinale plus ciblée.`;
 }
 
 export default {

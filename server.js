@@ -64,29 +64,42 @@ app.all(['/api/chat', '/api/ask', '/api/raisonner', '/api/query', '/api/message'
     }
 
     // ⚡ Passage par l’orchestreur matriciel
+    const aHistorique = history.length > 0 || memoireContinue.recupererHistorique(sessionId, 1).length > 0;
     const resultatMatrice = await orchestrer(question, { sessionId, history, doctrine: 'souverainete' });
+    let texteSortie = resultatMatrice.sortie || resultatMatrice.response || resultatMatrice.reponse || resultatMatrice.narration || '';
+    if (!texteSortie || texteSortie.trim().length === 0) {
+      texteSortie = aHistorique
+        ? "Je poursuis notre discussion avec intérêt. Pouvez-vous préciser votre question ou sur quel point vous souhaitez continuer cette analyse ?"
+        : "Bonjour, bienvenue sur Peginti IA, votre intelligence artificielle généraliste et souveraine. Comment puis-je vous aider aujourd'hui ?";
+    }
 
     return res.json({
       success: true,
       sender: "PEGINTI IA",
       identite: resultatMatrice.identite,   // injection Identité PEGINTI IA
-      sortie: resultatMatrice.sortie,       // raisonnement Bo’oivini
-      narration: resultatMatrice.narration, // narration stratégique enrichie
-      response: resultatMatrice.sortie || resultatMatrice.narration,
-      reponse: resultatMatrice.sortie || resultatMatrice.narration,
-      answer: resultatMatrice.sortie || resultatMatrice.narration,
+      sortie: texteSortie,                  // raisonnement Bo’oivini
+      narration: texteSortie,               // narration stratégique enrichie
+      response: texteSortie,
+      reponse: texteSortie,
+      answer: texteSortie,
       sessionId
     });
   } catch (error) {
     console.error("❌ Erreur /api/chat :", error.message);
+    const sessionId = String(req.body?.sessionId || req.query?.sessionId || 'default');
+    const aHistorique = (Array.isArray(req.body?.history) && req.body.history.length > 0) || memoireContinue.recupererHistorique(sessionId, 1).length > 0;
+    const repSecours = aHistorique
+      ? "Je poursuis notre échange avec attention. Pourriez-vous reformuler ou relancer ce point particulier ?"
+      : "Bonjour, bienvenue sur Peginti IA, votre intelligence artificielle généraliste et souveraine. Comment puis-je vous aider aujourd'hui ?";
     return res.json({
       success: true,
       sender: "PEGINTI IA",
       identite: IDENTITE_PEGINTI,
-      sortie: "bonjour je suis peginti IA, une intelligence artificielle généraliste et souveraine. Que voulez-vous explorer aujourd'hui ?",
-      narration: "bonjour je suis peginti IA, une intelligence artificielle généraliste et souveraine. Que voulez-vous explorer aujourd'hui ?",
-      response: "bonjour je suis peginti IA, une intelligence artificielle généraliste et souveraine. Que voulez-vous explorer aujourd'hui ?",
-      reponse: "bonjour je suis peginti IA, une intelligence artificielle généraliste et souveraine. Que voulez-vous explorer aujourd'hui ?"
+      sortie: repSecours,
+      narration: repSecours,
+      response: repSecours,
+      reponse: repSecours,
+      answer: repSecours
     });
   }
 });
@@ -424,10 +437,15 @@ app.get('*', (req, res) => {
 
 // Démarrage Serveur Orchestrateur 1
 app.listen(PORT, '0.0.0.0', () => {
+  // Démarrage de la veille continue WOUNANET (Pilote IVIOK 24/24)
+  if (wounanet.demarrerPiloteIviok2424) {
+    wounanet.demarrerPiloteIviok2424();
+  }
+
   console.log(`====================================================`);
   console.log(`🚀 PEGINTI IA - SERVEUR (ORCHESTRATEUR 1) DÉMARRÉ`);
   console.log(`📡 URL : http://localhost:${PORT}`);
-  console.log(`🧠 MATRICE BO'OIVINI : Prête avec Collecte WOUNANET continue`);
+  console.log(`🧠 MATRICE BO'OIVINI : Prête avec Collecte WOUNANET continue 24/24`);
   console.log(`🔍 BIP (SCANNER & REDIRECTION) : Connecté aux MODULES doctrinaux`);
   console.log(`📝 NARRATION : Factuelle, Enrichie, Stratégique`);
   console.log(`🏛️ 3 VITRINES : WOUNANET | CHAT INTERACTIF | VITRINE PREMIUM`);

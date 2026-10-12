@@ -69,31 +69,64 @@ export const CATALOGUE_PREMIUM = {
 
   produits: [
     {
+      id: "prod-minang-lite",
+      nom: "MINANG Lite (Messenger SMS & Off-Grid IP)",
+      badge: "Innovation ✈️ / GRATUIT",
+      badgeClass: "badge-innovation",
+      categorie: "MESSAGERIE & RÉSEAU SOUVERAIN",
+      prixFcfa: "GRATUIT (Inclus)",
+      montantNumerique: 0,
+      description: "Messagerie sociale souveraine par TomTech.inc. Fonctionne sans connexion Internet grâce au protocole SMS-IP, adresses IP simplifiées et réseau Mesh local. Envoi de messages, photos, documents, notes vocales et appels audio P2P.",
+      avantages: [
+        "Communication sans Internet (Protocole SMS-IP & Mesh local)",
+        "Échange de messages texte, images, documents PDF/TXT et vocaux",
+        "Appels audio P2P sur adresse IP localement simplifiée"
+      ]
+    },
+    {
       id: "prod-dsk-peginti-ia",
-      nom: "DSK PEGINTI IA",
+      nom: "DSK PEGINTI IA Pro",
       badge: "Populaire 🔥",
+      badgeClass: "badge-populaire",
       categorie: "LOGICIEL & SDK",
       prixFcfa: "15 000 FCFA /mois",
       montantNumerique: 15000,
-      description: "Kit de développement autonome. Correction de code, détection de bugs et refactoring automatique."
+      description: "Kit de développement autonome complet. Correction de code, détection de bugs et refactoring souverain.",
+      avantages: [
+        "Correction et refactoring automatique selon la doctrine Techno-eecoc",
+        "Détection et résolution des anomalies de performance",
+        "Exportation de micro-services souverains prêts au déploiement"
+      ]
     },
     {
       id: "prod-code-studio-pro",
       nom: "Code Studio Pro",
       badge: "Souverain ⚡",
+      badgeClass: "badge-souverain",
       categorie: "GÉNÉRATEUR PRO",
       prixFcfa: "45 000 FCFA /unique",
       montantNumerique: 45000,
-      description: "Générateur full-stack d'applications web et mobile sur-mesure avec intégration d'API souveraines."
+      description: "Générateur full-stack d'applications web et mobile sur-mesure avec architecture certifiée TOMTECH.",
+      avantages: [
+        "Génération complète d'architectures web, mobiles et microservices",
+        "Composants réactifs optimisés pour une faible consommation de bande passante",
+        "Intégration directe aux API et tunnels de paiement souverains"
+      ]
     },
     {
       id: "prod-matrice-eecoc",
-      nom: "Module Matrice Techno-eecoc Enterprise",
+      nom: "Matrice Techno-eecoc Enterprise",
       badge: "Écologique 🌿",
+      badgeClass: "badge-eecoc",
       categorie: "ARCHITECTURE IA",
       prixFcfa: "75 000 FCFA /unique",
       montantNumerique: 75000,
-      description: "Algorithmes de calcul matriciel frugal à régénération de tenseurs, réduisant la consommation de calcul de plus de 60%."
+      description: "Algorithmes de calcul matriciel frugal à régénération de tenseurs, réduisant la consommation de calcul de plus de 60%.",
+      avantages: [
+        "Réduction de 60%+ de la charge énergétique par tensorisation régénérative",
+        "Adapté aux infrastructures frugales et environnements off-grid",
+        "Licence perpétuelle entreprise avec support direct TomTech"
+      ]
     }
   ]
 };
