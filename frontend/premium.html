@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Boutique PEGINTI : abonnements, logiciels et services, studio SDK Peginti Pro">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0e1116">
+<title>PEGINTI IA — Boutique</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch.png">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="entete" id="entete"><a class="logo" href="/">PEGINTI <span>IA</span></a></header>
+<main class="large">
+  <div class="boutique-tete">
+    <div><h1>Boutique PEGINTI</h1>
+    <p class="sous-titre">Abonnements, logiciels et services. Le studio SDK <strong>Peginti Pro</strong> est inclus avec l'accès premium.</p></div>
+    <button type="button" class="panier-btn" id="ouvrir-panier" aria-controls="panier">Panier <span class="badge" id="nb-panier">0</span></button>
+  </div>
+  <div id="zone-msg-premium" aria-live="polite"></div>
+
+  <nav class="onglets" id="onglets" aria-label="Sections de la boutique">
+    <button type="button" data-vue="catalogue" aria-selected="true">Catalogue</button>
+    <button type="button" data-vue="commandes" aria-selected="false">Mes commandes</button>
+    <button type="button" data-vue="logiciels" aria-selected="false">Mes logiciels</button>
+    <button type="button" data-vue="studio" aria-selected="false">Studio SDK</button>
+  </nav>
+
+  <section id="vue-catalogue">
+    <form class="filtres" id="filtres" role="search">
+      <input type="search" id="f-q" placeholder="Rechercher un produit" aria-label="Rechercher" maxlength="80">
+      <select id="f-categorie" aria-label="Catégorie"><option value="">Toutes les catégories</option></select>
+      <select id="f-type" aria-label="Type">
+        <option value="">Tous les types</option><option value="abonnement">Abonnements</option>
+        <option value="logiciel">Logiciels</option><option value="service">Services</option>
+      </select>
+      <select id="f-tri" aria-label="Tri">
+        <option value="">Sélection</option><option value="prix_asc">Prix croissant</option>
+        <option value="prix_desc">Prix décroissant</option><option value="nom">Nom A–Z</option>
+      </select>
+    </form>
+    <div class="grille produits" id="catalogue"></div>
+    <p class="indice cache" id="vide">Aucun produit ne correspond à votre recherche.</p>
+  </section>
+
+  <section id="vue-produit" class="cache"></section>
+  <section id="vue-commandes" class="cache"></section>
+  <section id="vue-logiciels" class="cache"></section>
+
+  <section id="vue-studio" class="cache">
+    <div id="studio-verrou" class="carte"><p>Le studio est réservé aux comptes premium. Commandez l'accès premium : il est activé dès la validation du paiement.</p></div>
+    <div id="studio" class="carte cache">
+      <div class="fil" id="fil" data-endpoint="/api/premium/studio" data-vitrine="PREMIUM" aria-live="polite"></div>
+      <div id="zone-msg"></div>
+      <form id="form-chat">
+        <label for="message">Décrivez votre application ou votre problème</label>
+        <textarea id="message" maxlength="8000" rows="3" required></textarea>
+        <div class="rangee"><button type="submit">Envoyer</button><button type="button" class="discret" id="effacer">Effacer</button></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<aside id="panier" class="panier cache" aria-label="Panier" role="dialog" aria-modal="false">
+  <div class="panier-tete"><h2>Votre panier</h2><button type="button" class="discret" id="fermer-panier" aria-label="Fermer le panier">✕</button></div>
+  <div id="panier-lignes"></div>
+  <div class="panier-pied">
+    <div class="total"><span>Total</span><strong id="panier-total">0 FCFA</strong></div>
+    <div id="panier-avert"></div>
+    <label for="mode-paiement">Mode de paiement</label>
+    <select id="mode-paiement"></select>
+    <label for="note">Note (facultatif)</label>
+    <input id="note" maxlength="300">
+    <div class="rangee"><button type="button" id="commander">Commander</button><button type="button" class="discret" id="vider">Vider</button></div>
+    <div id="panier-paiement"></div>
+  </div>
+</aside>
+<nav class="nav-bas" id="nav-bas" aria-label="Navigation mobile"></nav>
+<script src="/assets/js/commun.js" defer></script>
+<script src="/assets/js/chat.js" defer></script>
+<script src="/assets/js/premium.js" defer></script>
+</body>
+</html>

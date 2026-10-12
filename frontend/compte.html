@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Gestion du compte">
+<meta name="robots" content="noindex">
+<title>PEGINTI IA — Mon compte</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0e1116">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch.png">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="entete" id="entete"><a class="logo" href="/">PEGINTI <span>IA</span></a></header>
+<main>
+<h1>Mon compte</h1>
+<div id="zone-msg"></div>
+<div class="carte">
+  <p><strong id="p-pseudo"></strong> · <span id="p-email"></span></p>
+  <p><span class="badge" id="p-role"></span> <span class="badge">adresse <span id="p-verif"></span></span></p>
+</div>
+<h2>Changer le mot de passe</h2>
+<form id="form-mdp" class="carte">
+  <label for="mdp-actuel">Mot de passe actuel</label><input id="mdp-actuel" type="password" autocomplete="current-password" required>
+  <label for="mdp-nouveau">Nouveau mot de passe (12 caractères minimum)</label><input id="mdp-nouveau" type="password" autocomplete="new-password" required>
+  <div class="rangee"><button type="submit">Modifier</button></div>
+</form>
+<h2>Double authentification (TOTP)</h2>
+<div id="tfa-obligatoire" class="msg erreur cache" role="alert">La double authentification est <strong>obligatoire</strong> pour votre compte (équipe TOMTECH.INC). Activez-la pour accéder au reste de la plateforme.</div>
+<div class="carte">
+  <div id="tfa-off">
+    <p>Ajoute un code à usage unique à chaque connexion (Aegis, Google Authenticator, FreeOTP…).</p>
+    <button type="button" id="tfa-demarrer">Activer</button>
+    <div id="tfa-config" class="cache">
+      <p>Dans votre application, ajoutez un compte « clé manuelle » avec ce secret :</p>
+      <div class="secret" id="tfa-secret"></div>
+      <p class="indice">Ou collez cette adresse otpauth : <span id="tfa-uri" class="secret"></span></p>
+      <form id="form-tfa-activer"><label for="tfa-code">Code affiché par l'application</label>
+        <input id="tfa-code" inputmode="numeric" maxlength="10" required>
+        <div class="rangee"><button type="submit">Confirmer et activer</button></div></form>
+    </div>
+  </div>
+  <div id="codes-bloc" class="cache carte">
+    <p><strong>Codes de secours</strong> — notez-les maintenant dans un endroit sûr : ils ne seront plus affichés. Chacun sert une seule fois si vous perdez votre téléphone.</p>
+    <div class="secret" id="codes-liste"></div>
+  </div>
+  <div id="tfa-on" class="cache">
+    <p>La double authentification est <strong>active</strong>. Codes de secours restants : <strong id="codes-restants">0</strong>.</p>
+    <form id="form-codes"><label for="codes-mdp">Mot de passe</label><input id="codes-mdp" type="password" autocomplete="current-password" required>
+      <label for="codes-code">Code actuel</label><input id="codes-code" inputmode="numeric" maxlength="10" required>
+      <div class="rangee"><button type="submit" class="discret">Régénérer les codes de secours</button></div></form>
+    <div id="tfa-off-bloc"><form id="form-tfa-off"><label for="tfa-off-mdp">Mot de passe</label><input id="tfa-off-mdp" type="password" autocomplete="current-password" required>
+      <label for="tfa-off-code">Code actuel</label><input id="tfa-off-code" inputmode="numeric" maxlength="10" required>
+      <div class="rangee"><button type="submit" class="danger">Désactiver</button></div></form></div>
+  </div>
+</div>
+<h2>Sessions ouvertes</h2>
+<div class="carte"><table id="table-sessions"></table>
+  <div class="rangee"><button type="button" class="discret" id="toutes">Fermer toutes les sessions</button></div></div>
+<h2>Supprimer mon compte</h2>
+<form id="form-suppr" class="carte">
+  <p>Supprime définitivement le compte, l'historique et les demandes associées.</p>
+  <label for="suppr-mdp">Mot de passe</label><input id="suppr-mdp" type="password" autocomplete="current-password" required>
+  <div class="rangee"><button type="submit" class="danger">Supprimer définitivement</button></div>
+</form>
+</main>
+<nav class="nav-bas" id="nav-bas" aria-label="Navigation mobile"></nav>
+<script src="/assets/js/commun.js" defer></script>
+<script src="/assets/js/compte.js" defer></script>
+</body>
+</html>

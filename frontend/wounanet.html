@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Wounanet : veille en temps réel">
+<meta name="robots" content="noindex">
+<title>PEGINTI IA — Wounanet</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0e1116">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch.png">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="entete" id="entete"><a class="logo" href="/">PEGINTI <span>IA</span></a></header>
+<main>
+<h1>Wounanet</h1>
+<p class="sous-titre">Moteur de veille et de recherche en temps réel, alimenté en continu par des sources publiques. Le fil des dépêches est ouvert à tous ; la recherche et la synthèse demandent un compte.</p>
+<div id="zone-msg"></div>
+<div id="verrou" class="carte"><p>Pour lancer une recherche et obtenir une synthèse sourcée, connectez-vous.</p><a class="bouton" href="/connexion?retour=/wounanet">Se connecter</a></div>
+<form id="form-recherche" class="carte cache">
+  <label for="sujet">Sujet de recherche</label>
+  <input id="sujet" maxlength="300" minlength="2" placeholder="Ex. : transition énergétique en Afrique centrale" required>
+  <div class="rangee"><button type="submit">Lancer le balayage</button></div>
+</form>
+<div id="resultat" aria-live="polite"></div>
+<h2>Dernières dépêches</h2>
+<div class="sources" id="flux"></div>
+</main>
+<nav class="nav-bas" id="nav-bas" aria-label="Navigation mobile"></nav>
+<script src="/assets/js/commun.js" defer></script>
+<script src="/assets/js/wounanet.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0e1116">
+<title>PEGINTI IA — Administration</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch.png">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="entete" id="entete"><a class="logo" href="/">PEGINTI <span>IA</span></a></header>
+<main class="large">
+  <h1>Administration</h1>
+  <p class="sous-titre" id="identite-admin">Chargement…</p>
+  <div id="zone-msg-admin" aria-live="polite"></div>
+  <nav class="onglets" id="onglets-admin" aria-label="Sections d'administration"></nav>
+  <section id="contenu-admin"></section>
+</main>
+<dialog id="dlg-2fa" aria-labelledby="dlg-titre">
+  <form method="dialog" id="form-2fa">
+    <h2 id="dlg-titre">Confirmation 2FA</h2>
+    <p class="indice">Action sensible : saisissez le code actuel de votre application d'authentification. Un code déjà utilisé est refusé : attendez le suivant.</p>
+    <label for="code-2fa">Code à 6 chiffres</label>
+    <input id="code-2fa" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" required>
+    <div class="rangee"><button type="submit" value="ok">Confirmer</button><button type="button" class="discret" id="annuler-2fa">Annuler</button></div>
+  </form>
+</dialog>
+<nav class="nav-bas" id="nav-bas" aria-label="Navigation mobile"></nav>
+<script src="/assets/js/commun.js" defer></script>
+<script src="/assets/js/admin.js" defer></script>
+</body>
+</html>

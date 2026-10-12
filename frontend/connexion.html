@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Connexion et création de compte">
+<meta name="robots" content="noindex">
+<title>PEGINTI IA — Connexion</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0e1116">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch.png">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="entete" id="entete"><a class="logo" href="/">PEGINTI <span>IA</span></a></header>
+<main>
+<h1>Compte PEGINTI</h1>
+<div class="onglets" role="tablist">
+  <button type="button" role="tab" data-onglet="connexion" aria-selected="true">Connexion</button>
+  <button type="button" role="tab" data-onglet="inscription" aria-selected="false">Créer un compte</button>
+</div>
+<div id="zone-msg"></div>
+<div class="carte" id="p-connexion">
+  <form id="form-connexion" autocomplete="on">
+    <label for="log-email">Adresse e-mail</label><input id="log-email" type="email" autocomplete="username" required>
+    <label for="log-mdp">Mot de passe</label><input id="log-mdp" type="password" autocomplete="current-password" required>
+    <div id="totp-bloc" class="cache"><label for="log-totp">Code à deux facteurs (6 chiffres)</label>
+      <input id="log-totp" inputmode="numeric" autocomplete="one-time-code" maxlength="10">
+      <label for="log-secours">Ou un code de secours (si téléphone perdu)</label><input id="log-secours" autocomplete="off" maxlength="16"></div>
+    <div class="rangee"><button type="submit">Se connecter</button><button type="button" class="discret" id="lien-oubli">Mot de passe oublié ?</button></div>
+  </form>
+</div>
+<div class="carte cache" id="p-inscription">
+  <form id="form-inscription" autocomplete="on">
+    <label for="ins-email">Adresse e-mail</label><input id="ins-email" type="email" autocomplete="email" required>
+    <label for="ins-pseudo">Pseudo (3 à 32 caractères)</label><input id="ins-pseudo" minlength="3" maxlength="32" autocomplete="nickname" required>
+    <label for="ins-mdp">Mot de passe</label><input id="ins-mdp" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+    <ul class="indice" id="regles"></ul>
+    <div class="rangee"><button type="submit">Créer mon compte</button></div>
+  </form>
+</div>
+<div class="carte cache" id="p-oubli">
+  <form id="form-oubli">
+    <label for="oubli-email">Adresse e-mail du compte</label><input id="oubli-email" type="email" required>
+    <div class="rangee"><button type="submit">Envoyer le lien</button></div>
+  </form>
+</div>
+</main>
+<nav class="nav-bas" id="nav-bas" aria-label="Navigation mobile"></nav>
+<script src="/assets/js/commun.js" defer></script>
+<script src="/assets/js/connexion.js" defer></script>
+</body>
+</html>
