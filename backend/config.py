@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import os
 import secrets
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import urlparse
@@ -36,6 +37,19 @@ def _bool(valeur, defaut: bool) -> bool:
     return str(valeur).strip().lower() in ("1", "true", "oui", "yes", "on")
 
 
+def _cles_gemini(e) -> tuple:
+    """Clés Gemini : GEMINI_API_KEYS (séparées par virgule/espace/ligne), GEMINI_API_KEY, GEMINI_API_KEY_1…_20.
+    Doublons et valeurs vides ignorés, ordre conservé."""
+    brut = [e.get("GEMINI_API_KEYS", ""), e.get("GEMINI_API_KEY", "")]
+    brut += [e.get(f"GEMINI_API_KEY_{i}", "") for i in range(1, 21)]
+    vues: list[str] = []
+    for bloc in brut:
+        for k in re.split(r"[,\s;]+|\.(?=AQ\.)", bloc or ""):  # tolère aussi des clés « AQ. » collées par un point
+            if k and k not in vues:
+                vues.append(k)
+    return tuple(vues)
+
+
 @dataclass
 class Config:
     env: str
@@ -57,6 +71,8 @@ class Config:
     dossier_logiciels: str = ""
     upload_max_mo: int = 95  # limite Cloudflare gratuit : 100 Mo
     chat_antiflood: int = 30  # requêtes max par 10 s et par client ; 0 = désactivé
+    gemini_keys: tuple = ()  # toutes les clés Gemini (rotation) ; gemini_key = la première
+    gemini_strategie: str = "tourniquet"  # ou "sequentiel"
     session_duree: int = 7 * 86400
     session_inactivite: int = 12 * 3600
 
@@ -114,8 +130,10 @@ def charger_config(overrides: dict | None = None) -> Config:
         cookie_secure=_bool(e.get("COOKIE_SECURE"), base_url.startswith("https")),
         trust_cloudflare=_bool(e.get("TRUST_CLOUDFLARE"), env == "production"),
         origines_autorisees=frozenset(origines),
-        gemini_key=e.get("GEMINI_API_KEY", ""),
-        gemini_model=e.get("GEMINI_MODEL", "gemini-2.5-flash"),
+        gemini_key=(_cles_gemini(e) or ("",))[0],
+        gemini_keys=_cles_gemini(e),
+        gemini_strategie="sequentiel" if e.get("GEMINI_STRATEGIE", "").strip().lower().startswith("seq") else "tourniquet",
+        gemini_model=e.get("GEMINI_MODEL") or "gemini-flash-latest,gemini-3.5-flash,gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-2.5-flash-lite",
         newsdata_key=e.get("NEWSDATA_API_KEY") or e.get("PEGINTINEWSAPIKEY", ""),
         verification_email_requise=_bool(e.get("VERIFICATION_EMAIL_REQUISE"), bool(smtp["hote"])),
         smtp=smtp,

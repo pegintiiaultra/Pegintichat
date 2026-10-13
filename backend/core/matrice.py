@@ -21,8 +21,10 @@ INSTRUCTION_RAISONNEMENT = (
     "sens dans son contexte culturel et historique). Réponds UNIQUEMENT par un objet JSON valide avec "
     "exactement trois clés de type chaîne : « factuel » (faits établis, concis), « enrichi » (analyse "
     "comparative/dialectique/herméneutique), « strategique » (perspectives et recommandations). "
-    "Laisse une clé vide si elle est sans objet. Pour une question simple, mets la réponse complète "
-    "dans « enrichi »."
+    "Laisse une clé vide si elle est sans objet. Pour une question simple, factuelle ou qui demande une "
+    "réponse brève, mets UNIQUEMENT la réponse dans « enrichi » et laisse « factuel » et « strategique » "
+    "vides. Respecte strictement la longueur demandée (« en une phrase » = une seule phrase) et ne "
+    "rajoute aucune morale ni conclusion générale."
 )
 
 REGLE_DONNEES_NON_FIABLES = (
@@ -99,7 +101,9 @@ def raisonner(paquet: dict, historique: list[dict]) -> dict:
                                        "La synthèse automatique n'est pas disponible pour le moment.",
                             "enrichi": "", "strategique": ""}, "sources": sources, "mode": "sources_seules"}
     msg = ("Le moteur de raisonnement n'est pas disponible pour l'instant"
-           + (" (clé GEMINI_API_KEY non configurée)." if not cfg.gemini_key else ". Réessayez dans un instant.")
+           + (" (aucune clé Gemini configurée)." if not cfg.gemini_keys else (". Le modèle Gemini configuré est introuvable : l'administrateur doit vérifier GEMINI_MODEL."
+              if llm.CAUSE["modele_introuvable"] else
+              ". Toutes les clés sont momentanément saturées ; réessayez dans une minute."))
            + (" Aucune dépêche n'a pu être collectée non plus." if paquet["besoin_wounanet"] else ""))
     return {"niveaux": {"factuel": "", "enrichi": msg, "strategique": ""}, "sources": [],
             "mode": "indisponible"}

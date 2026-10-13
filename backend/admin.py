@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from flask import Blueprint, current_app, g, jsonify, request
 
 from . import courriel, permissions as perm, security as sec
+from .services import llm
 from .activite import VITRINES
 from .auth import _jeton_courriel, journaliser
 from .commun import (ErreurAPI, cfg, corps_json, exiger_connexion, exiger_permission, reauth_totp, texte)
@@ -56,7 +57,7 @@ def etat():
         "demarre_le": datetime.fromtimestamp(DEMARRE, timezone.utc).isoformat(),
         "duree_s": int(time.time() - DEMARRE),
         "wounanet": current_app.extensions["wounanet"].etat(),
-        "moteur_configure": bool(c.gemini_key), "smtp_configure": bool(c.smtp["hote"]),
+        "moteur_configure": bool(c.gemini_keys), "moteur": llm.etat_moteur(c), "smtp_configure": bool(c.smtp["hote"]),
         "taille_base_mo": round(os.path.getsize(c.db_path) / 1048576, 2),
         "sessions_actives": db.execute("SELECT COUNT(*) FROM sessions WHERE expire_le>?", (now,)).fetchone()[0],
     }

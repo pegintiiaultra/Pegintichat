@@ -55,7 +55,58 @@ def creer(args, role):
         print("La double authentification (application TOTP) sera exigée à la première connexion.")
 
 
+def cles_gemini(tester):
+    """Saisie masquée des clés Gemini : rien ne s'affiche, rien n'est écrit ailleurs que dans .env (mode 600)."""
+    import os
+    import re
+    env = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+    cles = []
+    print("Collez chaque clé (la saisie reste invisible) puis Entrée. Entrée vide pour terminer.")
+    while True:
+        k = getpass.getpass(f"Clé n°{len(cles) + 1} : ").strip()
+        if not k:
+            break
+        if re.search(r"\s", k) or len(k) < 20:
+            print("  Clé ignorée : format invalide.")
+        elif k in cles:
+            print("  Clé ignorée : doublon.")
+        else:
+            cles.append(k)
+    if not cles:
+        sys.exit("Aucune clé saisie : .env inchangé.")
+    lignes = []
+    if os.path.exists(env):
+        with open(env, encoding="utf-8") as f:
+            lignes = [l.rstrip("\n") for l in f if l.split("=", 1)[0].strip() not in ("GEMINI_API_KEYS", "GEMINI_API_KEY")
+                      and not re.match(r"GEMINI_API_KEY_\d+=", l)]
+    lignes.append("GEMINI_API_KEYS=" + ",".join(cles))
+    fd = os.open(env, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, "w", encoding="utf-8") as f:
+        f.write("\n".join(lignes) + "\n")
+    os.chmod(env, 0o600)
+    print(f"{len(cles)} clé(s) enregistrée(s) dans .env. Redémarrez le serveur.")
+    if tester:
+        import urllib.error
+        import urllib.request
+        for i, k in enumerate(cles, 1):
+            r = urllib.request.Request(
+                "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent",
+                data=b'{"contents":[{"parts":[{"text":"dis ok"}]}]}', method="POST",
+                headers={"Content-Type": "application/json", "x-goog-api-key": k})
+            try:
+                urllib.request.urlopen(r, timeout=20)
+                etat = "OK (200)"
+            except urllib.error.HTTPError as e:
+                etat = f"HTTP {e.code}" + (" (surcharge temporaire, la clé est valable)" if e.code in (500, 503) else "")
+            except Exception as e:
+                etat = type(e).__name__
+            print(f"  clé n°{i} : {etat}")
+
+
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "cles-gemini":
+        cles_gemini("--tester" in sys.argv[2:])
+        return
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     s = p.add_subparsers(dest="cmd", required=True)
     for nom in ("creer-superadmin", "creer-admin", "creer-technique", "creer-utilisateur"):
@@ -79,6 +130,7 @@ def main():
     c.add_argument("--prix", type=int, help="prix en FCFA")
     s.add_parser("audit")
     s.add_parser("purger")
+    s.add_parser("cles-gemini").add_argument("--tester", action="store_true")
     args = p.parse_args()
 
     args.app = create_app()
